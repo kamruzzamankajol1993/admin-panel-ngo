@@ -63,7 +63,14 @@
                                                                 ?>
 
 
-                            <tr>
+                             <!-- red background start --->
+
+@if(empty($allDataFromNVisaFd9Fd1->check_status) && ($allDataFromNVisaFd9Fd1->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
                                 <td>
 
                                     @if($ngoTypeData->ngo_type_new_old == 'Old')
@@ -98,7 +105,7 @@
 
                                                                          @elseif($allDataFromNVisaFd9Fd1->status == 'Submitted')
                                                                           <button class="btn btn-secondary btn-xs" type="button">
-                                                                         জমা দেওয়া হয়েছে 
+                                                                         জমা দেওয়া হয়েছে
 
 
                                                                         </button>

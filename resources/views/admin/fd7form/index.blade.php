@@ -62,7 +62,14 @@
                            ->where('user_id',$form_one_data->user_id)->first();
 
                                                            ?>
-                            <tr>
+                            <!-- red background start --->
+
+@if(empty($dataFromFd6FormAll->check_status) && ($dataFromFd6FormAll->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
                                 <td>  @if($ngoTypeData->ngo_type_new_old == 'Old')
 
                                     #{{ App\Http\Controllers\Admin\CommonController::englishToBangla($ngoTypeData->registration) }}

@@ -39,7 +39,14 @@ $decesionName = DB::table('dak_details')
  @include('admin.post.receivedNameChangeDak')
 
     @else
+<!-- red background start --->
+
+@if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
 <tr>
+@endif
+<!-- red background end -->
 <td style="text-align:left;">
     উৎসঃ {{ $form_one_data->organization_name_ban }} <br>
     প্রেরকঃ {{ $form_one_data->organization_name_ban }}<span class="p-4"><i class="fa fa-user"></i>

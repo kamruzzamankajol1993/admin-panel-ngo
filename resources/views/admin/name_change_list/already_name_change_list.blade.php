@@ -38,7 +38,7 @@
                         <table class="display" id="basic-1">
                             <thead>
 
-                            
+
       <tr>
 
                                 <th>নিবন্ধন নম্বর</th>
@@ -79,8 +79,15 @@ $ngoOldNew = DB::table('ngo_type_and_languages')
                                 $reg_address =$reg_number->organization_address;
 
                                 ?>
-                            <tr>
-                              
+                              <!-- red background start --->
+
+@if(empty($all_data_for_new_list_all->check_status) && ($all_data_for_new_list_all->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
+
 
 
                                 <td>

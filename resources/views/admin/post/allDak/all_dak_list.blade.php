@@ -79,7 +79,14 @@ $formOneDataId = DB::table('ngo_statuses')->where('id',$allStatusData->registrat
                         $decesionName = DB::table('dak_details')
                         ->where('id',$allStatusData->dak_detail_id)->where('status','registration')->value('decision_list');
                                         ?>
-                                    <tr>
+                                    <!-- red background start --->
+
+@if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
                                         <td style="text-align:left;">
                                             উৎসঃ {{ $form_one_data->organization_name_ban }} <br>
                                             প্রেরকঃ {{ $adminNamePrerok }}<span class="p-4"><i class="fa fa-user"></i>
@@ -310,7 +317,14 @@ $formOneDataId = DB::table('ngo_renews')->where('id',$allStatusData->renew_statu
                     $decesionName = DB::table('dak_details')
                     ->where('id',$allStatusData->dak_detail_id)->where('status','renew')->value('decision_list');
                                     ?>
-                                <tr>
+                                <!-- red background start --->
+
+@if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
                                     <td style="text-align:left;">
                                         উৎসঃ {{ $form_one_data->organization_name_ban }} <br>
                                         প্রেরকঃ {{ $adminNamePrerok }}<span class="p-4"><i class="fa fa-user"></i>
@@ -549,7 +563,14 @@ $formOneDataId = DB::table('ngo_name_changes')->where('id',$allStatusData->name_
                 $decesionName = DB::table('dak_details')
                 ->where('id',$allStatusData->dak_detail_id)->where('status','nameChange')->value('decision_list');
                                 ?>
-                            <tr>
+                            <!-- red background start --->
+
+@if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
                                 <td style="text-align:left;">
                                     উৎসঃ {{ $form_one_data->organization_name_ban }} <br>
                                     প্রেরকঃ {{ $adminNamePrerok }}<span class="p-4"><i class="fa fa-user"></i>
@@ -788,7 +809,14 @@ $formOneDataId = DB::table('fd9_forms')
             $decesionName = DB::table('dak_details')
             ->where('id',$allStatusData->dak_detail_id)->where('status','fdNine')->value('decision_list');
                             ?>
-                        <tr>
+                       <!-- red background start --->
+
+@if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
                             <td style="text-align:left;">
                                 উৎসঃ {{ $form_one_data->organization_name_ban }} <br>
                                 প্রেরকঃ {{ $adminNamePrerok }}<span class="p-4"><i class="fa fa-user"></i>
@@ -1032,7 +1060,14 @@ $formOneDataId = DB::table('fd9_one_forms')
         $decesionName = DB::table('dak_details')
         ->where('id',$allStatusData->dak_detail_id)->where('status','fdNineOne')->value('decision_list');
                         ?>
-                    <tr>
+                   <!-- red background start --->
+
+@if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
                         <td style="text-align:left;">
                             উৎসঃ {{ $form_one_data->organization_name_ban }} <br>
                             প্রেরকঃ {{ $adminNamePrerok }}<span class="p-4"><i class="fa fa-user"></i>
@@ -1270,7 +1305,14 @@ $formOneDataId = DB::table('fd6_forms')->where('id',$allStatusData->fd_six_statu
     $decesionName = DB::table('dak_details')
     ->where('id',$allStatusData->dak_detail_id)->where('status','fdSix')->value('decision_list');
                     ?>
-                <tr>
+                <!-- red background start --->
+
+@if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
                     <td style="text-align:left;">
                         উৎসঃ {{ $form_one_data->organization_name_ban }} <br>
                         প্রেরকঃ {{ $adminNamePrerok }}<span class="p-4"><i class="fa fa-user"></i>
@@ -1506,7 +1548,14 @@ $formOneDataId = DB::table('fd7_forms')->where('id',$allStatusData->fd_seven_sta
     $decesionName = DB::table('dak_details')
     ->where('id',$allStatusData->dak_detail_id)->where('status','fdSeven')->value('decision_list');
                     ?>
-                <tr>
+                <!-- red background start --->
+
+@if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
                     <td style="text-align:left;">
                         উৎসঃ {{ $form_one_data->organization_name_ban }} <br>
                         প্রেরকঃ {{ $adminNamePrerok }}<span class="p-4"><i class="fa fa-user"></i>
@@ -1741,7 +1790,14 @@ $formOneDataId = DB::table('fc1_forms')->where('id',$allStatusData->fc_one_statu
     $decesionName = DB::table('dak_details')
     ->where('id',$allStatusData->dak_detail_id)->where('status','fcOne')->value('decision_list');
                     ?>
-                <tr>
+            <!-- red background start --->
+
+@if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
                     <td style="text-align:left;">
                         উৎসঃ {{ $form_one_data->organization_name_ban }} <br>
                         প্রেরকঃ {{ $adminNamePrerok }}<span class="p-4"><i class="fa fa-user"></i>
@@ -1976,7 +2032,14 @@ $formOneDataId = DB::table('fc2_forms')->where('id',$allStatusData->fc_two_statu
     $decesionName = DB::table('dak_details')
     ->where('id',$allStatusData->dak_detail_id)->where('status','fcTwo')->value('decision_list');
                     ?>
-                <tr>
+              <!-- red background start --->
+
+@if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
                     <td style="text-align:left;">
                         উৎসঃ {{ $form_one_data->organization_name_ban }} <br>
                         প্রেরকঃ {{ $adminNamePrerok }}<span class="p-4"><i class="fa fa-user"></i>
@@ -2211,7 +2274,14 @@ $branchNames = DB::table('branches')
      $decesionName = DB::table('dak_details')
      ->where('id',$allStatusData->dak_detail_id)->where('status','fdThree')->value('decision_list');
                      ?>
-                 <tr>
+            <!-- red background start --->
+
+@if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
                      <td style="text-align:left;">
                          উৎসঃ {{ $form_one_data->organization_name_ban }} <br>
                          প্রেরকঃ {{ $adminNamePrerok }}<span class="p-4"><i class="fa fa-user"></i>
@@ -2445,7 +2515,14 @@ $branchNames = DB::table('branches')
  $decesionName = DB::table('dak_details')
  ->where('id',$allStatusData->dak_detail_id)->where('status','duplicate')->value('decision_list');
       ?>
-  <tr>
+  <!-- red background start --->
+
+@if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
       <td style="text-align:left;">
           উৎসঃ {{ $form_one_data->organization_name_ban }} <br>
           প্রেরকঃ {{ $adminNamePrerok }}<span class="p-4"><i class="fa fa-user"></i>
@@ -2682,7 +2759,14 @@ $branchNames = DB::table('branches')
  $decesionName = DB::table('dak_details')
  ->where('id',$allStatusData->dak_detail_id)->where('status','constitution')->value('decision_list');
       ?>
-  <tr>
+  <!-- red background start --->
+
+@if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
       <td style="text-align:left;">
           উৎসঃ {{ $form_one_data->organization_name_ban }} <br>
           প্রেরকঃ {{ $adminNamePrerok }}<span class="p-4"><i class="fa fa-user"></i>
@@ -2918,7 +3002,14 @@ $branchNames = DB::table('branches')
      $decesionName = DB::table('dak_details')
      ->where('id',$allStatusData->dak_detail_id)->where('status','committee')->value('decision_list');
           ?>
-      <tr>
+      <!-- red background start --->
+
+@if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
           <td style="text-align:left;">
               উৎসঃ {{ $form_one_data->organization_name_ban }} <br>
               প্রেরকঃ {{ $adminNamePrerok }}<span class="p-4"><i class="fa fa-user"></i>
@@ -3152,7 +3243,14 @@ $branchNames = DB::table('branches')
   $decesionName = DB::table('dak_details')
   ->where('id',$allStatusData->dak_detail_id)->where('status','fdFive')->value('decision_list');
        ?>
-   <tr>
+   <!-- red background start --->
+
+@if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
        <td style="text-align:left;">
            উৎসঃ {{ $form_one_data->organization_name_ban }} <br>
            প্রেরকঃ {{ $adminNamePrerok }}<span class="p-4"><i class="fa fa-user"></i>

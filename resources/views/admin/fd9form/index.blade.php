@@ -62,7 +62,14 @@ $ngoTypeData = DB::table('ngo_type_and_languages')
 ->where('user_id',$form_one_data->user_id)->first();
 
                                 ?>
-                            <tr>
+                              <!-- red background start --->
+
+@if(empty($allDataFromNVisaFd9Fd1->check_status) && ($allDataFromNVisaFd9Fd1->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
                                 <td>
 
                                    @if($ngoTypeData->ngo_type_new_old == 'Old')

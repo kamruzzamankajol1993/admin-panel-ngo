@@ -84,7 +84,14 @@
                                 $reg_address = DB::table('fd_one_forms')->where('id',$all_data_for_new_list_all->fd_one_form_id)->value('organization_address');
 
                                 ?>
-                            <tr>
+                              <!-- red background start --->
+
+@if(empty($all_data_for_new_list_all->check_status) && ($all_data_for_new_list_all->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
+<tr>
+@endif
+<!-- red background end -->
 
                                 <td>
                                     @if($ngoOldNew == 'Old')
@@ -95,7 +102,7 @@
 @endif
 
    </td>
-       
+
                                 <td><h6>
                                      {{ $reg_name  }}<br>
 

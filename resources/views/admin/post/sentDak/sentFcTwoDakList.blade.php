@@ -36,7 +36,14 @@ $adminNamePrapok = DB::table('admins')
 $decesionName = DB::table('dak_details')
 ->where('id',$allStatusData->dak_detail_id)->where('status','fcTwo')->value('decision_list');
   ?>
+<!-- red background start --->
+
+@if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
+<tr style="background-color: red;color:white !important;">
+@else
 <tr>
+@endif
+<!-- red background end -->
   <td style="text-align:left;">
       উৎসঃ {{ $form_one_data->organization_name_ban }} <br>
       প্রেরকঃ {{ $adminNamePrerok }}<span class="p-4"><i class="fa fa-user"></i>

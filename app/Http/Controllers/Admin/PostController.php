@@ -201,15 +201,6 @@ class PostController extends Controller
     ->latest()->get()->unique('executive_committee_id');
 
 
-
-
-
-
-
-
-
-
-
     $all_data_for_new_list = DB::table('ngo_statuses')->whereIn('status',['Ongoing','Old Ngo Renew'])->latest()->get();
 
     return view('admin.post.allDak.all_dak_list',compact('ngoStatusFdFive','ngoStatusExecutiveCommittee','ngoStatusDuplicateCertificate','ngoStatusConstitution','nothiList','ngoStatusFdThreeDak','ngoStatusFcTwoDak','ngoStatusFcOneDak','ngoStatusFdSevenDak','ngoStatusFdSixDak','ngoStatusFDNineOneDak','ngoStatusFDNineDak','ngoStatusNameChange','ngoStatusRenew','ngoStatusReg'));
@@ -309,9 +300,6 @@ try{
 
 
             $ngoStatusFdSixDak = NgoFdSixDak::where('status',1)->whereNull('sent_status')->where('receiver_admin_id',Auth::guard('admin')->user()->id)->latest()->get();
-
-
-
 
             $ngoStatusFdSevenDak = NgoFdSevenDak::where('status',1)->whereNull('sent_status')->where('receiver_admin_id',Auth::guard('admin')->user()->id)->latest()->get();
 
@@ -586,6 +574,7 @@ try{
                             $regDakData->informational_purposes =$infoOnulipi;
                             $regDakData->attraction_attention =$eyeOnulipi;
                             $regDakData->dak_detail_id = $dakDetailId;
+
                             $regDakData->status = 1;
                             $regDakData->save();
 
@@ -2112,7 +2101,22 @@ try{
                        ->where('registration_status_id',$request->main_id)
        ->update([
            'sent_status' => 1,
+           'check_status'=>1
         ]);
+
+                // new code for red mark start
+
+                if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
+
+                DB::table('ngo_statuses')->where('id',$request->main_id)
+                         ->update([
+                            'check_status'=>1
+                         ]);
+
+                        }
+                // new code for red mark end
+
+
             if($number >0){
                 for($i=0;$i<$number;$i++){
 
@@ -2124,6 +2128,7 @@ try{
                  $regDakData->status = 0;
                  $regDakData->nothi_jat_status = 0;
                  $regDakData->amPmValue = $amPmValueFinal;
+                 $regDakData->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
                  $regDakData->save();
 
                 }
@@ -2156,21 +2161,22 @@ try{
                        ->where('renew_status_id',$request->main_id)
        ->update([
            'sent_status' => 1,
+           'check_status'=>1
         ]);
+
+          // new code for red mark start
+          if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
+          DB::table('ngo_renews')->where('id',$request->main_id)
+          ->update([
+             'check_status'=>1
+          ]);
+        }
+
+ // new code for red mark end
+
+
             if($number >0){
                 for($i=0;$i<$number;$i++){
-
-
-
-
-
-
-
-
-
-
-
-
 
                  $regDakData = new NgoRenewDak();
                  $regDakData->sender_admin_id =Auth::guard('admin')->user()->id;
@@ -2179,6 +2185,7 @@ try{
                  $regDakData->status = 0;
                  $regDakData->nothi_jat_status = 0;
                  $regDakData->amPmValue = $amPmValueFinal;
+                 $regDakData->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
                  $regDakData->save();
 
                 }
@@ -2214,24 +2221,24 @@ try{
                        ->where('name_change_status_id',$request->main_id)
        ->update([
            'sent_status' => 1,
+           'check_status'=>1
         ]);
+
+         // new code for red mark start
+         if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
+            DB::table('ngo_name_changes')->where('id',$request->main_id)
+            ->update([
+               'check_status'=>1
+            ]);
+          }
+
+   // new code for red mark end
 
 
                        //13 february code end
 
             if($number >0){
                 for($i=0;$i<$number;$i++){
-
-
-
-
-
-
-
-
-
-
-
 
                  $regDakData = new NgoNameChangeDak();
                  $regDakData->sender_admin_id =Auth::guard('admin')->user()->id;
@@ -2240,6 +2247,7 @@ try{
                  $regDakData->status = 0;
                  $regDakData->nothi_jat_status = 0;
                  $regDakData->amPmValue = $amPmValueFinal;
+                 $regDakData->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
                  $regDakData->save();
 
                 }
@@ -2280,22 +2288,22 @@ try{
                            ->where('f_d_nine_status_id',$request->main_id)
            ->update([
                'sent_status' => 1,
+               'check_status'=>1
             ]);
+// new code for red mark start
+if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
+    DB::table('fd9_forms')->where('id',$request->main_id)
+    ->update([
+       'check_status'=>1
+    ]);
+  }
 
+// new code for red mark end
 
                            //13 february code end
 
             if($number >0){
                 for($i=0;$i<$number;$i++){
-
-
-
-
-
-
-
-
-
 
                  $regDakData = new NgoFDNineDak();
                  $regDakData->sender_admin_id =Auth::guard('admin')->user()->id;
@@ -2304,6 +2312,7 @@ try{
                  $regDakData->status = 0;
                  $regDakData->nothi_jat_status = 0;
                  $regDakData->amPmValue = $amPmValueFinal;
+                 $regDakData->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
                  $regDakData->save();
 
                 }
@@ -2341,7 +2350,19 @@ try{
                          ->where('f_d_nine_one_status_id',$request->main_id)
          ->update([
              'sent_status' => 1,
+             'check_status'=>1
           ]);
+
+
+          // new code for red mark start
+if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
+    DB::table('fd9_one_forms')->where('id',$request->main_id)
+    ->update([
+       'check_status'=>1
+    ]);
+  }
+
+// new code for red mark end
 
 
                          //13 february code end
@@ -2350,18 +2371,6 @@ try{
             if($number >0){
                 for($i=0;$i<$number;$i++){
 
-
-
-
-
-
-
-
-
-
-
-
-
                  $regDakData = new NgoFDNineOneDak();
                  $regDakData->sender_admin_id =Auth::guard('admin')->user()->id;
                  $regDakData->receiver_admin_id = $request->admin_id[$i];
@@ -2369,6 +2378,7 @@ try{
                  $regDakData->status = 0;
                  $regDakData->nothi_jat_status = 0;
                  $regDakData->amPmValue = $amPmValueFinal;
+                 $regDakData->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
                  $regDakData->save();
 
                 }
@@ -2407,7 +2417,19 @@ try{
                          ->where('fd_six_status_id',$request->main_id)
          ->update([
              'sent_status' => 1,
+             'check_status'=>1
           ]);
+
+
+          // new code for red mark start
+if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
+    DB::table('fd6_forms')->where('id',$request->main_id)
+    ->update([
+       'check_status'=>1
+    ]);
+  }
+
+// new code for red mark end
 
 
                          //13 february code end
@@ -2416,18 +2438,6 @@ try{
             if($number >0){
                 for($i=0;$i<$number;$i++){
 
-
-
-
-
-
-
-
-
-
-
-
-
                  $regDakData = new NgoFdSixDak();
                  $regDakData->sender_admin_id =Auth::guard('admin')->user()->id;
                  $regDakData->receiver_admin_id = $request->admin_id[$i];
@@ -2435,6 +2445,7 @@ try{
                  $regDakData->status = 0;
                  $regDakData->nothi_jat_status = 0;
                  $regDakData->amPmValue = $amPmValueFinal;
+                 $regDakData->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
                  $regDakData->save();
 
                 }
@@ -2471,7 +2482,19 @@ try{
                          ->where('fd_seven_status_id',$request->main_id)
          ->update([
              'sent_status' => 1,
+             'check_status'=>1
           ]);
+
+
+           // new code for red mark start
+if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
+    DB::table('fd7_forms')->where('id',$request->main_id)
+    ->update([
+       'check_status'=>1
+    ]);
+  }
+
+// new code for red mark end
 
 
                          //13 february code end
@@ -2480,18 +2503,6 @@ try{
             if($number >0){
                 for($i=0;$i<$number;$i++){
 
-
-
-
-
-
-
-
-
-
-
-
-
                  $regDakData = new NgoFdSevenDak();
                  $regDakData->sender_admin_id =Auth::guard('admin')->user()->id;
                  $regDakData->receiver_admin_id = $request->admin_id[$i];
@@ -2499,6 +2510,7 @@ try{
                  $regDakData->status = 0;
                  $regDakData->nothi_jat_status = 0;
                  $regDakData->amPmValue = $amPmValueFinal;
+                 $regDakData->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
                  $regDakData->save();
 
                 }
@@ -2535,23 +2547,23 @@ try{
      ->where('fc_one_status_id',$request->main_id)
 ->update([
 'sent_status' => 1,
+'check_status'=>1
 ]);
+
+ // new code for red mark start
+ if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
+    DB::table('fc1_forms')->where('id',$request->main_id)
+    ->update([
+       'check_status'=>1
+    ]);
+  }
+
+// new code for red mark end
 
 
      //13 february code end
             if($number >0){
                 for($i=0;$i<$number;$i++){
-
-
-
-
-
-
-
-
-
-
-
 
                  $regDakData = new FcOneDak();
                  $regDakData->sender_admin_id =Auth::guard('admin')->user()->id;
@@ -2560,6 +2572,7 @@ try{
                  $regDakData->status = 0;
                  $regDakData->nothi_jat_status = 0;
                  $regDakData->amPmValue = $amPmValueFinal;
+                 $regDakData->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
                  $regDakData->save();
 
                 }
@@ -2596,21 +2609,25 @@ try{
    ->where('fc_two_status_id',$request->main_id)
 ->update([
 'sent_status' => 1,
+'check_status'=>1
 ]);
+
+
+// new code for red mark start
+if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
+    DB::table('fc2_forms')->where('id',$request->main_id)
+    ->update([
+       'check_status'=>1
+    ]);
+  }
+
+// new code for red mark end
 
 
    //13 february code end
 
             if($number >0){
                 for($i=0;$i<$number;$i++){
-
-
-
-
-
-
-
-
 
                  $regDakData = new FcTwoDak();
                  $regDakData->sender_admin_id =Auth::guard('admin')->user()->id;
@@ -2619,6 +2636,7 @@ try{
                  $regDakData->status = 0;
                  $regDakData->nothi_jat_status = 0;
                  $regDakData->amPmValue = $amPmValueFinal;
+                 $regDakData->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
                  $regDakData->save();
 
                 }
@@ -2656,7 +2674,19 @@ try{
    ->where('fd_three_status_id',$request->main_id)
 ->update([
 'sent_status' => 1,
+'check_status'=>1
 ]);
+
+
+// new code for red mark start
+if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
+    DB::table('fd3_forms')->where('id',$request->main_id)
+    ->update([
+       'check_status'=>1
+    ]);
+  }
+
+// new code for red mark end
 
 
    //13 february code end
@@ -2665,14 +2695,6 @@ try{
             if($number >0){
                 for($i=0;$i<$number;$i++){
 
-
-
-
-
-
-
-
-
                  $regDakData = new FdThreeDak();
                  $regDakData->sender_admin_id =Auth::guard('admin')->user()->id;
                  $regDakData->receiver_admin_id = $request->admin_id[$i];
@@ -2680,6 +2702,7 @@ try{
                  $regDakData->status = 0;
                  $regDakData->nothi_jat_status = 0;
                  $regDakData->amPmValue = $amPmValueFinal;
+                 $regDakData->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
                  $regDakData->save();
 
                 }
@@ -2717,7 +2740,19 @@ FdFiveDak::where('receiver_admin_id',Auth::guard('admin')->user()->id)
 ->where('fd_five_status_id',$request->main_id)
 ->update([
 'sent_status' => 1,
+'check_status'=>1
 ]);
+
+
+ // new code for red mark start
+if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
+    DB::table('fd_five_forms')->where('id',$request->main_id)
+    ->update([
+       'check_status'=>1
+    ]);
+  }
+
+// new code for red mark end
 
 
 //13 february code end
@@ -2726,14 +2761,6 @@ FdFiveDak::where('receiver_admin_id',Auth::guard('admin')->user()->id)
       if($number >0){
           for($i=0;$i<$number;$i++){
 
-
-
-
-
-
-
-
-
            $regDakData = new FdFiveDak();
            $regDakData->sender_admin_id =Auth::guard('admin')->user()->id;
            $regDakData->receiver_admin_id = $request->admin_id[$i];
@@ -2741,6 +2768,7 @@ FdFiveDak::where('receiver_admin_id',Auth::guard('admin')->user()->id)
            $regDakData->status = 0;
            $regDakData->nothi_jat_status = 0;
            $regDakData->amPmValue = $amPmValueFinal;
+           $regDakData->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
            $regDakData->save();
 
           }
@@ -2790,14 +2818,6 @@ DuplicateCertificateDak::where('receiver_admin_id',Auth::guard('admin')->user()-
       if($number >0){
           for($i=0;$i<$number;$i++){
 
-
-
-
-
-
-
-
-
            $regDakData = new DuplicateCertificateDak();
            $regDakData->sender_admin_id =Auth::guard('admin')->user()->id;
            $regDakData->receiver_admin_id = $request->admin_id[$i];
@@ -2814,9 +2834,6 @@ DuplicateCertificateDak::where('receiver_admin_id',Auth::guard('admin')->user()-
 
    }elseif($request->mainStatusNew == 'constitution'){
 
-
-
-
     $deleteData = ConstitutionDak::where('sender_admin_id',Auth::guard('admin')->user()->id)
 
          ->where('constitution_id',$request->main_id)
@@ -2825,7 +2842,6 @@ DuplicateCertificateDak::where('receiver_admin_id',Auth::guard('admin')->user()-
 
 
          //<--- 13 february code -->
-
 
 $previousReceiver = ConstitutionDak::where('receiver_admin_id',Auth::guard('admin')->user()->id)
 ->where('constitution_id',$request->main_id)
@@ -2853,14 +2869,6 @@ ConstitutionDak::where('receiver_admin_id',Auth::guard('admin')->user()->id)
 
 if($number >0){
   for($i=0;$i<$number;$i++){
-
-
-
-
-
-
-
-
 
    $regDakData = new ConstitutionDak();
    $regDakData->sender_admin_id =Auth::guard('admin')->user()->id;
@@ -2917,14 +2925,6 @@ ExecutiveCommitteeDak::where('receiver_admin_id',Auth::guard('admin')->user()->i
 
 if($number >0){
   for($i=0;$i<$number;$i++){
-
-
-
-
-
-
-
-
 
    $regDakData = new ExecutiveCommitteeDak();
    $regDakData->sender_admin_id =Auth::guard('admin')->user()->id;
@@ -3052,18 +3052,8 @@ if($mainDataStatus == 'registration'){
 
 
 //end new code for ajax call
-
-
-
-
-
-
-
-
-
-
-         $data = view('admin.post.newDataForFirstStepAjax',compact('allRegistrationDak','mainDataStatus'))->render();
-        return response()->json($data);
+    $data = view('admin.post.newDataForFirstStepAjax',compact('allRegistrationDak','mainDataStatus'))->render();
+    return response()->json($data);
 
         //  return redirect('admin/showDataAll/'.$request->mainStatusNew.'/'.$request->main_id);
 
