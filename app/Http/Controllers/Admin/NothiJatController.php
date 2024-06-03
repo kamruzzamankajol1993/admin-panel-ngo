@@ -11,6 +11,7 @@ use Hash;
 use PDF;
 use File;
 use Mail;
+use App\Models\FormNoFiveDak;
 use App\Models\ParentNoteForFcOne;
 use App\Models\ParentNoteForFcTwo;
 use App\Models\ParentNoteForFdNine;
@@ -179,6 +180,16 @@ class NothiJatController extends Controller
 
 
 
+          }elseif($status == 'formNoFive'){
+
+            $updateDataInsert = FormNoFiveDak::find($id);
+            $updateDataInsert->nothi_jat_id = 0;
+            $updateDataInsert->nothi_jat_status = 0;
+            $updateDataInsert->save();
+
+
+
+
           }elseif($status == 'duplicate'){
 
             $updateDataInsert = DuplicateCertificateDak::find($id);
@@ -316,6 +327,16 @@ class NothiJatController extends Controller
 
 
                 $updateDataInsert = FdFiveDak::find($request->dakId);
+                $updateDataInsert->nothi_jat_id = $request->nothiId;
+                $updateDataInsert->nothi_jat_status = 1;
+                $updateDataInsert->save();
+
+
+            }elseif($request->status == 'formNoFive'){
+
+
+
+                $updateDataInsert = FormNoFiveDak::find($request->dakId);
                 $updateDataInsert->nothi_jat_id = $request->nothiId;
                 $updateDataInsert->nothi_jat_status = 1;
                 $updateDataInsert->save();

@@ -175,6 +175,11 @@ $allNoteListNew = DB::table('parent_not_for_executive_committees')
 $allNoteListNew = DB::table('parent_note_for_fd_threes')
 ->where('nothi_detail_id',$dakId)->get();
 
+}elseif($status == 'formNoFive'){
+
+$allNoteListNew = DB::table('parent_note_for_form_no_five_daks')
+->where('nothi_detail_id',$dakId)->get();
+
 }
 
 

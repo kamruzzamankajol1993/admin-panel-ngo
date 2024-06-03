@@ -64,7 +64,7 @@
 
 
                                           @foreach ($senderNothiListRegistration->unique('sender') as $key=>$nothiLists1)
-                                          
+
                                           <?php
 
                $nothiLists = DB::table('nothi_lists')->where('id',$nothiLists1->nothId)->first();
@@ -1977,6 +1977,7 @@ style="padding:5px; background-color:#879dd9; border-radius: 10px;">নথি �
                                    @endforeach
 
                                        <!-- end fd five form -->
+                                       @include('admin.receiveNothi.formNoFiveNothi')
                         </tbody>
                     </table>
 

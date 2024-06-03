@@ -1551,6 +1551,9 @@ $allNoteListNew = DB::table('parent_not_for_executive_committees')->where('nothi
                 @endforeach
 
                     <!-- executive committee end-->
+
+                    @include('admin.receiveNothi.formNoFiveNothi')
+                    
                     </tbody>
                 </table>
 

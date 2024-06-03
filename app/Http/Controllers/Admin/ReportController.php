@@ -10,6 +10,7 @@ use Mail;
 use Carbon\Carbon;
 use Mpdf\Mpdf;
 use Response;
+use App\Models\ProjectSubject;
 class ReportController extends Controller
 {
     public $user;
@@ -21,6 +22,1688 @@ class ReportController extends Controller
             $this->user = Auth::guard('admin')->user();
             return $next($request);
         });
+    }
+
+
+    public function prokolpoBeneficiariesReportSearch(Request $request){
+
+        if (is_null($this->user) || !$this->user->can('prokolpoReportView')) {
+            //abort(403, 'Sorry !! You are Unauthorized to view !');
+            return redirect()->route('error_404');
+        }
+        $prokolpoType = $request->prokolpo_type;
+        $distrcitName = $request->distric_name;
+        $divisionName = $request->division_name;
+
+        $projectSubjectList = ProjectSubject::orderBy('id','desc')->get();
+        $prokolpoReport = DB::table('prokolpo_details')->latest()->get();
+
+        $prokolpoReportFd6 = DB::table('prokolpo_details')->where('type','fd6')->count();
+        $prokolpoReportFd7 = DB::table('prokolpo_details')->where('type','fd7')->count();
+        $prokolpoReportFc1 = DB::table('prokolpo_details')->where('type','fc1')->count();
+        $prokolpoReportFc2 = DB::table('prokolpo_details')->where('type','fc2')->count();
+
+
+        $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+        $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
+
+        if(empty($request->prokolpo_type) || in_array('সকল',$request->prokolpo_type)){
+
+            //dd($request->all());
+
+
+             //search form by form start
+
+             //($request->all());
+
+             if(empty($request->distric_name)){
+
+                     $prokolpoReportFd6Main = DB::table('prokolpo_details')
+                     ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+                     ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+                     ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+                     ->where('prokolpo_details.type','fd6')
+                     ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+                     ->orderBy('prokolpo_details.id','desc')
+                     ->get();
+
+                     $prokolpoReportFd7Main = DB::table('prokolpo_details')
+             ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+             ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+             ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+             ->where('prokolpo_details.type','fd7')
+             ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+
+                     $prokolpoReportFc1Main = DB::table('prokolpo_details')
+             ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+             ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+             ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+             ->where('prokolpo_details.type','fc1')
+             ->where('prokolpo_areas.type','fcOne')
+             ->whereIn('prokolpo_areas.division_name',$request->division_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+
+                     $prokolpoReportFc2Main = DB::table('prokolpo_details')
+             ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+             ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+             ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+             ->where('prokolpo_details.type','fc2')
+             ->where('prokolpo_areas.type','fcTwo')
+             ->whereIn('prokolpo_areas.division_name',$request->division_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+
+
+
+             }else{
+
+                $prokolpoReportFd6Main = DB::table('prokolpo_details')
+                ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+                ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+                ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+                ->where('prokolpo_details.type','fd6')
+                ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+                ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
+                ->orderBy('prokolpo_details.id','desc')
+                ->get();
+
+
+                $prokolpoReportFd7Main = DB::table('prokolpo_details')
+             ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+             ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+             ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+             ->where('prokolpo_details.type','fd7')
+             ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+             ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+                $prokolpoReportFc1Main = DB::table('prokolpo_details')
+             ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+             ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+             ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+             ->where('prokolpo_details.type','fc1')
+             ->where('prokolpo_areas.type','fcOne')
+             ->whereIn('prokolpo_areas.division_name',$request->division_name)
+             ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+                $prokolpoReportFc2Main = DB::table('prokolpo_details')
+             ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+             ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+             ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+             ->where('prokolpo_details.type','fc2')
+             ->where('prokolpo_areas.type','fcTwo')
+             ->whereIn('prokolpo_areas.division_name',$request->division_name)
+             ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+
+             }
+
+
+             //end for by form  form
+
+             return view('admin.report.beneficiaries.prokolpoReportSearchNorMal',compact('divisionName','distrcitName','prokolpoType','cityCorporationList','districtList','divisionList','projectSubjectList','prokolpoReportFc2Main','prokolpoReportFc1Main','prokolpoReportFd7Main','prokolpoReportFd6Main','prokolpoReportFc2','prokolpoReportFc1','prokolpoReportFd7','prokolpoReport','prokolpoReportFd6'));
+
+
+        }else{
+
+
+            //search form by form start
+
+            //dd($request->all());
+
+            if(empty($request->distric_name)){
+
+
+                if(in_array('বহুবার্ষিক',$request->prokolpo_type)){
+
+
+                    $prokolpoReportFd6Main = DB::table('prokolpo_details')
+                    ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+                    ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+                    ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+                    ->where('prokolpo_details.type','fd6')
+                    ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+                    ->orderBy('prokolpo_details.id','desc')
+                    ->get();
+
+
+                }else{
+
+
+
+                    $prokolpoReportFd6Main=0;
+
+
+                }
+
+
+                if(in_array('জরুরি ত্রাণ সহায়তা',$request->prokolpo_type)){
+
+
+
+                    $prokolpoReportFd7Main = DB::table('prokolpo_details')
+            ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+            ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+            ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+            ->where('prokolpo_details.type','fd7')
+            ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFd7Main =0;
+
+
+                }
+
+
+                if(in_array('এককালীন অনুদান',$request->prokolpo_type)){
+
+
+                    $prokolpoReportFc1Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc1')
+            ->where('prokolpo_areas.type','fcOne')
+            ->whereIn('prokolpo_areas.division_name',$request->division_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFc1Main =0;
+
+
+                }
+
+
+                if(in_array('বৈদেশিক অনুদানে গৃহীত',$request->prokolpo_type)){
+
+
+
+                    $prokolpoReportFc2Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc2')
+            ->where('prokolpo_areas.type','fcTwo')
+            ->whereIn('prokolpo_areas.division_name',$request->division_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFc2Main =0;
+
+
+                }
+
+            }else{
+
+
+
+
+
+                if(in_array('বহুবার্ষিক',$request->prokolpo_type)){
+
+
+                    $prokolpoReportFd6Main = DB::table('prokolpo_details')
+                    ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+                    ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+                    ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+                    ->where('prokolpo_details.type','fd6')
+                    ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+                    ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
+                    ->orderBy('prokolpo_details.id','desc')
+                    ->get();
+
+
+                }else{
+
+
+
+                    $prokolpoReportFd6Main=0;
+
+
+                }
+
+
+                if(in_array('জরুরি ত্রাণ সহায়তা',$request->prokolpo_type)){
+
+
+
+                    $prokolpoReportFd7Main = DB::table('prokolpo_details')
+            ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+            ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+            ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+            ->where('prokolpo_details.type','fd7')
+            ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+            ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFd7Main =0;
+
+
+                }
+
+
+                if(in_array('এককালীন অনুদান',$request->prokolpo_type)){
+
+
+                    $prokolpoReportFc1Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc1')
+            ->where('prokolpo_areas.type','fcOne')
+            ->whereIn('prokolpo_areas.division_name',$request->division_name)
+            ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFc1Main =0;
+
+
+                }
+
+
+                if(in_array('বৈদেশিক অনুদানে গৃহীত',$request->prokolpo_type)){
+
+
+
+                    $prokolpoReportFc2Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc2')
+            ->where('prokolpo_areas.type','fcTwo')
+            ->whereIn('prokolpo_areas.division_name',$request->division_name)
+            ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFc2Main =0;
+
+
+                }
+
+
+            }
+
+            return view('admin.report.beneficiaries.prokolpoReportSearch',compact('divisionName','distrcitName','prokolpoType','cityCorporationList','districtList','divisionList','projectSubjectList','prokolpoReportFc2Main','prokolpoReportFc1Main','prokolpoReportFd7Main','prokolpoReportFd6Main','prokolpoReportFc2','prokolpoReportFc1','prokolpoReportFd7','prokolpoReport','prokolpoReportFd6'));
+            //end for by form  form
+        }
+
+
+    }
+
+
+    public function prokolpoReportSearch(Request $request){
+
+
+
+        if (is_null($this->user) || !$this->user->can('prokolpoReportView')) {
+            //abort(403, 'Sorry !! You are Unauthorized to view !');
+            return redirect()->route('error_404');
+        }
+        $prokolpoType = $request->prokolpo_type;
+        $distrcitName = $request->distric_name;
+        $divisionName = $request->division_name;
+
+        $projectSubjectList = ProjectSubject::orderBy('id','desc')->get();
+        $prokolpoReport = DB::table('prokolpo_details')->latest()->get();
+
+        $prokolpoReportFd6 = DB::table('prokolpo_details')->where('type','fd6')->count();
+        $prokolpoReportFd7 = DB::table('prokolpo_details')->where('type','fd7')->count();
+        $prokolpoReportFc1 = DB::table('prokolpo_details')->where('type','fc1')->count();
+        $prokolpoReportFc2 = DB::table('prokolpo_details')->where('type','fc2')->count();
+
+
+        $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+        $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
+
+        if(empty($request->prokolpo_type) || in_array('সকল',$request->prokolpo_type)){
+
+            //dd($request->all());
+
+
+             //search form by form start
+
+             //($request->all());
+
+             if(empty($request->distric_name)){
+
+                     $prokolpoReportFd6Main = DB::table('prokolpo_details')
+                     ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+                     ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+                     ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+                     ->where('prokolpo_details.type','fd6')
+                     ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+                     ->orderBy('prokolpo_details.id','desc')
+                     ->get();
+
+                     $prokolpoReportFd7Main = DB::table('prokolpo_details')
+             ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+             ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+             ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+             ->where('prokolpo_details.type','fd7')
+             ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+
+                     $prokolpoReportFc1Main = DB::table('prokolpo_details')
+             ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+             ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+             ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+             ->where('prokolpo_details.type','fc1')
+             ->where('prokolpo_areas.type','fcOne')
+             ->whereIn('prokolpo_areas.division_name',$request->division_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+
+                     $prokolpoReportFc2Main = DB::table('prokolpo_details')
+             ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+             ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+             ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+             ->where('prokolpo_details.type','fc2')
+             ->where('prokolpo_areas.type','fcTwo')
+             ->whereIn('prokolpo_areas.division_name',$request->division_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+
+
+
+             }else{
+
+                $prokolpoReportFd6Main = DB::table('prokolpo_details')
+                ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+                ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+                ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+                ->where('prokolpo_details.type','fd6')
+                ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+                ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
+                ->orderBy('prokolpo_details.id','desc')
+                ->get();
+
+
+                $prokolpoReportFd7Main = DB::table('prokolpo_details')
+             ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+             ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+             ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+             ->where('prokolpo_details.type','fd7')
+             ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+             ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+                $prokolpoReportFc1Main = DB::table('prokolpo_details')
+             ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+             ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+             ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+             ->where('prokolpo_details.type','fc1')
+             ->where('prokolpo_areas.type','fcOne')
+             ->whereIn('prokolpo_areas.division_name',$request->division_name)
+             ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+                $prokolpoReportFc2Main = DB::table('prokolpo_details')
+             ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+             ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+             ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+             ->where('prokolpo_details.type','fc2')
+             ->where('prokolpo_areas.type','fcTwo')
+             ->whereIn('prokolpo_areas.division_name',$request->division_name)
+             ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+
+             }
+
+
+             //end for by form  form
+
+             return view('admin.report.prokolpoReportSearchNorMal',compact('divisionName','distrcitName','prokolpoType','cityCorporationList','districtList','divisionList','projectSubjectList','prokolpoReportFc2Main','prokolpoReportFc1Main','prokolpoReportFd7Main','prokolpoReportFd6Main','prokolpoReportFc2','prokolpoReportFc1','prokolpoReportFd7','prokolpoReport','prokolpoReportFd6'));
+
+
+        }else{
+
+
+            //search form by form start
+
+            //dd($request->all());
+
+            if(empty($request->distric_name)){
+
+
+                if(in_array('বহুবার্ষিক',$request->prokolpo_type)){
+
+
+                    $prokolpoReportFd6Main = DB::table('prokolpo_details')
+                    ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+                    ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+                    ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+                    ->where('prokolpo_details.type','fd6')
+                    ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+                    ->orderBy('prokolpo_details.id','desc')
+                    ->get();
+
+
+                }else{
+
+
+
+                    $prokolpoReportFd6Main=0;
+
+
+                }
+
+
+                if(in_array('জরুরি ত্রাণ সহায়তা',$request->prokolpo_type)){
+
+
+
+                    $prokolpoReportFd7Main = DB::table('prokolpo_details')
+            ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+            ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+            ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+            ->where('prokolpo_details.type','fd7')
+            ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFd7Main =0;
+
+
+                }
+
+
+                if(in_array('এককালীন অনুদান',$request->prokolpo_type)){
+
+
+                    $prokolpoReportFc1Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc1')
+            ->where('prokolpo_areas.type','fcOne')
+            ->whereIn('prokolpo_areas.division_name',$request->division_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFc1Main =0;
+
+
+                }
+
+
+                if(in_array('বৈদেশিক অনুদানে গৃহীত',$request->prokolpo_type)){
+
+
+
+                    $prokolpoReportFc2Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc2')
+            ->where('prokolpo_areas.type','fcTwo')
+            ->whereIn('prokolpo_areas.division_name',$request->division_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFc2Main =0;
+
+
+                }
+
+            }else{
+
+
+
+
+
+                if(in_array('বহুবার্ষিক',$request->prokolpo_type)){
+
+
+                    $prokolpoReportFd6Main = DB::table('prokolpo_details')
+                    ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+                    ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+                    ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+                    ->where('prokolpo_details.type','fd6')
+                    ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+                    ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
+                    ->orderBy('prokolpo_details.id','desc')
+                    ->get();
+
+
+                }else{
+
+
+
+                    $prokolpoReportFd6Main=0;
+
+
+                }
+
+
+                if(in_array('জরুরি ত্রাণ সহায়তা',$request->prokolpo_type)){
+
+
+
+                    $prokolpoReportFd7Main = DB::table('prokolpo_details')
+            ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+            ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+            ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+            ->where('prokolpo_details.type','fd7')
+            ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+            ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFd7Main =0;
+
+
+                }
+
+
+                if(in_array('এককালীন অনুদান',$request->prokolpo_type)){
+
+
+                    $prokolpoReportFc1Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc1')
+            ->where('prokolpo_areas.type','fcOne')
+            ->whereIn('prokolpo_areas.division_name',$request->division_name)
+            ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFc1Main =0;
+
+
+                }
+
+
+                if(in_array('বৈদেশিক অনুদানে গৃহীত',$request->prokolpo_type)){
+
+
+
+                    $prokolpoReportFc2Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc2')
+            ->where('prokolpo_areas.type','fcTwo')
+            ->whereIn('prokolpo_areas.division_name',$request->division_name)
+            ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFc2Main =0;
+
+
+                }
+
+
+
+
+            }
+
+            return view('admin.report.prokolpoReportSearch',compact('divisionName','distrcitName','prokolpoType','cityCorporationList','districtList','divisionList','projectSubjectList','prokolpoReportFc2Main','prokolpoReportFc1Main','prokolpoReportFd7Main','prokolpoReportFd6Main','prokolpoReportFc2','prokolpoReportFc1','prokolpoReportFd7','prokolpoReport','prokolpoReportFd6'));
+            //end for by form  form
+        }
+
+
+    }
+
+
+    public function prokolpoBeneficiariesReportPrintSearch(Request $request){
+
+
+
+        $prokolpoType = $request->prokolpo_type;
+        $distrcitName = $request->distric_name;
+        $divisionName = $request->division_name;
+
+        $projectSubjectList = ProjectSubject::orderBy('id','desc')->get();
+        $prokolpoReport = DB::table('prokolpo_details')->latest()->get();
+
+        $prokolpoReportFd6 = DB::table('prokolpo_details')->where('type','fd6')->count();
+        $prokolpoReportFd7 = DB::table('prokolpo_details')->where('type','fd7')->count();
+        $prokolpoReportFc1 = DB::table('prokolpo_details')->where('type','fc1')->count();
+        $prokolpoReportFc2 = DB::table('prokolpo_details')->where('type','fc2')->count();
+
+
+        $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+        $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
+
+        if(empty($request->prokolpo_type) || in_array('সকল',$request->prokolpo_type)){
+
+            //dd($request->all());
+
+
+             //search form by form start
+
+             //($request->all());
+
+             if(empty($request->distric_name)){
+
+                     $prokolpoReportFd6Main = DB::table('prokolpo_details')
+                     ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+                     ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+                     ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+                     ->where('prokolpo_details.type','fd6')
+                     ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+                     ->orderBy('prokolpo_details.id','desc')
+                     ->get();
+
+                     $prokolpoReportFd7Main = DB::table('prokolpo_details')
+             ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+             ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+             ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+             ->where('prokolpo_details.type','fd7')
+             ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+
+                     $prokolpoReportFc1Main = DB::table('prokolpo_details')
+             ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+             ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+             ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+             ->where('prokolpo_details.type','fc1')
+             ->where('prokolpo_areas.type','fcOne')
+             ->whereIn('prokolpo_areas.division_name',$request->division_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+
+                     $prokolpoReportFc2Main = DB::table('prokolpo_details')
+             ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+             ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+             ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+             ->where('prokolpo_details.type','fc2')
+             ->where('prokolpo_areas.type','fcTwo')
+             ->whereIn('prokolpo_areas.division_name',$request->division_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+
+
+
+             }else{
+
+                $prokolpoReportFd6Main = DB::table('prokolpo_details')
+                ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+                ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+                ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+                ->where('prokolpo_details.type','fd6')
+                ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+                ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
+                ->orderBy('prokolpo_details.id','desc')
+                ->get();
+
+
+                $prokolpoReportFd7Main = DB::table('prokolpo_details')
+             ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+             ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+             ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+             ->where('prokolpo_details.type','fd7')
+             ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+             ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+                $prokolpoReportFc1Main = DB::table('prokolpo_details')
+             ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+             ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+             ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+             ->where('prokolpo_details.type','fc1')
+             ->where('prokolpo_areas.type','fcOne')
+             ->whereIn('prokolpo_areas.division_name',$request->division_name)
+             ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+                $prokolpoReportFc2Main = DB::table('prokolpo_details')
+             ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+             ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+             ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+             ->where('prokolpo_details.type','fc2')
+             ->where('prokolpo_areas.type','fcTwo')
+             ->whereIn('prokolpo_areas.division_name',$request->division_name)
+             ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+
+             }
+
+
+             //end for by form  form
+
+             $data = view('admin.report.beneficiaries.prokolpoReportSearchPrintNormal',compact('divisionName','distrcitName','prokolpoType','cityCorporationList','districtList','divisionList','projectSubjectList','prokolpoReportFc2Main','prokolpoReportFc1Main','prokolpoReportFd7Main','prokolpoReportFd6Main','prokolpoReportFc2','prokolpoReportFc1','prokolpoReportFd7','prokolpoReport','prokolpoReportFd6'));
+
+
+        }else{
+
+
+            //search form by form start
+
+            //dd($request->all());
+
+            if(empty($request->distric_name)){
+
+
+                if(in_array('বহুবার্ষিক',$request->prokolpo_type)){
+
+
+                    $prokolpoReportFd6Main = DB::table('prokolpo_details')
+                    ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+                    ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+                    ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+                    ->where('prokolpo_details.type','fd6')
+                    ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+                    ->orderBy('prokolpo_details.id','desc')
+                    ->get();
+
+
+                }else{
+
+
+
+                    $prokolpoReportFd6Main=0;
+
+
+                }
+
+
+                if(in_array('জরুরি ত্রাণ সহায়তা',$request->prokolpo_type)){
+
+
+
+                    $prokolpoReportFd7Main = DB::table('prokolpo_details')
+            ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+            ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+            ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+            ->where('prokolpo_details.type','fd7')
+            ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFd7Main =0;
+
+
+                }
+
+
+                if(in_array('এককালীন অনুদান',$request->prokolpo_type)){
+
+
+                    $prokolpoReportFc1Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc1')
+            ->where('prokolpo_areas.type','fcOne')
+            ->whereIn('prokolpo_areas.division_name',$request->division_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFc1Main =0;
+
+
+                }
+
+
+                if(in_array('বৈদেশিক অনুদানে গৃহীত',$request->prokolpo_type)){
+
+
+
+                    $prokolpoReportFc2Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc2')
+            ->where('prokolpo_areas.type','fcTwo')
+            ->whereIn('prokolpo_areas.division_name',$request->division_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFc2Main =0;
+
+
+                }
+
+            }else{
+
+
+
+
+
+                if(in_array('বহুবার্ষিক',$request->prokolpo_type)){
+
+
+                    $prokolpoReportFd6Main = DB::table('prokolpo_details')
+                    ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+                    ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+                    ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+                    ->where('prokolpo_details.type','fd6')
+                    ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+                    ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
+                    ->orderBy('prokolpo_details.id','desc')
+                    ->get();
+
+
+                }else{
+
+
+
+                    $prokolpoReportFd6Main=0;
+
+
+                }
+
+
+                if(in_array('জরুরি ত্রাণ সহায়তা',$request->prokolpo_type)){
+
+
+
+                    $prokolpoReportFd7Main = DB::table('prokolpo_details')
+            ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+            ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+            ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+            ->where('prokolpo_details.type','fd7')
+            ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+            ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFd7Main =0;
+
+
+                }
+
+
+                if(in_array('এককালীন অনুদান',$request->prokolpo_type)){
+
+
+                    $prokolpoReportFc1Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc1')
+            ->where('prokolpo_areas.type','fcOne')
+            ->whereIn('prokolpo_areas.division_name',$request->division_name)
+            ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFc1Main =0;
+
+
+                }
+
+
+                if(in_array('বৈদেশিক অনুদানে গৃহীত',$request->prokolpo_type)){
+
+
+
+                    $prokolpoReportFc2Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc2')
+            ->where('prokolpo_areas.type','fcTwo')
+            ->whereIn('prokolpo_areas.division_name',$request->division_name)
+            ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFc2Main =0;
+
+
+                }
+
+
+
+
+            }
+
+            $data = view('admin.report.beneficiaries.prokolpoReportSearchPrint',compact('divisionName','distrcitName','prokolpoType','cityCorporationList','districtList','divisionList','projectSubjectList','prokolpoReportFc2Main','prokolpoReportFc1Main','prokolpoReportFd7Main','prokolpoReportFd6Main','prokolpoReportFc2','prokolpoReportFc1','prokolpoReportFd7','prokolpoReport','prokolpoReportFd6'));
+            //end for by form  form
+        }
+
+
+        $mpdf = new Mpdf([
+            'default_font' => 'nikosh'
+        ]);
+
+        $mpdf->WriteHTML($data);
+        $mpdf->Output();
+        die();
+
+
+
+    }
+
+
+
+    public function prokolpoReportPrintSearch(Request $request){
+
+
+
+        $prokolpoType = $request->prokolpo_type;
+        $distrcitName = $request->distric_name;
+        $divisionName = $request->division_name;
+
+        $projectSubjectList = ProjectSubject::orderBy('id','desc')->get();
+        $prokolpoReport = DB::table('prokolpo_details')->latest()->get();
+
+        $prokolpoReportFd6 = DB::table('prokolpo_details')->where('type','fd6')->count();
+        $prokolpoReportFd7 = DB::table('prokolpo_details')->where('type','fd7')->count();
+        $prokolpoReportFc1 = DB::table('prokolpo_details')->where('type','fc1')->count();
+        $prokolpoReportFc2 = DB::table('prokolpo_details')->where('type','fc2')->count();
+
+
+        $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+        $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
+
+        if(empty($request->prokolpo_type) || in_array('সকল',$request->prokolpo_type)){
+
+            //dd($request->all());
+
+
+             //search form by form start
+
+             //($request->all());
+
+             if(empty($request->distric_name)){
+
+                     $prokolpoReportFd6Main = DB::table('prokolpo_details')
+                     ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+                     ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+                     ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+                     ->where('prokolpo_details.type','fd6')
+                     ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+                     ->orderBy('prokolpo_details.id','desc')
+                     ->get();
+
+                     $prokolpoReportFd7Main = DB::table('prokolpo_details')
+             ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+             ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+             ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+             ->where('prokolpo_details.type','fd7')
+             ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+
+                     $prokolpoReportFc1Main = DB::table('prokolpo_details')
+             ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+             ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+             ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+             ->where('prokolpo_details.type','fc1')
+             ->where('prokolpo_areas.type','fcOne')
+             ->whereIn('prokolpo_areas.division_name',$request->division_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+
+                     $prokolpoReportFc2Main = DB::table('prokolpo_details')
+             ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+             ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+             ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+             ->where('prokolpo_details.type','fc2')
+             ->where('prokolpo_areas.type','fcTwo')
+             ->whereIn('prokolpo_areas.division_name',$request->division_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+
+
+
+             }else{
+
+                $prokolpoReportFd6Main = DB::table('prokolpo_details')
+                ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+                ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+                ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+                ->where('prokolpo_details.type','fd6')
+                ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+                ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
+                ->orderBy('prokolpo_details.id','desc')
+                ->get();
+
+
+                $prokolpoReportFd7Main = DB::table('prokolpo_details')
+             ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+             ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+             ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+             ->where('prokolpo_details.type','fd7')
+             ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+             ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+                $prokolpoReportFc1Main = DB::table('prokolpo_details')
+             ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+             ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+             ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+             ->where('prokolpo_details.type','fc1')
+             ->where('prokolpo_areas.type','fcOne')
+             ->whereIn('prokolpo_areas.division_name',$request->division_name)
+             ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+                $prokolpoReportFc2Main = DB::table('prokolpo_details')
+             ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+             ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+             ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+             ->where('prokolpo_details.type','fc2')
+             ->where('prokolpo_areas.type','fcTwo')
+             ->whereIn('prokolpo_areas.division_name',$request->division_name)
+             ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+             ->orderBy('prokolpo_details.id','desc')
+             ->get();
+
+
+             }
+
+
+             //end for by form  form
+
+             $data = view('admin.report.prokolpoReportSearchPrintNormal',compact('divisionName','distrcitName','prokolpoType','cityCorporationList','districtList','divisionList','projectSubjectList','prokolpoReportFc2Main','prokolpoReportFc1Main','prokolpoReportFd7Main','prokolpoReportFd6Main','prokolpoReportFc2','prokolpoReportFc1','prokolpoReportFd7','prokolpoReport','prokolpoReportFd6'));
+
+
+        }else{
+
+
+            //search form by form start
+
+            //dd($request->all());
+
+            if(empty($request->distric_name)){
+
+
+                if(in_array('বহুবার্ষিক',$request->prokolpo_type)){
+
+
+                    $prokolpoReportFd6Main = DB::table('prokolpo_details')
+                    ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+                    ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+                    ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+                    ->where('prokolpo_details.type','fd6')
+                    ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+                    ->orderBy('prokolpo_details.id','desc')
+                    ->get();
+
+
+                }else{
+
+
+
+                    $prokolpoReportFd6Main=0;
+
+
+                }
+
+
+                if(in_array('জরুরি ত্রাণ সহায়তা',$request->prokolpo_type)){
+
+
+
+                    $prokolpoReportFd7Main = DB::table('prokolpo_details')
+            ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+            ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+            ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+            ->where('prokolpo_details.type','fd7')
+            ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFd7Main =0;
+
+
+                }
+
+
+                if(in_array('এককালীন অনুদান',$request->prokolpo_type)){
+
+
+                    $prokolpoReportFc1Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc1')
+            ->where('prokolpo_areas.type','fcOne')
+            ->whereIn('prokolpo_areas.division_name',$request->division_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFc1Main =0;
+
+
+                }
+
+
+                if(in_array('বৈদেশিক অনুদানে গৃহীত',$request->prokolpo_type)){
+
+
+
+                    $prokolpoReportFc2Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc2')
+            ->where('prokolpo_areas.type','fcTwo')
+            ->whereIn('prokolpo_areas.division_name',$request->division_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFc2Main =0;
+
+
+                }
+
+            }else{
+
+
+
+
+
+                if(in_array('বহুবার্ষিক',$request->prokolpo_type)){
+
+
+                    $prokolpoReportFd6Main = DB::table('prokolpo_details')
+                    ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+                    ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+                    ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+                    ->where('prokolpo_details.type','fd6')
+                    ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+                    ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
+                    ->orderBy('prokolpo_details.id','desc')
+                    ->get();
+
+
+                }else{
+
+
+
+                    $prokolpoReportFd6Main=0;
+
+
+                }
+
+
+                if(in_array('জরুরি ত্রাণ সহায়তা',$request->prokolpo_type)){
+
+
+
+                    $prokolpoReportFd7Main = DB::table('prokolpo_details')
+            ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+            ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+            ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+            ->where('prokolpo_details.type','fd7')
+            ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+            ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFd7Main =0;
+
+
+                }
+
+
+                if(in_array('এককালীন অনুদান',$request->prokolpo_type)){
+
+
+                    $prokolpoReportFc1Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc1')
+            ->where('prokolpo_areas.type','fcOne')
+            ->whereIn('prokolpo_areas.division_name',$request->division_name)
+            ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFc1Main =0;
+
+
+                }
+
+
+                if(in_array('বৈদেশিক অনুদানে গৃহীত',$request->prokolpo_type)){
+
+
+
+                    $prokolpoReportFc2Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc2')
+            ->where('prokolpo_areas.type','fcTwo')
+            ->whereIn('prokolpo_areas.division_name',$request->division_name)
+            ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+                }else{
+
+                    $prokolpoReportFc2Main =0;
+
+
+                }
+
+
+
+
+            }
+
+            $data = view('admin.report.prokolpoReportSearchPrint',compact('divisionName','distrcitName','prokolpoType','cityCorporationList','districtList','divisionList','projectSubjectList','prokolpoReportFc2Main','prokolpoReportFc1Main','prokolpoReportFd7Main','prokolpoReportFd6Main','prokolpoReportFc2','prokolpoReportFc1','prokolpoReportFd7','prokolpoReport','prokolpoReportFd6'));
+            //end for by form  form
+        }
+
+
+        $mpdf = new Mpdf([
+            'default_font' => 'nikosh'
+        ]);
+
+        $mpdf->WriteHTML($data);
+        $mpdf->Output();
+        die();
+
+
+
+    }
+
+
+    public function prokolpoBeneficiariesReportPrint(){
+
+        if (is_null($this->user) || !$this->user->can('prokolpoReportView')) {
+            //abort(403, 'Sorry !! You are Unauthorized to view !');
+            return redirect()->route('error_404');
+        }
+
+
+
+            \LogActivity::addToLog('View prokolpoReport.');
+
+            $projectSubjectList = ProjectSubject::orderBy('id','desc')->get();
+            $prokolpoReport = DB::table('prokolpo_details')->latest()->get();
+
+            $prokolpoReportFd6Main = DB::table('prokolpo_details')
+            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+            ->where('prokolpo_details.type','fd6')
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+            $prokolpoReportFd7Main = DB::table('prokolpo_details')
+            ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+            ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+            ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+            ->where('prokolpo_details.type','fd7')
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+            $prokolpoReportFc1Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc1')
+            ->where('prokolpo_areas.type','fcOne')
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+            $prokolpoReportFc2Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc2')
+            ->where('prokolpo_areas.type','fcTwo')
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+            $prokolpoReportFd6 = DB::table('prokolpo_details')->where('type','fd6')->count();
+            $prokolpoReportFd7 = DB::table('prokolpo_details')->where('type','fd7')->count();
+            $prokolpoReportFc1 = DB::table('prokolpo_details')->where('type','fc1')->count();
+            $prokolpoReportFc2 = DB::table('prokolpo_details')->where('type','fc2')->count();
+
+
+            $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+        $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')->groupBy('city_orporation')->select('city_orporation')->get();
+
+
+        $data =  view('admin.report.beneficiaries.prokolpoReportPrint',compact('cityCorporationList','districtList','divisionList','projectSubjectList','prokolpoReportFc2Main','prokolpoReportFc1Main','prokolpoReportFd7Main','prokolpoReportFd6Main','prokolpoReportFc2','prokolpoReportFc1','prokolpoReportFd7','prokolpoReport','prokolpoReportFd6'));
+
+
+
+        $mpdf = new Mpdf([
+            'default_font' => 'nikosh'
+        ]);
+
+        $mpdf->WriteHTML($data);
+        $mpdf->Output();
+        die();
+
+    }
+
+
+
+    public function prokolpoReportPrint(){
+
+        if (is_null($this->user) || !$this->user->can('prokolpoReportView')) {
+            //abort(403, 'Sorry !! You are Unauthorized to view !');
+            return redirect()->route('error_404');
+        }
+
+
+
+            \LogActivity::addToLog('View prokolpoReport.');
+
+            $projectSubjectList = ProjectSubject::orderBy('id','desc')->get();
+            $prokolpoReport = DB::table('prokolpo_details')->latest()->get();
+
+            $prokolpoReportFd6Main = DB::table('prokolpo_details')
+            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+            ->where('prokolpo_details.type','fd6')
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+            $prokolpoReportFd7Main = DB::table('prokolpo_details')
+            ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+            ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+            ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+            ->where('prokolpo_details.type','fd7')
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+            $prokolpoReportFc1Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc1')
+            ->where('prokolpo_areas.type','fcOne')
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+            $prokolpoReportFc2Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc2')
+            ->where('prokolpo_areas.type','fcTwo')
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+            $prokolpoReportFd6 = DB::table('prokolpo_details')->where('type','fd6')->count();
+            $prokolpoReportFd7 = DB::table('prokolpo_details')->where('type','fd7')->count();
+            $prokolpoReportFc1 = DB::table('prokolpo_details')->where('type','fc1')->count();
+            $prokolpoReportFc2 = DB::table('prokolpo_details')->where('type','fc2')->count();
+
+
+            $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+        $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')->groupBy('city_orporation')->select('city_orporation')->get();
+
+
+        $data =  view('admin.report.prokolpoReportPrint',compact('cityCorporationList','districtList','divisionList','projectSubjectList','prokolpoReportFc2Main','prokolpoReportFc1Main','prokolpoReportFd7Main','prokolpoReportFd6Main','prokolpoReportFc2','prokolpoReportFc1','prokolpoReportFd7','prokolpoReport','prokolpoReportFd6'));
+
+
+
+        $mpdf = new Mpdf([
+            'default_font' => 'nikosh'
+        ]);
+
+        $mpdf->WriteHTML($data);
+        $mpdf->Output();
+        die();
+
+    }
+
+
+    public function prokolpoReport(){
+
+
+        if (is_null($this->user) || !$this->user->can('prokolpoReportView')) {
+            //abort(403, 'Sorry !! You are Unauthorized to view !');
+            return redirect()->route('error_404');
+        }
+
+
+
+            \LogActivity::addToLog('View prokolpoReport.');
+
+            $projectSubjectList = ProjectSubject::orderBy('id','desc')->get();
+            $prokolpoReport = DB::table('prokolpo_details')->latest()->get();
+
+            $prokolpoReportFd6Main = DB::table('prokolpo_details')
+            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+            ->where('prokolpo_details.type','fd6')
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+            $prokolpoReportFd7Main = DB::table('prokolpo_details')
+            ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+            ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+            ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+            ->where('prokolpo_details.type','fd7')
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+            $prokolpoReportFc1Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc1')
+            ->where('prokolpo_areas.type','fcOne')
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+            $prokolpoReportFc2Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc2')
+            ->where('prokolpo_areas.type','fcTwo')
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+            $prokolpoReportFd6 = DB::table('prokolpo_details')->where('type','fd6')->count();
+            $prokolpoReportFd7 = DB::table('prokolpo_details')->where('type','fd7')->count();
+            $prokolpoReportFc1 = DB::table('prokolpo_details')->where('type','fc1')->count();
+            $prokolpoReportFc2 = DB::table('prokolpo_details')->where('type','fc2')->count();
+
+
+            $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+        $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')->groupBy('city_orporation')->select('city_orporation')->get();
+
+
+            return view('admin.report.prokolpoReport',compact('cityCorporationList','districtList','divisionList','projectSubjectList','prokolpoReportFc2Main','prokolpoReportFc1Main','prokolpoReportFd7Main','prokolpoReportFd6Main','prokolpoReportFc2','prokolpoReportFc1','prokolpoReportFd7','prokolpoReport','prokolpoReportFd6'));
+
+
+
+
+    }
+
+
+    public function prokolpoBeneficiariesReport(){
+
+
+        if (is_null($this->user) || !$this->user->can('prokolpoReportView')) {
+            //abort(403, 'Sorry !! You are Unauthorized to view !');
+            return redirect()->route('error_404');
+        }
+
+
+
+            \LogActivity::addToLog('View prokolpoReport.');
+
+            $projectSubjectList = ProjectSubject::orderBy('id','desc')->get();
+            $prokolpoReport = DB::table('prokolpo_details')->latest()->get();
+
+            $prokolpoReportFd6Main = DB::table('prokolpo_details')
+            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+            ->where('prokolpo_details.type','fd6')
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+            $prokolpoReportFd7Main = DB::table('prokolpo_details')
+            ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+            ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+            ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+            ->where('prokolpo_details.type','fd7')
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+            $prokolpoReportFc1Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc1')
+            ->where('prokolpo_areas.type','fcOne')
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+            $prokolpoReportFc2Main = DB::table('prokolpo_details')
+            ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+            ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+            ->where('prokolpo_details.type','fc2')
+            ->where('prokolpo_areas.type','fcTwo')
+            ->orderBy('prokolpo_details.id','desc')
+            ->get();
+
+
+            $prokolpoReportFd6 = DB::table('prokolpo_details')->where('type','fd6')->count();
+            $prokolpoReportFd7 = DB::table('prokolpo_details')->where('type','fd7')->count();
+            $prokolpoReportFc1 = DB::table('prokolpo_details')->where('type','fc1')->count();
+            $prokolpoReportFc2 = DB::table('prokolpo_details')->where('type','fc2')->count();
+
+
+            $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+        $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')->groupBy('city_orporation')->select('city_orporation')->get();
+
+
+            return view('admin.report.beneficiaries.prokolpoReport',compact('cityCorporationList','districtList','divisionList','projectSubjectList','prokolpoReportFc2Main','prokolpoReportFc1Main','prokolpoReportFd7Main','prokolpoReportFd6Main','prokolpoReportFc2','prokolpoReportFc1','prokolpoReportFd7','prokolpoReport','prokolpoReportFd6'));
+
+
+
+
     }
 
 
@@ -42,6 +1725,18 @@ class ReportController extends Controller
             return redirect()->route('error_404')->with('error','some thing went wrong ');
         }
     }
+
+
+    public function prokolpoReportDistrict(Request $request){
+
+        $districtList = DB::table('civilinfos')->whereIn('division_bn',$request->divisionId)
+        ->groupBy('district_bn')->select('district_bn')->get();
+
+        return view('admin.report.prokolpoReportDistrict',compact('districtList'));
+
+    }
+
+
 
 
 

@@ -12,7 +12,7 @@ class NothiApproverController extends Controller
 {
     public function store(Request $request){
         try{
-            DB::beginTransaction();
+            
 
         $nothiApproverList = NothiApprover::orderBy('id','desc')->value('id');
 
@@ -34,10 +34,10 @@ class NothiApproverController extends Controller
         $dataInsert->save();
 
 
-        return redirect()->back()->with('success','সফলভাবে সংরক্ষণ হয়েছে');
+        return redirect()->back()->with('success','সলভাবে সংরক্ষণ হয়েছে');
 
     } catch (\Exception $e) {
-        DB::rollBack();
+       
         return redirect()->route('error_404')->with('error','some thing went wrong ');
     }
 

@@ -397,9 +397,15 @@
                 aria-controls="profile-icon"
                 aria-selected="false"><i
         class="icofont icofont-file-document"></i>বিদেশ থেকে প্রাপ্ত জিনিসপত্র /দ্রব্যসামগ্র্রীর সংরক্ষণ সংক্রান্ত কাগজপত্রাদি</a></li>
+        @elseif($status == 'formNoFive')
 
+        <li class="nav-item"><a class="nav-link" id="profile-icon-tab_form_eight"
+            data-bs-toggle="tab" href="#profile-icon_form_eight" role="tab"
+            aria-controls="profile-icon"
+            aria-selected="false"><i
+    class="icofont icofont-file-document"></i>বার্ষিক প্রতিবেদন </a></li>
 
-                                                @endif
+                 @endif
 
                                                 <!-- end new code --->
 
@@ -591,7 +597,22 @@ $potroZariListValue =  DB::table('nothi_details')
 ?>
 
 @if($potroZariListValue == 1)
+
+<?php
+
+
+$nothiApproverListOnu = DB::table('nothi_approvers')->where('nothiId',$nothiId)
+->where('adminId',Auth::guard('admin')->user()->id)
+->where('status',$status)
+->where('noteId',$id)->value('id');
+
+
+?>
     <div class="dropdown me-2">
+
+        @if(empty($nothiApproverListOnu))
+
+        @else
         <button class="btn btn-primary dropdown-toggle"
                 type="button"
                 id="dropdownMenuButton1"
@@ -599,6 +620,7 @@ $potroZariListValue =  DB::table('nothi_details')
                 aria-expanded="false">
             পত্র অনুমোদন করুন
         </button>
+        @endif
         <div class="dropdown-menu"
              aria-labelledby="dropdownMenuButton1">
             <div>
@@ -630,8 +652,23 @@ $potroZariListValue =  DB::table('nothi_details')
         ?>
 
         @if($potroZariListValue == 1)
+
+        <?php
+
+
+$nothiApproverListOnu = DB::table('nothi_approvers')->where('nothiId',$nothiId)
+->where('adminId',Auth::guard('admin')->user()->id)
+->where('status',$status)
+->where('noteId',$id)->value('id');
+
+
+?>
+@if(empty($nothiApproverListOnu))
+
+@else
         <button class="btn btn-primary me-2" data-bs-toggle="modal"
         data-original-title="" data-bs-target="#potroZariModal"><i class="fa fa-print"></i>পত্র জারি করুন </button>
+        @endif
         @else
 
 
@@ -988,7 +1025,7 @@ $potroZariListValue =  DB::table('nothi_details')
     </div>
     <div class="col-lg-4">
         <div class="mt-4" style="text-align: center;">
-            
+
             @if($potroZariListValue == 1)
 
             @if(!$nothiApproverLista)
@@ -1230,6 +1267,16 @@ $potroZariListValue =  DB::table('nothi_details')
 
        @include('admin.fdFiveForm.docListForNothi')
        </div>
+
+       @elseif($status == 'formNoFive')
+
+
+       <div class="tab-pane fade" id="profile-icon_form_eight" role="tabpanel"
+       aria-labelledby="profile-icon-tab_form_eight">
+
+       @include('admin.form_no_five.form_no_five')
+       </div>
+
        @endif
 
        <!-- end new code-->

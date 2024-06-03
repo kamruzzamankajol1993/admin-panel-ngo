@@ -53,6 +53,8 @@ use App\Models\ParentNoteForFdNineOne;
 use App\Models\ParentNoteForFdSeven;
 use App\Models\ParentNoteForFdsix;
 use App\Models\ParentNoteForFdThree;
+use App\Models\ParentNoteForFdFive;
+use App\Models\ParentNoteForFormNoFiveDak;
 use App\Models\ParentNoteForNameChange;
 use App\Models\ParentNoteForRegistration;
 use App\Models\ParentNoteForRenew;
@@ -231,7 +233,31 @@ try{
             ->get();
 
 
+        }elseif($status == 'fdFive'){
+
+
+
+
+
+
+            $checkParent = ParentNoteForFdFive::where('fd_three_doc_present_id',$id)
+            ->get();
+
+
+        }elseif($status == 'formNoFive'){
+
+
+
+
+
+
+            $checkParent = ParentNoteForFormNoFiveDak::where('fd_three_doc_present_id',$id)
+            ->get();
+
+
         }
+
+
 
         return view('admin.presentDocument.sheetAndNotes',compact('checkParent','nothiId','status','id'));
 

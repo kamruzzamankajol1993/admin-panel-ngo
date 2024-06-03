@@ -77,6 +77,11 @@ try{
 
        ->where('dakType','fdFive')->latest()->get();
 
+       $senderNothiListformNoFive = NothiDetail::where('sender',Auth::guard('admin')->user()->id)
+        ->whereNull('back_nothi')
+
+       ->where('dakType','formNoFive')->latest()->get();
+
 
          $senderNothiListduplicate = NothiDetail::where('sender',Auth::guard('admin')->user()->id)
          ->whereNull('back_nothi')
@@ -97,6 +102,7 @@ try{
 
 
             return view('admin.sendNothi.index',compact('senderNothiListfdNine',
+            'senderNothiListformNoFive',
             'senderNothiListfdFive',
             'senderNothiListnameChange',
             'senderNothiListfdNineOne',

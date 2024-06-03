@@ -107,10 +107,22 @@
                                                                                   <div class="mt-4" style="text-align: center;">
                                                                                       @if($potroZariListValue == 1)
 
+                                                                                      @if(!$nothiApproverList)
+
+                                                                                    @else
+<?php
+
+                                                                                    $nothiApproverLista = DB::table('admins')->where('id',$nothiApproverList->adminId)
+                                                                               ->first();
+
+                                                                                    ?>
+
                                                                                       @if(!$nothiApproverLista)
 
                                                                                       @else
                                                                                       <img src="{{ asset('/') }}{{ $nothiApproverLista->admin_sign }}" style="height:30px;"/><br>
+                                                                                      @endif
+
                                                                                       @endif
 
                                                                                       @else
@@ -118,11 +130,11 @@
                                                                                   <span>{{ $appName }}</span><br>
                                                                                   <span>{{ $desiName }}</span><br>
 
-                                                                                  @if(empty($potrangshoDraft->extra_text ) || $potrangshoDraft->extra_text == '<p>..........</p>')
+                                                                                  {{-- @if(empty($potrangshoDraft->extra_text ) || $potrangshoDraft->extra_text == '<p>..........</p>')
                                                                                   <textarea id="ineditor4" name="extra_text" contenteditable="true">..........</textarea>
                                                                                   @else
                                                                                     <textarea id="ineditor4" name="extra_text" contenteditable="true">{!! $potrangshoDraft->extra_text !!}</textarea>
-                                                                                   @endif
+                                                                                   @endif --}}
                               <span>ফোন :{{ $aphone }}</span><br>
                               <span>ইমেইল : {{ $aemail }}</span>
                                                                                   </div>

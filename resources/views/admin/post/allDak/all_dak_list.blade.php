@@ -235,7 +235,7 @@ $desiNames = DB::table('designation_lists')
                                         @else
 
 
-                                        <img src="{{ asset('/') }}{{ $receiverImage }}" class="rounded-circle" alt="Sample Image">
+                                        <img src="{{ asset('/') }}{{ $senderImage }}" class="rounded-circle" alt="Sample Image">
 @endif
 
                                         @endif
@@ -321,7 +321,9 @@ $formOneDataId = DB::table('ngo_renews')->where('id',$allStatusData->renew_statu
 
 @if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
 <tr style="background-color: red;color:white !important;">
+
 @else
+
 <tr>
 @endif
 <!-- red background end -->
@@ -480,7 +482,7 @@ $desiNames = DB::table('designation_lists')
 
                                         @else
 
-                                        <img src="{{ asset('/') }}{{ $receiverImage }}" class="rounded-circle" alt="Sample Image">
+                                        <img src="{{ asset('/') }}{{ $senderImage }}" class="rounded-circle" alt="Sample Image">
 @endif
 
                                         @endif
@@ -723,7 +725,7 @@ $desiNames = DB::table('designation_lists')
 
                                         @else
 
-                                        <img src="{{ asset('/') }}{{ $receiverImage }}" class="rounded-circle" alt="Sample Image">
+                                        <img src="{{ asset('/') }}{{ $senderImage }}" class="rounded-circle" alt="Sample Image">
 @endif
 
                                         @endif
@@ -965,7 +967,7 @@ $desiNames = DB::table('designation_lists')
 
                                         @else
 
-                                        <img src="{{ asset('/') }}{{ $receiverImage }}" class="rounded-circle" alt="Sample Image">
+                                        <img src="{{ asset('/') }}{{ $senderImage }}" class="rounded-circle" alt="Sample Image">
 @endif
 
                                         @endif
@@ -1217,7 +1219,7 @@ $branchNames = DB::table('branches')
 
               @else
 
-              <img src="{{ asset('/') }}{{ $receiverImage }}" class="rounded-circle" alt="Sample Image">
+              <img src="{{ asset('/') }}{{ $senderImage }}" class="rounded-circle" alt="Sample Image">
 @endif
 
               @endif
@@ -1461,7 +1463,7 @@ $branchNames = DB::table('branches')
 
                                 @else
 
-                                <img src="{{ asset('/') }}{{ $receiverImage }}" class="rounded-circle" alt="Sample Image">
+                                <img src="{{ asset('/') }}{{ $senderImage }}" class="rounded-circle" alt="Sample Image">
 @endif
 
                                 @endif
@@ -1704,7 +1706,7 @@ $branchNames = DB::table('branches')
 
                                 @else
 
-                                <img src="{{ asset('/') }}{{ $receiverImage }}" class="rounded-circle" alt="Sample Image">
+                                <img src="{{ asset('/') }}{{ $senderImage }}" class="rounded-circle" alt="Sample Image">
 @endif
 
                                 @endif
@@ -1946,7 +1948,7 @@ $branchNames = DB::table('branches')
 
                                 @else
 
-                                <img src="{{ asset('/') }}{{ $receiverImage }}" class="rounded-circle" alt="Sample Image">
+                                <img src="{{ asset('/') }}{{ $senderImage }}" class="rounded-circle" alt="Sample Image">
 @endif
 
                                 @endif
@@ -2188,7 +2190,7 @@ $branchNames = DB::table('branches')
 
                                 @else
 
-                                <img src="{{ asset('/') }}{{ $receiverImage }}" class="rounded-circle" alt="Sample Image">
+                                <img src="{{ asset('/') }}{{ $senderImage }}" class="rounded-circle" alt="Sample Image">
 @endif
 
                                 @endif
@@ -2430,7 +2432,7 @@ $branchNames = DB::table('branches')
 
                                  @else
 
-                                 <img src="{{ asset('/') }}{{ $receiverImage }}" class="rounded-circle" alt="Sample Image">
+                                 <img src="{{ asset('/') }}{{ $senderImage }}" class="rounded-circle" alt="Sample Image">
  @endif
 
                                  @endif
@@ -2672,7 +2674,7 @@ $branchNames = DB::table('branches')
 
                   @else
 
-                  <img src="{{ asset('/') }}{{ $receiverImage }}" class="rounded-circle" alt="Sample Image">
+                  <img src="{{ asset('/') }}{{ $senderImage }}" class="rounded-circle" alt="Sample Image">
  @endif
 
                   @endif
@@ -2914,7 +2916,7 @@ $branchNames = DB::table('branches')
 
                   @else
 
-                  <img src="{{ asset('/') }}{{ $receiverImage }}" class="rounded-circle" alt="Sample Image">
+                  <img src="{{ asset('/') }}{{ $senderImage }}" class="rounded-circle" alt="Sample Image">
  @endif
 
                   @endif
@@ -3156,7 +3158,7 @@ $branchNames = DB::table('branches')
 
                       @else
 
-                      <img src="{{ asset('/') }}{{ $receiverImage }}" class="rounded-circle" alt="Sample Image">
+                      <img src="{{ asset('/') }}{{ $senderImage }}" class="rounded-circle" alt="Sample Image">
      @endif
 
                       @endif
@@ -3397,7 +3399,7 @@ $branchNames = DB::table('branches')
 
                    @else
 
-                   <img src="{{ asset('/') }}{{ $receiverImage }}" class="rounded-circle" alt="Sample Image">
+                   <img src="{{ asset('/') }}{{ $senderImage }}" class="rounded-circle" alt="Sample Image">
   @endif
 
                    @endif

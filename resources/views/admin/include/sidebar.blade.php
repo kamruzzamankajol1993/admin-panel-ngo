@@ -380,6 +380,15 @@
 </li>
 @endif
 
+@if ($usr->can('formNoFiveAdd') || $usr->can('formNoFiveView') || $usr->can('formNoFiveDelete') || $usr->can('formNoFiveUpdate'))
+<li class="dropdown">
+    <a class="nav-link menu-title link-nav {{ Route::is('formNoFive.index') || Route::is('formNoFive.show') ? 'active' : '' }}" href="{{ route('formNoFive.index') }}">
+        <i data-feather="airplay"></i>
+        <span>ফরম নং-৫ (বার্ষিক প্রতিবেদন)</span>
+    </a>
+</li>
+@endif
+
 
 
 @if ($usr->can('duplicateCertificateAdd') || $usr->can('duplicateCertificateView') || $usr->can('duplicateCertificateDelete') || $usr->can('duplicateCertificateUpdate'))
@@ -703,7 +712,7 @@
 <!-- leave management end --->
 
 <!-- report start  -->
-@if ($usr->can('reportAdd') || $usr->can('reportView') ||  $usr->can('reportDelete') ||  $usr->can('reportUpdate'))
+@if ($usr->can('prokolpoBeneficiariesReportPrint') || $usr->can('prokolpoBeneficiariesReportView') || $usr->can('prokolpoReportPrint') || $usr->can('prokolpoReportView') || $usr->can('reportAdd') || $usr->can('reportView') ||  $usr->can('reportDelete') ||  $usr->can('reportUpdate'))
 
                     <li class="sidebar-main-title">
                         <div>
@@ -711,14 +720,20 @@
                         </div>
                       </li>
 
-                      @if (Route::is('foreignNgoListReport') || Route::is('localNgoListReport') || Route::is('districtWiseListSearch') || Route::is('districtWiseList') || Route::is('districtWiseListResult')  || Route::is('monthlyReportOfNgo') || Route::is('monthlyReportOfNgoSearch') || Route::is('yearlyReportOfNgo') || Route::is('yearlyReportOfNgoSearch') || Route::is('monthlyReportOfNgoRenew') || Route::is('monthlyReportOfNgoRenewSearch') || Route::is('yearlyReportOfNgoRenew') || Route::is('yearlyReportOfNgoRenewSearch')  )
+                      @if (Route::is('prokolpoBeneficiariesReportSearch') || Route::is('prokolpoBeneficiariesReport') || Route::is('prokolpoReportSearch') || Route::is('prokolpoReport') || Route::is('foreignNgoListReport') || Route::is('localNgoListReport') || Route::is('districtWiseListSearch') || Route::is('districtWiseList') || Route::is('districtWiseListResult')  || Route::is('monthlyReportOfNgo') || Route::is('monthlyReportOfNgoSearch') || Route::is('yearlyReportOfNgo') || Route::is('yearlyReportOfNgoSearch') || Route::is('monthlyReportOfNgoRenew') || Route::is('monthlyReportOfNgoRenewSearch') || Route::is('yearlyReportOfNgoRenew') || Route::is('yearlyReportOfNgoRenewSearch')  )
 
                       <li class="dropdown">
                         <a class="nav-link menu-title active" href="javascript:void(0)"><i data-feather="settings"></i><span>রিপোর্ট </span></a>
                         <ul class="nav-submenu menu-content" style="display: block;">
 
 
+                            <li class="">
+                                <a href="{{ route('prokolpoReport') }}" class="{{ Route::is('prokolpoReport') || Route::is('prokolpoReportSearch')   ? 'active' : '' }}" data-key="t-nft-landing">সকল প্রকল্পের তালিকা</a>
+                            </li>
 
+                            <li class="">
+                                <a href="{{ route('prokolpoBeneficiariesReport') }}" class="{{ Route::is('prokolpoBeneficiariesReport') || Route::is('prokolpoBeneficiariesReportSearch')   ? 'active' : '' }}" data-key="t-nft-landing">সকল উপকারভোগীর তালিকা</a>
+                            </li>
 
 
                             <li class="">
@@ -762,7 +777,13 @@
     <a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="settings"></i><span>রিপোর্ট </span></a>
     <ul class="nav-submenu menu-content">
 
+        <li class="">
+            <a href="{{ route('prokolpoReport') }}" class="{{ Route::is('prokolpoReport')  ? 'active' : '' }}" data-key="t-nft-landing">সকল প্রকল্পের তালিকা</a>
+        </li>
 
+        <li class="">
+            <a href="{{ route('prokolpoBeneficiariesReport') }}" class="{{ Route::is('prokolpoBeneficiariesReport') || Route::is('prokolpoBeneficiariesReportSearch')   ? 'active' : '' }}" data-key="t-nft-landing">সকল উপকারভোগীর তালিকা</a>
+        </li>
 
         <li class="">
             <a href="{{ route('districtWiseList') }}" class="{{ Route::is('districtWiseList')  ? 'active' : '' }}" data-key="t-nft-landing">সকল এনজিও'র তালিকা</a>

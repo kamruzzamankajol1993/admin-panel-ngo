@@ -36,6 +36,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/') }}public/admin/assets/css/feather-icon.css">
     <!-- Plugins css start-->
     <link rel="stylesheet" type="text/css" href="{{ asset('/') }}public/admin/assets/css/datatables.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
     <!-- Plugins css start-->
     <link rel="stylesheet" type="text/css" href="{{ asset('/') }}public/admin/assets/css/animate.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('/') }}public/admin/assets/css/chartist.css">
@@ -314,6 +317,8 @@
         })
     }
 </script>
+
+
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
 <script>
@@ -374,8 +379,12 @@
 
      <script>
         $(document).ready(function() {
-    $('.js-example-basic-multiple').select2();
-    $('.js-example-basic-single').select2();
+    $('.js-example-basic-multiple').select2({
+        placeholder: "-- নির্বাচন করুন --"
+    });
+    $('.js-example-basic-single').select2({
+
+    });
 });
      </script>
 

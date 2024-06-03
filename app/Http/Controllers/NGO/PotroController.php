@@ -9,6 +9,9 @@ use Image;
 use Auth;
 use Hash;
 use PDF;
+use App\Models\ParentNoteForFormNoFiveDak;
+use App\Models\FormNoFiveDak;
+use App\Models\FormNoFiveOfficeSarok;
 use App\Models\ParentNoteForFcOne;
 use App\Models\ParentNoteForFcTwo;
 use App\Models\ParentNoteForFdNine;
@@ -171,6 +174,17 @@ class PotroController extends Controller
 
             $officeDetail = FdThreeOfficeSarok::where('parent_note_for_fd_three_id',$id)->get();
             $checkParent = ParentNoteForFdThree::where('nothi_detail_id',$parentId)
+                           ->where('serial_number',$nothiId)->get();
+        }elseif($status == 'formNoFive'){
+
+            $getIdSarok = FormNoFiveOfficeSarok::where('pnote_form_no_five',$id)->value('id');
+
+            $potrangshoDraftNew =  DB::table('potrangsho_drafts')->where('sarokId',$getIdSarok)
+                                   ->where('status',$status)->orderBy('id','desc')
+                                   ->first();
+
+            $officeDetail = FormNoFiveOfficeSarok::where('pnote_form_no_five',$id)->get();
+            $checkParent = ParentNoteForFormNoFiveDak::where('nothi_detail_id',$parentId)
                            ->where('serial_number',$nothiId)->get();
         }
 
@@ -395,7 +409,30 @@ class PotroController extends Controller
               ->get();
 
 
-          }
+          }elseif($status == 'formNoFive'){
+
+
+            $getIdSarok = FormNoFiveOfficeSarok::where('pnote_form_no_five',$id)
+            ->value('id');
+
+
+            $potrangshoDraftNew =  DB::table('potrangsho_drafts')
+            ->where('sarokId',$getIdSarok)
+            ->where('status',$status)
+            ->orderBy('id','desc')
+            ->first();
+
+            $officeDetail = FormNoFiveOfficeSarok::where('pnote_form_no_five',$id)->get();
+
+
+
+
+            $checkParent = ParentNoteForFormNoFiveDak::where('nothi_detail_id',$parentId)
+            ->where('serial_number',$nothiId)
+            ->get();
+
+
+        }
 
 
         $nothiNumber = NothiList::where('id',$nothiId)->value('main_sarok_number');

@@ -229,6 +229,20 @@ $childNoteNewList = DB::table('child_note_for_fd_threes')
 $officeDetail = DB::table('fd_three_office_saroks')
 ->where('parent_note_for_fd_three_id',$checkParentFirst->id)->get();
 
+}elseif($status == 'formNoFive'){
+
+$checkParentFirst = DB::table('parent_note_for_form_no_five_daks')
+->where('nothi_detail_id',$dakId)
+->where('serial_number',$nothiId)
+->first();
+
+
+$childNoteNewList = DB::table('child_note_for_form_no_fives')
+                       ->where('pnote_form_no_five',$checkParentFirst->id)->get();
+
+$officeDetail = DB::table('form_no_five_office_saroks')
+->where('pnote_form_no_five',$checkParentFirst->id)->get();
+
 }elseif($status == 'duplicate'){
 
 $checkParentFirst = DB::table('parent_note_for_duplicate_certificates')->where('nothi_detail_id',$dakId)

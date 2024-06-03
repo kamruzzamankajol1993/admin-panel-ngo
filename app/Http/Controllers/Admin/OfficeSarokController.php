@@ -10,6 +10,7 @@ use Hash;
 use DateTime;
 use DateTimezone;
 use DB;
+use App\Models\FormNoFiveOfficeSarok;
 use App\Models\RegistrationOfficeSarok;
 use App\Models\RenewOfficeSarok;
 use App\Models\NameChangeOfficeSarok;
@@ -205,6 +206,19 @@ class OfficeSarokController extends Controller
 
         $saveNewData = new FdFiveOfficeSarok();
         $saveNewData->pnote_fd_five = $request->parentIdForPotrangso;
+       //  $saveNewData->office_subject = $request->subject;
+       //  $saveNewData->office_sutro = $request->sutro;
+       //  $saveNewData->description =$request->maindes;
+        $saveNewData->created_at =$created_at;
+        $saveNewData->save();
+
+
+
+
+    }elseif($request->statusForPotrangso == 'formNoFive'){
+
+        $saveNewData = new FormNoFiveOfficeSarok();
+        $saveNewData->pnote_form_no_five  = $request->parentIdForPotrangso;
        //  $saveNewData->office_subject = $request->subject;
        //  $saveNewData->office_sutro = $request->sutro;
        //  $saveNewData->description =$request->maindes;

@@ -28,7 +28,7 @@ $usr = Auth::guard('admin')->user();
             <ul class="nav-menus">
 
                 <li>
-                    <button class="btn btn-primary">{{  App\Http\Controllers\Admin\CommonController::englishToBangla(date('d F Y')) }}</button>
+                    <a><span class="badge bg-success">{{  App\Http\Controllers\Admin\CommonController::englishToBangla(date('d F Y')) }}</span> </a>
 
                 </li>
 
@@ -48,7 +48,7 @@ $usr = Auth::guard('admin')->user();
                     <div class="notification-box"><i data-feather="bell"></i><span class="dot-animated"></span></div>
                     <ul class="notification-dropdown onhover-show-div">
                         <li>
-                            <p class="f-w-700 mb-0">আপনার কাছে {{ count($ongoingNgoStatus) + count($ongoingNgoRenewStatus) + count($ongoingNgoNameChangeStatus) }} টি নোটিফিকেশন এসেছে <span class="pull-right badge badge-primary badge-pill">{{ count($ongoingNgoStatus) + count($ongoingNgoRenewStatus) + count($ongoingNgoNameChangeStatus) }} </span></p>
+                            <p class="f-w-700 mb-0">আপনা কাছে {{ count($ongoingNgoStatus) + count($ongoingNgoRenewStatus) + count($ongoingNgoNameChangeStatus) }} টি নোটিফিকেশন এসছে <span class="pull-right badge badge-primary badge-pill">{{ count($ongoingNgoStatus) + count($ongoingNgoRenewStatus) + count($ongoingNgoNameChangeStatus) }} </span></p>
                         </li>
 
                         @foreach($ongoingNgoStatus as $all_ongoingNgoStatus)
@@ -57,7 +57,7 @@ $usr = Auth::guard('admin')->user();
                         <li class="noti-primary">
                             <div class="media"><span class="notification-bg bg-light-primary"><i data-feather="activity"> </i></span>
                                 <div class="media-body">
-                                    <p>নতুন এনজিও নিবন্ধন অনুরোধ</p>
+                                    <p>নুন এনজিও নিন্ধন অনুরো</p>
                                 </div>
                             </div>
                         </li>
@@ -84,7 +84,7 @@ $usr = Auth::guard('admin')->user();
                         <li class="noti-primary">
                             <div class="media"><span class="notification-bg bg-light-primary"><i data-feather="activity"> </i></span>
                                 <div class="media-body">
-                                    <p>নতুন এনজিও নাম পরিবর্তনের অনুরোধ</p>
+                                    <p>নতন এনজিও নাম পরিবর্তনের নুরোধ</p>
                                 </div>
                             </div>
                         </li>

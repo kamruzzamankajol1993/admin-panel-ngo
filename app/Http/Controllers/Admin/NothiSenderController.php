@@ -13,7 +13,7 @@ class NothiSenderController extends Controller
 
 //dd(3);
 try{
-    DB::beginTransaction();
+   
 
 $nothiApproverList = NothiSender::orderBy('id','desc')->value('id');
 
@@ -32,11 +32,11 @@ $deleteData = NothiSender::where('id','<=',$nothiApproverList)->delete();
         $dataInsert->status = $request->fstatus;
         $dataInsert->save();
 
-        DB::commit();
-        return redirect()->back()->with('success','সফলভাবে সংরক্ষণ হয়েছে');
+        
+        return redirect()->back()->with('success','সফলভাবে সরক্ষণ হয়েছ');
 
     } catch (\Exception $e) {
-        DB::rollBack();
+        
         return redirect()->route('error_404')->with('error','some thing went wrong ');
     }
 

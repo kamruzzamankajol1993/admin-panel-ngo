@@ -146,6 +146,13 @@ class DashBoardController extends Controller
        ->where('dakType','fdFive')->latest()->get();
 
 
+       $senderNothiListformNoFive = NothiDetail::where('receiver',Auth::guard('admin')->user()->id)
+        ->whereNull('sent_status')
+        ->whereNull('list_status')
+        ->limit(5)
+       ->where('dakType','formNoFive')->latest()->get();
+
+
          $senderNothiListduplicate = NothiDetail::where('receiver',Auth::guard('admin')->user()->id)
          ->whereNull('sent_status')
          ->whereNull('list_status')
@@ -259,8 +266,15 @@ class DashBoardController extends Controller
            $ngoStatusExecutiveCommittee = DB::table('document_for_executive_committee_approvals')->where('status','Ongoing')->latest()->limit(5) ->get();
 
            $ngoStatusFdFive = DB::table('fd_five_forms')->where('status','Ongoing')->latest()->limit(5)->get();
+
+
+           $ngoStatusFormNoFive = DB::table('form_no_fives')->where('status','pending')->latest()->limit(5)->get();
+
+
 //dd($ngoStatusFdFive);
             return view('admin.dashboard.dashboard',compact(
+                'senderNothiListformNoFive',
+                'ngoStatusFormNoFive',
                 'users',
                 'allTaskList',
                 'ngoStatusFdFive',
@@ -333,11 +347,14 @@ class DashBoardController extends Controller
 
             $ngoStatusFdFive = DB::table('fd_five_daks')->where('status',1)->whereNull('sent_status')->where('receiver_admin_id',Auth::guard('admin')->user()->id)->latest() ->limit(5)->get();
 
+            $ngoStatusFormNoFive = DB::table('form_no_five_daks')->where('status',1)->whereNull('sent_status')->where('receiver_admin_id',Auth::guard('admin')->user()->id)->latest() ->limit(5)->get();
 
             $all_data_for_new_list = DB::table('ngo_statuses')->whereIn('status',['Ongoing','Old Ngo Renew'])->latest() ->limit(5)->get();
 
 
             return view('admin.dashboard.dashboardOne',compact(
+                'senderNothiListformNoFive',
+                'ngoStatusFormNoFive',
                 'users',
                 'allTaskList',
                 'adminTaskList',

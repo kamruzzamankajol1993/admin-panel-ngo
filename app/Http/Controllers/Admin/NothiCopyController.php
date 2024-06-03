@@ -121,7 +121,7 @@ class NothiCopyController extends Controller
 
 
     try{
-        DB::beginTransaction();
+        
 
        NothiCopy::where('nothiId', $request->fnothiId)
        ->where('noteId', $request->fnoteId)
@@ -132,7 +132,7 @@ class NothiCopyController extends Controller
 
        return redirect()->back()->with('success','সফলভাবে  বাছাই সম্পন্ন হয়েছে');
     } catch (\Exception $e) {
-        DB::rollBack();
+       
         return redirect()->route('error_404')->with('error','some thing went wrong ');
     }
 

@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Mail;
 use PDF;
 use Response;
+use App\Models\FormNoFiveDak;
 use App\Models\Branch;
 use App\Models\FdFiveDak;
 use App\Models\ForwardingLetterOnulipi;
@@ -140,10 +141,15 @@ class AppServiceProvider extends ServiceProvider
              ->where('dakType','fdFive')->distinct()
               ->count('receiver');
 
+              $totalReceiveNothiRi12FormFive = NothiDetail::where('receiver',Auth::guard('admin')->user()->id)->whereNull('sent_status')
+             ->whereNull('list_status')
+             ->where('dakType','formNoFive')->distinct()
+              ->count('receiver');
 
 
 
-        $totalReceiveNothi = $totalReceiveNothiRe + $totalReceiveNothiRi + $totalReceiveNothiRi1 + $totalReceiveNothiRi2+
+
+        $totalReceiveNothi = $totalReceiveNothiRi12FormFive + $totalReceiveNothiRe + $totalReceiveNothiRi + $totalReceiveNothiRi1 + $totalReceiveNothiRi2+
         $totalReceiveNothiRi3 + $totalReceiveNothiRi4 + $totalReceiveNothiRi5 + $totalReceiveNothiRi6 + $totalReceiveNothiRi7 +
         $totalReceiveNothiRi8 + $totalReceiveNothiRi9 + $totalReceiveNothiRi10 + $totalReceiveNothiRi11 + $totalReceiveNothiRi12;
 
@@ -177,6 +183,12 @@ class AppServiceProvider extends ServiceProvider
                     $dataFdFive = DB::table('fd_five_forms')->where('status','Ongoing')
                     ->orWhereNull('status')
                     ->latest()->count();
+
+                    $dataFormNoFive = DB::table('form_no_fives')->where('status','pending')
+                    ->orWhereNull('status')
+                    ->latest()->count();
+
+
 
                     $dataFdNine = DB::table('fd9_forms')->where('status','Ongoing')->latest()->count();
 
@@ -294,6 +306,13 @@ class AppServiceProvider extends ServiceProvider
                     $fdFiveId= $fdFiveMain->implode("id", " ");
                     $fdFiveIdArray= explode(" ", $fdFiveId);
 
+                    $formNoFiveMain= DB::table('form_no_fives')->where('status','pending')
+                    ->orWhereNull('status')
+                    ->select('id')
+                    ->latest()->get();
+                    $formNoFiveId= $formNoFiveMain->implode("id", " ");
+                    $formNoFiveIdArray= explode(" ", $formNoFiveId);
+
 
                     $constitutionsMain= DB::table('document_for_amendment_or_approval_of_constitutions')
                     ->where('status','Ongoing')
@@ -409,6 +428,14 @@ class AppServiceProvider extends ServiceProvider
                    ->groupBy('fd_five_status_id')->count();
 
 
+                   $ngoStatusFormNoFive1 = FormNoFiveDak::where('status',1)
+                   ->whereIn('form_no_five_status_id',$formNoFiveIdArray)
+                   ->where('nothi_jat_status',0)
+                   ->where('nothi_jat_status','!=',1)
+                   ->where('sender_admin_id',Auth::guard('admin')->user()->id)
+                   ->groupBy('form_no_five_status_id')->count();
+
+
                    $ngoStatusDuplicateCertificate1 = DB::table('duplicate_certificate_daks')
                    ->whereIn('duplicate_certificate_id',$certificatesIdArray)
                    ->where('status',1)->where('nothi_jat_status',0)
@@ -437,11 +464,11 @@ class AppServiceProvider extends ServiceProvider
 
                    //new code end //
 
-                    $mainCodeCountHeader1 =$ngoStatusFdFive1 + $ngoStatusExecutiveCommittee1+ $ngoStatusConstitution1+$ngoStatusDuplicateCertificate1+$ngoStatusReg1+$ngoStatusFDNineOneDak1+$ngoStatusFdThreeDak1+$ngoStatusFcTwoDak1+$ngoStatusFcOneDak1+$ngoStatusFdSevenDak1+$ngoStatusFdSixDak1+$ngoStatusFDNineDak1+$ngoStatusNameChange1+$ngoStatusRenew1;
+                    $mainCodeCountHeader1 =$ngoStatusFormNoFive1 + $ngoStatusFdFive1 + $ngoStatusExecutiveCommittee1+ $ngoStatusConstitution1+$ngoStatusDuplicateCertificate1+$ngoStatusReg1+$ngoStatusFDNineOneDak1+$ngoStatusFdThreeDak1+$ngoStatusFcTwoDak1+$ngoStatusFcOneDak1+$ngoStatusFdSevenDak1+$ngoStatusFdSixDak1+$ngoStatusFDNineDak1+$ngoStatusNameChange1+$ngoStatusRenew1;
 
 
                    $mainCodeCountHeader2 =  $all_data_for_name_changes_list + $all_data_for_renew_list + $all_data_for_new_list+ $dataFdNineOne +
-                   $dataFdNine + $dataFromFd6Form + $dataFromFd7Form+$dataFromFc1Form+$dataFdFive+
+                   $dataFdNine + $dataFromFd6Form + $dataFromFd7Form+$dataFromFc1Form+$dataFormNoFive+
                    $dataFromFc2Form+$dataFromFd3Form+$all_data_for_name_changes_list1e+$all_data_for_name_changes_list2e+$all_data_for_name_changes_list3e ;
                 //  dd($mainCodeCountHeader1);
                    $mainCodeCountHeader = $mainCodeCountHeader2 - $mainCodeCountHeader1;
@@ -451,7 +478,8 @@ class AppServiceProvider extends ServiceProvider
 
 
                     $ngoStatusRenew = NgoRenewDak::where('status',1)->
-                    where('nothi_jat_status',0)->whereNull('sent_status')
+                    where('nothi_jat_status',0)
+                    ->whereNull('sent_status')
                     ->whereNull('present_status')
                     ->where('receiver_admin_id',Auth::guard('admin')->user()->id)
                     ->latest() ->count();
@@ -512,11 +540,20 @@ class AppServiceProvider extends ServiceProvider
                     ->where('receiver_admin_id',Auth::guard('admin')->user()->id)
                     ->latest() ->count();
 
-                    $mainCodeCountHeader2 =$ngoStatusFdFive+$ngoStatusExecutiveCommittee+ $ngoStatusConstitution+$ngoStatusDuplicateCertificate+$ngoStatusReg+$ngoStatusFDNineOneDak+$ngoStatusFdThreeDak+$ngoStatusFcTwoDak+$ngoStatusFcOneDak+$ngoStatusFdSevenDak+$ngoStatusFdSixDak+$ngoStatusFDNineDak+$ngoStatusNameChange+$ngoStatusRenew;
+
+                    $ngoStatusFormFive = FormNoFiveDak::where('status',1)
+                    ->where('nothi_jat_status',0)->whereNull('sent_status')
+                    ->whereNull('present_status')
+                    ->where('receiver_admin_id',Auth::guard('admin')->user()->id)
+                    ->latest() ->count();
+
+
+
+                    $mainCodeCountHeader2 =$ngoStatusFormFive + $ngoStatusFdFive+$ngoStatusExecutiveCommittee+ $ngoStatusConstitution+$ngoStatusDuplicateCertificate+$ngoStatusReg+$ngoStatusFDNineOneDak+$ngoStatusFdThreeDak+$ngoStatusFcTwoDak+$ngoStatusFcOneDak+$ngoStatusFdSevenDak+$ngoStatusFdSixDak+$ngoStatusFDNineDak+$ngoStatusNameChange+$ngoStatusRenew;
 
 
                     $ngoStatusFdFive1 = FdFiveDak::where('status',1)->where('nothi_jat_status',0)->where('nothi_jat_status','!=',1)->where('sender_admin_id',Auth::guard('admin')->user()->id)->latest() ->count();
-
+                    $ngoStatusFormNoFive1 = FormNoFiveDak::where('status',1)->where('nothi_jat_status',0)->where('nothi_jat_status','!=',1)->where('sender_admin_id',Auth::guard('admin')->user()->id)->latest() ->count();
 
                     $ngoStatusDuplicateCertificate1 = DB::table('duplicate_certificate_daks')->where('status',1)->where('nothi_jat_status',0)->where('nothi_jat_status','!=',1)->where('sender_admin_id',Auth::guard('admin')->user()->id)->latest() ->count();
                    $ngoStatusConstitution1 = DB::table('constitution_daks')->where('status',1)->where('nothi_jat_status',0)->where('nothi_jat_status','!=',1)->where('sender_admin_id',Auth::guard('admin')->user()->id)->latest() ->count();
@@ -534,12 +571,12 @@ class AppServiceProvider extends ServiceProvider
                     $ngoStatusReg1 = NgoRegistrationDak::where('status',1)->where('nothi_jat_status',0)->where('nothi_jat_status','!=',1)->where('sender_admin_id',Auth::guard('admin')->user()->id)->latest() ->count();
 
 
-                    $mainCodeCountHeader1 =$ngoStatusFdFive1+$ngoStatusExecutiveCommittee1+ $ngoStatusConstitution1+$ngoStatusDuplicateCertificate1+$ngoStatusReg1+$ngoStatusFDNineOneDak1+$ngoStatusFdThreeDak1+$ngoStatusFcTwoDak1+$ngoStatusFcOneDak1+$ngoStatusFdSevenDak1+$ngoStatusFdSixDak1+$ngoStatusFDNineDak1+$ngoStatusNameChange1+$ngoStatusRenew1;
+                    $mainCodeCountHeader1 =$ngoStatusFormNoFive1 + $ngoStatusFdFive1+$ngoStatusExecutiveCommittee1+ $ngoStatusConstitution1+$ngoStatusDuplicateCertificate1+$ngoStatusReg1+$ngoStatusFDNineOneDak1+$ngoStatusFdThreeDak1+$ngoStatusFcTwoDak1+$ngoStatusFcOneDak1+$ngoStatusFdSevenDak1+$ngoStatusFdSixDak1+$ngoStatusFDNineDak1+$ngoStatusNameChange1+$ngoStatusRenew1;
 
 
                    //$mainCodeCountHeader2 =  $all_data_for_name_changes_list + $all_data_for_renew_list + $all_data_for_new_list+ $dataFdNineOne + $dataFdNine + $dataFromFd6Form + $dataFromFd7Form+$dataFromFc1Form+$dataFromFc2Form+$dataFromFd3Form ;
 
-                   $mainCodeCountHeader = $mainCodeCountHeader2 - $mainCodeCountHeader1;
+                   $mainCodeCountHeader = $mainCodeCountHeader2 ;
 
                 }
 

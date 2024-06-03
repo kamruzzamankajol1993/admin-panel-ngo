@@ -193,10 +193,21 @@ aria-labelledby="myModalLabel22">
                                                                             <div class="mt-4" style="text-align: right;">
                                                                                 @if($potroZariListValue == 1)
 
+                                                                                @if(!$nothiApproverList)
+                                                                                    
+                                                                                    @else
+<?php 
+                                                                                    
+                                                                                    $nothiApproverLista = DB::table('admins')->where('id',$nothiApproverList->adminId)
+                                                                               ->first();
+                                                                                    
+                                                                                    ?>
+
                                                                                 @if(!$nothiApproverLista)
 
                                                                                 @else
                                                                                 <img src="{{ asset('/') }}{{ $appSignature }}" style="height:30px;"/><br>
+                                                                                @endif
                                                                                 @endif
 
                                                                                 @else
@@ -284,6 +295,12 @@ aria-labelledby="myModalLabel22">
 
                                                                         @if(count($nothiCopyListUpdate) == 0)
 
+                                                                        <div class="row" class="mt-4" style="margin-top: 30px;">
+                                                                            <div class="col-md-6">
+
+                                                                            </div>
+                                                                          </div>  
+
                                                                         @else
 
                                                                         <div class="row" class="mt-4" style="margin-top: 30px;">
@@ -347,7 +364,7 @@ aria-labelledby="myModalLabel22">
                                                                         @foreach($nothiCopyListUpdate as $key=>$nothiPropokLists)
                                                                         @if(empty($nothiPropokLists->organization_name))
                                                                         @if(count($nothiCopyListUpdate) == ($key+1))
-                                                                        <span>{{ App\Http\Controllers\Admin\CommonController::englishToBangla($key+1) }} | {{ $nothiPropokLists->otherOfficerDesignation }}, এনজিও বিষয়ক ব্যুরো</span>।
+                                                                        <span>{{ App\Http\Controllers\Admin\CommonController::englishToBangla($key+1) }} | {{ $nothiPropokLists->otherOfficerDesignation }}, এনজিও বিষয়ক ব্যুরো। </span>
                                                                         @else
                                                                         <span>{{ App\Http\Controllers\Admin\CommonController::englishToBangla($key+1) }} | {{ $nothiPropokLists->otherOfficerDesignation }}, এনজিও বিষয়ক ব্যুরো</span>;<br>
 
@@ -374,10 +391,22 @@ aria-labelledby="myModalLabel22">
 
         @if($potroZariListValue == 1)
 
+        @if(!$nothiApproverList)
+                                                                                    
+                                                                                    @else
+<?php 
+                                                                                    
+                                                                                    $nothiApproverLista = DB::table('admins')->where('id',$nothiApproverList->adminId)
+                                                                               ->first();
+                                                                                    
+                                                                                    ?>
+
         @if(!$nothiApproverLista)
 
         @else
         <img src="{{ asset('/') }}{{ $appSignature }}" style="height:30px;"/><br>
+        @endif
+
         @endif
 
         @else
@@ -405,9 +434,9 @@ aria-labelledby="myModalLabel22">
 
 
 
+</div>
 
-
-
+</div>
 
 
 

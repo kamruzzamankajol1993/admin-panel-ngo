@@ -241,7 +241,8 @@ $childNoteNewList = DB::table('child_note_for_fc_twos')
 
 
 
-$checkParentFirst = DB::table('parent_note_for_fd_threes')->where('nothi_detail_id',$parentId)
+$checkParentFirst = DB::table('parent_note_for_fd_threes')
+->where('nothi_detail_id',$parentId)
 ->where('serial_number',$nothiId)
 ->where('id',$id)
 ->first();
@@ -261,7 +262,8 @@ $childNoteNewList = DB::table('child_note_for_fd_threes')
 
 
 
-$checkParentFirst = DB::table('parent_note_for_fd_fives')->where('nothi_detail_id',$parentId)
+$checkParentFirst = DB::table('parent_note_for_fd_fives')
+->where('nothi_detail_id',$parentId)
 ->where('serial_number',$nothiId)
 ->where('id',$id)
 ->first();
@@ -273,6 +275,21 @@ $childNoteNewList = DB::table('child_note_for_fd_fives')
            $childNoteNewListValue = DB::table('child_note_for_fd_fives')
            ->where('pnote_fd_five',$id)->orderBy('id','desc')->value('id');
 
+
+}elseif($status == 'formNoFive'){
+
+$checkParentFirst = DB::table('parent_note_for_form_no_five_daks')
+->where('nothi_detail_id',$parentId)
+->where('serial_number',$nothiId)
+->where('id',$id)
+->first();
+
+
+$childNoteNewList = DB::table('child_note_for_form_no_fives')
+                       ->where('pnote_form_no_five',$id)->get();
+
+                       $childNoteNewListValue = DB::table('child_note_for_form_no_fives')
+           ->where('pnote_form_no_five',$id)->orderBy('id','desc')->value('id');
 
 }elseif($status == 'duplicate'){
 
@@ -754,10 +771,21 @@ $branchName = DB::table('branches')
         <div class="mt-4" style="text-align: center;">
             @if($potroZariListValue == 1)
 
+            @if(!$nothiApproverList)
+
+                                                                                    @else
+<?php
+
+                                                                                    $nothiApproverLista = DB::table('admins')->where('id',$nothiApproverList->adminId)
+                                                                               ->first();
+
+                                                                                    ?>
+
             @if(!$nothiApproverLista)
 
             @else
             <img src="{{ asset('/') }}{{ $nothiApproverLista->admin_sign }}" style="height:30px;"/><br>
+            @endif
             @endif
 
             @else

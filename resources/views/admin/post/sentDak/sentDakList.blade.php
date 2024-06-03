@@ -72,6 +72,8 @@
 
                                  @include('admin.post.sentDak.sentFdFiveDakList')
 
+                                 @include('admin.post.sentDak.sentFormNoFiveDakList')
+
                                     </tbody>
                                 </table>
                             </div>

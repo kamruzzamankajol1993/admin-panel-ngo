@@ -50,6 +50,7 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\ComplainMonitorController;
 use App\Http\Controllers\Admin\LeaveManagementController;
 use App\Http\Controllers\Admin\ProjectSubjectController;
+use App\Http\Controllers\Admin\FormNoFiveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +93,16 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::resource('leaveManagement', LeaveManagementController::class);
 
+    Route::resource('formNoFive', FormNoFiveController::class);
+
+    Route::controller(FormNoFiveController::class)->group(function () {
+        Route::post('/statusUpdateForformNoFive', 'statusUpdateForformNoFive')->name('statusUpdateForformNoFive');
+        Route::get('formNoFiveRetaltedPdf/{title}/{id}', 'formNoFiveRetaltedPdf')->name('formNoFiveRetaltedPdf');
+    });
+
+
+
+
     Route::controller(LeaveManagementController::class)->group(function () {
 
         Route::get('/receivedApplicationEdit/{id}', 'receivedApplicationEdit')->name('receivedApplicationEdit');
@@ -129,6 +140,26 @@ Route::group(['prefix' => 'admin'], function () {
     });
 
     Route::controller(ReportController::class)->group(function () {
+
+        Route::get('/prokolpoReportDistrict', 'prokolpoReportDistrict')->name('prokolpoReportDistrict');
+        Route::get('/prokolpoReportSearch', 'prokolpoReportSearch')->name('prokolpoReportSearch');
+        Route::get('/prokolpoReport', 'prokolpoReport')->name('prokolpoReport');
+        Route::get('/prokolpoReportPrint', 'prokolpoReportPrint')->name('prokolpoReportPrint');
+        Route::get('/prokolpoReportPrintSearchNormal', 'prokolpoReportPrintSearchNormal')->name('prokolpoReportPrintSearchNormal');
+        Route::get('/prokolpoReportPrintSearch', 'prokolpoReportPrintSearch')->name('prokolpoReportPrintSearch');
+
+
+        //start Beneficiaries list
+
+        Route::get('/prokolpoBeneficiariesReportDistrict', 'prokolpoBeneficiariesReportDistrict')->name('prokolpoBeneficiariesReportDistrict');
+        Route::get('/prokolpoBeneficiariesReportSearch', 'prokolpoBeneficiariesReportSearch')->name('prokolpoBeneficiariesReportSearch');
+        Route::get('/prokolpoBeneficiariesReport', 'prokolpoBeneficiariesReport')->name('prokolpoBeneficiariesReport');
+        Route::get('/prokolpoBeneficiariesReportPrint', 'prokolpoBeneficiariesReportPrint')->name('prokolpoBeneficiariesReportPrint');
+        Route::get('/prokolpoBeneficiariesReportPrintSearchNormal', 'prokolpoBeneficiariesReportPrintSearchNormal')->name('prokolpoBeneficiariesReportPrintSearchNormal');
+        Route::get('/prokolpoBeneficiariesReportPrintSearch', 'prokolpoBeneficiariesReportPrintSearch')->name('prokolpoBeneficiariesReportPrintSearch');
+
+        //end Beneficiaries list
+
 
         Route::get('/monthlyReportOfNgoSearch', 'monthlyReportOfNgoSearch')->name('monthlyReportOfNgoSearch');
         Route::get('/yearlyReportOfNgoSearch', 'yearlyReportOfNgoSearch')->name('yearlyReportOfNgoSearch');

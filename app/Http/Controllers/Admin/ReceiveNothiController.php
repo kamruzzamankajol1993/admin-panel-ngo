@@ -77,6 +77,11 @@ class ReceiveNothiController extends Controller
         ->whereNull('list_status')
        ->where('dakType','fdFive')->latest()->get();
 
+       $senderNothiListformNoFive = NothiDetail::where('receiver',Auth::guard('admin')->user()->id)
+        ->whereNull('sent_status')
+        ->whereNull('list_status')
+       ->where('dakType','formNoFive')->latest()->get();
+
 
          $senderNothiListduplicate = NothiDetail::where('receiver',Auth::guard('admin')->user()->id)
          ->whereNull('sent_status')
@@ -97,6 +102,7 @@ class ReceiveNothiController extends Controller
 
 
             return view('admin.receiveNothi.index',compact('senderNothiListfdNine',
+            'senderNothiListformNoFive',
             'senderNothiListfdFive',
             'senderNothiListnameChange',
             'senderNothiListfdNineOne',
