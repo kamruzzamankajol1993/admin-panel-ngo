@@ -12,10 +12,10 @@ $get_user_id1 = DB::table('fd_one_forms')->where('id',$ngoId)->value('registrati
 </p> --}}
 
 
-@if($id == 'pending')
+@if($id == 'Ongoing')
 Dear <b>{{$get_user_id}}</b>,
 
-your <b>Project Proposal Request</b> has been {{ $id }}. We'll assess the situation, and consider the next steps. Your dedication remains valuable, and we'll overcome this setback together.
+your <b>Annual Report Request</b> has been {{ $id }}. We'll assess the situation, and consider the next steps. Your dedication remains valuable, and we'll overcome this setback together.
 
 
 
@@ -26,7 +26,7 @@ your <b>Project Proposal Request</b> has been {{ $id }}. We'll assess the situat
 
 @elseif($id == 'Accepted')
 <p>Dear <b>{{$get_user_id}}</b>,</p>
-<p>We are excited to announce that your <b>Project Proposal Request</b>, has been officially Accepted! 🎉 <b style="font-size: 18px;">Congratulations</b>
+<p>We are excited to announce that your <b>Annual Report Request</b>, has been officially Accepted! 🎉 <b style="font-size: 18px;">Congratulations</b>
     to each one of you for
     making this significant achievement possible.</p>
 <p>Your NGO Registration NO: <b>{{ $get_user_id1 }}</b></p>
@@ -48,9 +48,9 @@ Unfortunately,
 
 <b>
     @if($id = 'Correct')
-    your <b>Project Proposal Request</b> need some Correction.
+    your <b>Annual Report Request</b> need some Correction.
     @else
-    your <b>Project Proposal Request</b> has been {{ $id }}.
+    your <b>Annual Report Request</b> has been {{ $id }}.
 
     @endif
     </b>

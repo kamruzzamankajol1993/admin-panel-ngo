@@ -66,7 +66,7 @@
                              <!-- red background start --->
 
 @if(empty($allDataFromNVisaFd9Fd1->check_status) && ($allDataFromNVisaFd9Fd1->file_last_check_date < date('Y-m-d')))
-<tr style="background-color: red;color:white !important;">
+<tr style="">
 @else
 <tr>
 @endif

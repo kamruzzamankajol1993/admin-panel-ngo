@@ -51,6 +51,7 @@ use App\Http\Controllers\Admin\ComplainMonitorController;
 use App\Http\Controllers\Admin\LeaveManagementController;
 use App\Http\Controllers\Admin\ProjectSubjectController;
 use App\Http\Controllers\Admin\FormNoFiveController;
+use App\Http\Controllers\Admin\FormNoSevenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,6 +99,13 @@ Route::group(['prefix' => 'admin'], function () {
     Route::controller(FormNoFiveController::class)->group(function () {
         Route::post('/statusUpdateForformNoFive', 'statusUpdateForformNoFive')->name('statusUpdateForformNoFive');
         Route::get('formNoFiveRetaltedPdf/{title}/{id}', 'formNoFiveRetaltedPdf')->name('formNoFiveRetaltedPdf');
+    });
+
+    Route::resource('formNoSeven', FormNoSevenController::class);
+
+    Route::controller(FormNoSevenController::class)->group(function () {
+        Route::post('/statusUpdateForformNoSeven', 'statusUpdateForformNoSeven')->name('statusUpdateForformNoSeven');
+        Route::get('formNoSevenRetaltedPdf/{title}/{id}', 'formNoSevenRetaltedPdf')->name('formNoSevenRetaltedPdf');
     });
 
 

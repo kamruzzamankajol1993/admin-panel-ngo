@@ -43,7 +43,9 @@ class Fd5Controller extends Controller
         if(Auth::guard('admin')->user()->designation_list_id == 2 || Auth::guard('admin')->user()->designation_list_id == 1){
 
 
-        $all_data_for_new_list = DB::table('fd_five_forms')->latest()->get();
+        $all_data_for_new_list = DB::table('fd_five_forms')
+        ->where('status','!=','Review')
+        ->latest()->get();
 
         }else{
 

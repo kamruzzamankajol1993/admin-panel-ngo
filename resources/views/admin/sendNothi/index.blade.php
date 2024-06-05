@@ -1978,7 +1978,7 @@ style="padding:5px; background-color:#879dd9; border-radius: 10px;">নথি �
                                   <!-- end fd five form -->
 
                              @include('admin.sendNothi.formNoFiveNothi')
-
+                             @include('admin.sendNothi.formNoSevenNothi')
 
                         </tbody>
                     </table>

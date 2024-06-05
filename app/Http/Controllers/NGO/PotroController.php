@@ -9,6 +9,12 @@ use Image;
 use Auth;
 use Hash;
 use PDF;
+
+use App\Models\FormNoSevenDak;
+use App\Models\ParentNoteForFormNoSeven;
+use App\Models\FormNoSevenOfficeSarok;
+use App\Models\ChildNoteForFormNoSeven;
+
 use App\Models\ParentNoteForFormNoFiveDak;
 use App\Models\FormNoFiveDak;
 use App\Models\FormNoFiveOfficeSarok;
@@ -185,6 +191,17 @@ class PotroController extends Controller
 
             $officeDetail = FormNoFiveOfficeSarok::where('pnote_form_no_five',$id)->get();
             $checkParent = ParentNoteForFormNoFiveDak::where('nothi_detail_id',$parentId)
+                           ->where('serial_number',$nothiId)->get();
+        }elseif($status == 'formNoSeven'){
+
+            $getIdSarok = FormNoSevenOfficeSarok::where('pnote_form_no_seven',$id)->value('id');
+
+            $potrangshoDraftNew =  DB::table('potrangsho_drafts')->where('sarokId',$getIdSarok)
+                                   ->where('status',$status)->orderBy('id','desc')
+                                   ->first();
+
+            $officeDetail = FormNoSevenOfficeSarok::where('pnote_form_no_seven',$id)->get();
+            $checkParent = ParentNoteForFormNoSeven::where('nothi_detail_id',$parentId)
                            ->where('serial_number',$nothiId)->get();
         }
 
@@ -428,6 +445,29 @@ class PotroController extends Controller
 
 
             $checkParent = ParentNoteForFormNoFiveDak::where('nothi_detail_id',$parentId)
+            ->where('serial_number',$nothiId)
+            ->get();
+
+
+        }elseif($status == 'formNoSeven'){
+
+
+            $getIdSarok = FormNoSevenOfficeSarok::where('pnote_form_no_seven',$id)
+            ->value('id');
+
+
+            $potrangshoDraftNew =  DB::table('potrangsho_drafts')
+            ->where('sarokId',$getIdSarok)
+            ->where('status',$status)
+            ->orderBy('id','desc')
+            ->first();
+
+            $officeDetail = FormNoSevenOfficeSarok::where('pnote_form_no_seven',$id)->get();
+
+
+
+
+            $checkParent = ParentNoteForFormNoSeven::where('nothi_detail_id',$parentId)
             ->where('serial_number',$nothiId)
             ->get();
 

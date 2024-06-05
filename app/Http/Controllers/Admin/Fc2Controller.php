@@ -36,6 +36,7 @@ class Fc2Controller extends Controller
           $dataFromFc2Form = DB::table('fc2_forms')
           ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fc2_forms.fd_one_form_id')
           ->select('fd_one_forms.*','fc2_forms.*','fc2_forms.id as mainId')
+          ->where('fc2_forms.status','!=','Review')
          ->orderBy('fc2_forms.id','desc')
          ->get();
         }else{

@@ -435,6 +435,8 @@
 
                                   @include('admin.post.formNoFiveDakFirstStep')
 
+                                  @include('admin.post.formNoSevenDakFirstStep')
+
                                   @include('admin.post.duplicateCertificateDakFirstStep')
 
                                   @include('admin.post.contitutionDakFirstStep')
@@ -1620,6 +1622,7 @@ $allNoteListNew = DB::table('parent_not_for_executive_committees')->where('nothi
                     <!-- executive committee end-->
 
                     @include('admin.receiveNothi.formNoFiveNothi')
+                    @include('admin.receiveNothi.formNoSevenNothi')
                     </tbody>
                 </table>
 

@@ -34,6 +34,7 @@ class FD7Controller extends Controller
           $dataFromFd7Form = DB::table('fd7_forms')
           ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd7_forms.fd_one_form_id')
           ->select('fd_one_forms.*','fd7_forms.*','fd7_forms.id as mainId')
+          ->where('fd7_forms.status','!=','Review')
          ->orderBy('fd7_forms.id','desc')
          ->get();
         }else{

@@ -79,7 +79,7 @@ $ngoOldNew = DB::table('ngo_type_and_languages')
                               <!-- red background start --->
 
 @if(empty($all_data_for_new_list_all->check_status) && ($all_data_for_new_list_all->file_last_check_date < date('Y-m-d')))
-<tr style="background-color: red;color:white !important;">
+<tr style="">
 @else
 <tr>
 @endif

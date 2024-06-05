@@ -44,7 +44,7 @@ $decesionName = DB::table('dak_details')
 <!-- red background start --->
 
 @if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
-<tr style="background-color: red;color:white !important;">
+<tr style="">
 @else
 <tr>
 @endif

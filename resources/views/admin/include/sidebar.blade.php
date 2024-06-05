@@ -384,7 +384,16 @@
 <li class="dropdown">
     <a class="nav-link menu-title link-nav {{ Route::is('formNoFive.index') || Route::is('formNoFive.show') ? 'active' : '' }}" href="{{ route('formNoFive.index') }}">
         <i data-feather="airplay"></i>
-        <span>ফরম নং-৫ (বার্ষিক প্রতিবেদন)</span>
+        <span>ফরম নং - ৫ (বার্ষিক প্রতিবেদন)</span>
+    </a>
+</li>
+@endif
+
+@if ($usr->can('formNoSevenAdd') || $usr->can('formNoSevenView') || $usr->can('formNoSevenDelete') || $usr->can('formNoSevenUpdate'))
+<li class="dropdown">
+    <a class="nav-link menu-title link-nav {{ Route::is('formNoSeven.index') || Route::is('formNoSeven.show') ? 'active' : '' }}" href="{{ route('formNoSeven.index') }}">
+        <i data-feather="airplay"></i>
+        <span>ফরম নং - ৭ (প্রকল্পের প্রত্যয়ন পত্র )</span>
     </a>
 </li>
 @endif

@@ -180,6 +180,11 @@ $allNoteListNew = DB::table('parent_note_for_fd_threes')
 $allNoteListNew = DB::table('parent_note_for_form_no_five_daks')
 ->where('nothi_detail_id',$dakId)->get();
 
+}elseif($status == 'formNoSeven'){
+
+$allNoteListNew = DB::table('parent_note_for_form_no_sevens')
+->where('nothi_detail_id',$dakId)->get();
+
 }
 
 

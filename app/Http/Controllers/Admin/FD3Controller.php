@@ -36,6 +36,7 @@ class FD3Controller extends Controller
           $dataFromFd3Form = DB::table('fd3_forms')
           ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd3_forms.fd_one_form_id')
           ->select('fd_one_forms.*','fd3_forms.*','fd3_forms.id as mainId')
+          ->where('fd3_forms.status','!=','Review')
          ->orderBy('fd3_forms.id','desc')
          ->get();
         }else{

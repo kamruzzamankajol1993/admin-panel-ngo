@@ -9,6 +9,7 @@ use Auth;
 use Hash;
 use DB;
 use App\Models\ParentNoteForFormNoFiveDak;
+use App\Models\ParentNoteForFormNoSeven;
 use App\Models\ParentNoteForFcOne;
 use App\Models\ParentNoteForFcTwo;
 use App\Models\ParentNoteForFdNine;
@@ -188,6 +189,13 @@ return 1;
         }elseif($status == 'formNoFive'){
 
             $checkParent = ParentNoteForFormNoFiveDak::where('nothi_detail_id',$dakId)
+            ->where('serial_number',$nothiId)
+            ->get();
+
+
+        }elseif($status == 'formNoSeven'){
+
+            $checkParent = ParentNoteForFormNoSeven::where('nothi_detail_id',$dakId)
             ->where('serial_number',$nothiId)
             ->get();
 
@@ -377,6 +385,13 @@ return 1;
         }elseif($status == 'formNoFive'){
 
             $checkParent = ParentNoteForFormNoFiveDak::where('nothi_detail_id',$dakId)
+            ->where('serial_number',$nothiId)
+            ->get();
+
+
+        }elseif($status == 'formNoSeven'){
+
+            $checkParent = ParentNoteForFormNoSevenDak::where('nothi_detail_id',$dakId)
             ->where('serial_number',$nothiId)
             ->get();
 
@@ -615,6 +630,21 @@ return 1;
         $saveNewData->save();
 
         $totalCount = ParentNoteForFormNoFiveDak::where('nothi_detail_id',$request->dakId)
+        ->where('serial_number',$request->nothiId)->count();
+            $pId = $saveNewData->id;
+
+
+    }elseif($request->status == 'formNoSeven'){
+
+        $saveNewData = new ParentNoteForFormNoSeven();
+        $saveNewData->nothi_detail_id = $request->dakId;
+        $saveNewData->serial_number = $request->nothiId;
+        $saveNewData->subject = $request->subject;
+        $saveNewData->name ='নোট';
+        $saveNewData->created_at =$created_at;
+        $saveNewData->save();
+
+        $totalCount = ParentNoteForFormNoSeven::where('nothi_detail_id',$request->dakId)
         ->where('serial_number',$request->nothiId)->count();
             $pId = $saveNewData->id;
 
@@ -874,6 +904,21 @@ return 1;
         $saveNewData->save();
 
         $totalCount = ParentNoteForFormNoFiveDak::where('nothi_detail_id',$request->dakId)
+        ->where('serial_number',$request->nothiId)->count();
+            $pId = $saveNewData->id;
+
+
+    }elseif($request->status == 'formNoSeven'){
+
+        $saveNewData = new ParentNoteForFormNoSeven();
+        $saveNewData->nothi_detail_id = $request->dakId;
+        $saveNewData->serial_number = $request->nothiId;
+        $saveNewData->subject = $request->subject;
+        $saveNewData->name ='নোট';
+        $saveNewData->created_at =$created_at;
+        $saveNewData->save();
+
+        $totalCount = ParentNoteForFormNoSeven::where('nothi_detail_id',$request->dakId)
         ->where('serial_number',$request->nothiId)->count();
             $pId = $saveNewData->id;
 

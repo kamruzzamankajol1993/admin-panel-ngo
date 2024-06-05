@@ -104,7 +104,7 @@ die();
        ->join('fd_one_forms', 'fd9_one_forms.fd_one_form_id', '=', 'fd_one_forms.id')
 
        ->select('fd_one_forms.*','fd9_one_forms.*','fd9_one_forms.id as mainId','fd9_one_forms.chief_name as chiefName','fd9_one_forms.chief_desi as chiefDesi','fd9_one_forms.digital_signature as chiefSign','fd9_one_forms.digital_seal as chiefSeal')
-
+       ->where('fd9_one_forms.status','!=','Review')
        ->orderBy('fd9_one_forms.id','desc')
        ->get();
 

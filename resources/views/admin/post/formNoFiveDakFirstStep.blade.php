@@ -36,19 +36,19 @@ $orginalReceverId= DB::table('form_no_five_daks')
     ->where('form_no_five_status_id',$allStatusData->id)->value('dak_detail_id');
 
                  $decesionName = DB::table('dak_details')
-    ->where('id',$decesionNameId)->where('status','fdFive')->value('decision_list');
+    ->where('id',$decesionNameId)->where('status','formNoFive')->value('decision_list');
 
                     ?>
 
                      @if(!empty($checkDataAvailableOrNot))
 
-                     @include('admin.post.receivedFdFiveDak')
+                     @include('admin.post.receivedFormNoFiveDak')
 
                                     @else
                 <!-- red background start --->
 
 @if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
-<tr style="background-color: red;color:white !important;">
+<tr style="">
 @else
 <tr>
 @endif

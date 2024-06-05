@@ -36,12 +36,12 @@ $adminNamePrapok = DB::table('admins')
 
 
 $decesionName = DB::table('dak_details')
-->where('id',$allStatusData->dak_detail_id)->where('status','fdFive')->value('decision_list');
+->where('id',$allStatusData->dak_detail_id)->where('status','formNoFive')->value('decision_list');
 ?>
 <!-- red background start --->
 
 @if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))
-<tr style="background-color: red;color:white !important;">
+<tr style="">
 @else
 <tr>
 @endif

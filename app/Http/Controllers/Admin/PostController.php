@@ -27,6 +27,10 @@ use App\Models\NgoFdSevenDak;
 use App\Models\FcOneDak;
 use App\Models\FdFiveDak;
 use App\Models\FormNoFiveDak;
+use App\Models\FormNoSevenDak;
+use App\Models\ParentNoteForFormNoSeven;
+use App\Models\FormNoSevenOfficeSarok;
+use App\Models\ChildNoteForFormNoSeven;
 use App\Models\FcTwoDak;
 use App\Models\NgoRegistrationDak;
 use App\Models\DesignationList;
@@ -48,9 +52,9 @@ class PostController extends Controller
 
         if(Auth::guard('admin')->user()->designation_list_id == 2 || Auth::guard('admin')->user()->designation_list_id == 1){
 
-            $all_data_for_new_list = DB::table('ngo_statuses')->latest()->get();
-            $all_data_for_renew_list = DB::table('ngo_renews')->latest()->get();
-            $all_data_for_name_changes_list = DB::table('ngo_name_changes')->latest()->get();
+            $all_data_for_new_list = DB::table('ngo_statuses')->where('status','!=','Review')->latest()->get();
+            $all_data_for_renew_list = DB::table('ngo_renews')->where('status','!=','Review')->latest()->get();
+            $all_data_for_name_changes_list = DB::table('ngo_name_changes')->where('status','!=','Review')->latest()->get();
 
 
 
@@ -58,14 +62,17 @@ class PostController extends Controller
             ->join('n_visas', 'n_visas.fd9_one_form_id', '=', 'fd9_one_forms.id')
             ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd9_one_forms.fd_one_form_id')
             ->select('fd_one_forms.*','fd9_one_forms.*','n_visas.*','n_visas.id as nVisaId')
+            ->where('fd9_one_forms.status','!=','Review')
+
             ->orderBY('fd9_one_forms.id','desc')
             ->get();
 
-            $dataFdNine = DB::table('fd9_forms')->latest()->get();
+            $dataFdNine = DB::table('fd9_forms')->where('status','!=','Review')->latest()->get();
 
             $dataFromFd6Form = DB::table('fd6_forms')
             ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd6_forms.fd_one_form_id')
             ->select('fd_one_forms.*','fd6_forms.*','fd6_forms.id as mainId')
+            ->where('fd6_forms.status','!=','Review')
             ->orderBy('fd6_forms.id','desc')
             ->get();
 
@@ -73,6 +80,7 @@ class PostController extends Controller
            $dataFromFd7Form = DB::table('fd7_forms')
            ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd7_forms.fd_one_form_id')
            ->select('fd_one_forms.*','fd7_forms.*','fd7_forms.id as mainId')
+           ->where('fd7_forms.status','!=','Review')
            ->orderBy('fd7_forms.id','desc')
            ->get();
 
@@ -80,6 +88,7 @@ class PostController extends Controller
            $dataFromFc1Form = DB::table('fc1_forms')
            ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fc1_forms.fd_one_form_id')
            ->select('fd_one_forms.*','fc1_forms.*','fc1_forms.id as mainId')
+           ->where('fc1_forms.status','!=','Review')
            ->orderBy('fc1_forms.id','desc')
            ->get();
 
@@ -87,6 +96,7 @@ class PostController extends Controller
            $dataFromFc2Form = DB::table('fc2_forms')
            ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fc2_forms.fd_one_form_id')
            ->select('fd_one_forms.*','fc2_forms.*','fc2_forms.id as mainId')
+           ->where('fc2_forms.status','!=','Review')
            ->orderBy('fc2_forms.id','desc')
            ->get();
 
@@ -94,6 +104,7 @@ class PostController extends Controller
            $dataFromFd3Form = DB::table('fd3_forms')
            ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd3_forms.fd_one_form_id')
            ->select('fd_one_forms.*','fd3_forms.*','fd3_forms.id as mainId')
+           ->where('fd3_forms.status','!=','Review')
            ->orderBy('fd3_forms.id','desc')
            ->get();
 
@@ -105,10 +116,12 @@ class PostController extends Controller
 
 
 
-           $ngoStatusFdFive = DB::table('fd_five_forms')->latest()->get();
+           $ngoStatusFdFive = DB::table('fd_five_forms')->where('status','!=','Review')->latest()->get();
           // dd($dataFromFd6Form);
+          $ngoStatusFormNoFive = DB::table('form_no_fives')->where('status','!=','Review')->latest()->get();
+          $ngoStatusFormNoSeven = DB::table('form_no_sevens')->where('status','!=','Review')->latest()->get();
 
-            return view('admin.post.allDak.dakListForDg',compact('ngoStatusFdFive','ngoStatusExecutiveCommittee','ngoStatusDuplicateCertificate','ngoStatusConstitution','dataFromFd3Form','dataFromFc2Form','dataFromFc1Form','dataFromFd7Form','dataFromFd6Form','dataFdNineOne','dataFdNine','all_data_for_name_changes_list','all_data_for_renew_list','all_data_for_new_list'));
+            return view('admin.post.allDak.dakListForDg',compact('ngoStatusFormNoSeven','ngoStatusFormNoFive','ngoStatusFdFive','ngoStatusExecutiveCommittee','ngoStatusDuplicateCertificate','ngoStatusConstitution','dataFromFd3Form','dataFromFc2Form','dataFromFc1Form','dataFromFd7Form','dataFromFd6Form','dataFdNineOne','dataFdNine','all_data_for_name_changes_list','all_data_for_renew_list','all_data_for_new_list'));
         }else{
 
         $nothiList = NothiList::latest()->get();
@@ -216,6 +229,8 @@ class PostController extends Controller
     }
     public function index(){
 
+        //dd(1);
+
 try{
 
         \LogActivity::addToLog('view dak list.');
@@ -235,19 +250,20 @@ try{
             ->join('n_visas', 'n_visas.fd9_one_form_id', '=', 'fd9_one_forms.id')
             ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd9_one_forms.fd_one_form_id')
             ->select('fd_one_forms.*','fd9_one_forms.*','n_visas.*','n_visas.id as nVisaId')
-            ->whereNull('fd9_one_forms.status')
+            ->where('fd9_one_forms.status','Ongoing')
             ->orderBY('fd9_one_forms.id','desc')
             ->get();
 
 
             //dd($dataFdNineOne);
-            $dataFormNoFive = DB::table('form_no_fives')->where('status','pending')->latest()->get();
+            $dataFormNoFive = DB::table('form_no_fives')->where('status','Ongoing')->latest()->get();
 
             $dataFdNine = DB::table('fd9_forms')->where('status','Ongoing')->latest()->get();
             $dataFdFiveForm = DB::table('fd_five_forms')->where('status','Ongoing')->latest()->get();
             $dataFromFd6Form = DB::table('fd6_forms')
             ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd6_forms.fd_one_form_id')
             ->select('fd_one_forms.*','fd6_forms.*','fd6_forms.id as mainId')
+            ->where('fd6_forms.status','Ongoing')
            ->orderBy('fd6_forms.id','desc')
            ->get();
 
@@ -255,6 +271,7 @@ try{
            $dataFromFd7Form = DB::table('fd7_forms')
            ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd7_forms.fd_one_form_id')
            ->select('fd_one_forms.*','fd7_forms.*','fd7_forms.id as mainId')
+           ->where('fd7_forms.status','Ongoing')
            ->orderBy('fd7_forms.id','desc')
            ->get();
 
@@ -262,6 +279,7 @@ try{
            $dataFromFc1Form = DB::table('fc1_forms')
            ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fc1_forms.fd_one_form_id')
            ->select('fd_one_forms.*','fc1_forms.*','fc1_forms.id as mainId')
+           ->where('fc1_forms.status','Ongoing')
            ->orderBy('fc1_forms.id','desc')
            ->get();
 
@@ -269,6 +287,7 @@ try{
            $dataFromFc2Form = DB::table('fc2_forms')
            ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fc2_forms.fd_one_form_id')
            ->select('fd_one_forms.*','fc2_forms.*','fc2_forms.id as mainId')
+           ->where('fc2_forms.status','Ongoing')
            ->orderBy('fc2_forms.id','desc')
            ->get();
 
@@ -276,6 +295,7 @@ try{
            $dataFromFd3Form = DB::table('fd3_forms')
            ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd3_forms.fd_one_form_id')
            ->select('fd_one_forms.*','fd3_forms.*','fd3_forms.id as mainId')
+           ->where('fd3_forms.status','Ongoing')
            ->orderBy('fd3_forms.id','desc')
            ->get();
 
@@ -288,9 +308,11 @@ try{
           // dd($dataFromFd6Form);
           $ngoStatusFdFive = DB::table('fd_five_forms')->where('status','Ongoing')->latest()->get();
 
-          $ngoStatusFormNoFive = DB::table('form_no_fives')->where('status','pending')->latest()->get();
+          $ngoStatusFormNoFive = DB::table('form_no_fives')->where('status','Ongoing')->latest()->get();
 
-            return view('admin.post.index',compact( 'ngoStatusConstitution','ngoStatusFormNoFive',
+          $ngoStatusFormNoSeven = DB::table('form_no_sevens')->where('status','Ongoing')->latest()->get();
+
+            return view('admin.post.index',compact('ngoStatusFormNoSeven','ngoStatusConstitution','ngoStatusFormNoFive',
             'ngoStatusDuplicateCertificate','dataFdFiveForm','ngoStatusFdFive','dataFormNoFive',
             'ngoStatusExecutiveCommittee','dataFromFd3Form','dataFromFc2Form','dataFromFc1Form','dataFromFd7Form','dataFromFd6Form','dataFdNineOne','dataFdNine','all_data_for_name_changes_list','all_data_for_renew_list','all_data_for_new_list'));
         }else{
@@ -329,6 +351,12 @@ try{
             ->latest()->get();
 
 
+            $ngoStatusFormNoSevenDak = FormNoSevenDak::where('status',1)
+            ->whereNull('sent_status')
+            ->where('receiver_admin_id',Auth::guard('admin')->user()->id)
+            ->latest()->get();
+
+
             $ngoStatusFDNineOneDak = NgoFDNineOneDak::where('status',1)->whereNull('sent_status')->where('receiver_admin_id',Auth::guard('admin')->user()->id)->latest()->get();
 
 
@@ -351,7 +379,7 @@ try{
 
         $all_data_for_new_list = DB::table('ngo_statuses')->whereIn('status',['Ongoing','Old Ngo Renew'])->latest()->get();
 
-        return view('admin.post.otherMemberIndex',compact( 'ngoStatusConstitution','ngoStatusFormNoFive',
+        return view('admin.post.otherMemberIndex',compact( 'ngoStatusFormNoSevenDak','ngoStatusConstitution','ngoStatusFormNoFive',
        'ngoStatusFormNoFiveDak','ngoStatusDuplicateCertificate','ngoStatusFdFiveDak','ngoStatusFdFive',
         'ngoStatusExecutiveCommittee','nothiList','ngoStatusFdThreeDak','ngoStatusFcTwoDak','ngoStatusFcOneDak','ngoStatusFdSevenDak','ngoStatusFdSixDak','ngoStatusFDNineOneDak','ngoStatusFDNineDak','ngoStatusNameChange','ngoStatusRenew','ngoStatusReg'));
 
@@ -422,6 +450,10 @@ try{
             ->where('sender_admin_id',Auth::guard('admin')->user()->id)
             ->get()->unique('form_no_five_status_id');
 
+            $ngoStatusFormNoSevenDak = FormNoSevenDak::where('status',1)
+            ->where('sender_admin_id',Auth::guard('admin')->user()->id)
+            ->get()->unique('form_no_seven_status_id');
+
 
             $ngoStatusFDNineOneDak = NgoFDNineOneDak::where('status',1)
             ->where('sender_admin_id',Auth::guard('admin')->user()->id)
@@ -457,7 +489,7 @@ try{
 
         $all_data_for_new_list = DB::table('ngo_statuses')->whereIn('status',['Ongoing','Old Ngo Renew'])->latest()->get();
 
-        return view('admin.post.sentDak.sentDakList',compact('ngoStatusFormNoFiveDak','ngoStatusFdFiveDak','ngoStatusDuplicateCertificate','ngoStatusConstitution','ngoStatusExecutiveCommittee','nothiList','ngoStatusFdThreeDak','ngoStatusFcTwoDak','ngoStatusFcOneDak','ngoStatusFdSevenDak','ngoStatusFdSixDak','ngoStatusFDNineOneDak','ngoStatusFDNineDak','ngoStatusNameChange','ngoStatusRenew','ngoStatusReg'));
+        return view('admin.post.sentDak.sentDakList',compact('ngoStatusFormNoSevenDak','ngoStatusFormNoFiveDak','ngoStatusFdFiveDak','ngoStatusDuplicateCertificate','ngoStatusConstitution','ngoStatusExecutiveCommittee','nothiList','ngoStatusFdThreeDak','ngoStatusFcTwoDak','ngoStatusFcOneDak','ngoStatusFdSevenDak','ngoStatusFdSixDak','ngoStatusFDNineOneDak','ngoStatusFDNineDak','ngoStatusNameChange','ngoStatusRenew','ngoStatusReg'));
 
     } catch (\Exception $e) {
         return redirect()->route('error_404')->with('error','some thing went wrong ');
@@ -1820,6 +1852,109 @@ try{
 
             ///new code
 
+        }elseif($request->mainstatus == 'formNoSeven'){
+
+            ////new code
+
+
+            if(count($receiverId) >0){
+
+                foreach($receiverId as $key => $allReceiverId){
+
+                    if (array_key_exists('karjo_onulipi'.$key, $inputAllData)){
+
+
+                        $karjoOnulipi = $inputAllData['karjo_onulipi'.$key][$key];
+                    }else{
+
+                        $karjoOnulipi = '';
+                    }
+
+
+                    if (array_key_exists('main_prapok'.$key, $inputAllData)){
+
+
+                        $mainPrapok = $inputAllData['main_prapok'.$key][$key];
+                    }else{
+
+                        $mainPrapok = '';
+                    }
+
+
+                    if (array_key_exists('info_onulipi'.$key, $inputAllData)){
+
+
+                        $infoOnulipi = $inputAllData['info_onulipi'.$key][$key];
+                    }else{
+
+                        $infoOnulipi = '';
+                    }
+
+
+                    if (array_key_exists('eye_onulipi'.$key, $inputAllData)){
+
+
+                        $eyeOnulipi = $inputAllData['eye_onulipi'.$key][$key];
+                    }else{
+
+                        $eyeOnulipi = '';
+                    }
+
+
+                    if(empty($karjoOnulipi) && empty($infoOnulipi) && empty($eyeOnulipi) ){
+
+                        //dd(22);
+
+                        if($mainPrapok == 1){
+
+                            //dd(1);
+
+                            $regDakData = FormNoSevenDak::find($inputAllData['receiverId'][$key]);
+                            $regDakData->original_recipient =$mainPrapok;
+                            $regDakData->copy_of_work =$karjoOnulipi;
+                            $regDakData->informational_purposes =$infoOnulipi;
+                            $regDakData->attraction_attention =$eyeOnulipi;
+                            $regDakData->dak_detail_id = $dakDetailId;
+                            $regDakData->status = 1;
+                            $regDakData->save();
+
+                        }else{
+
+                            //dd(2);
+
+                            return redirect()->back()->with('error','মূল-প্রাপক/কার্যার্থে অনুলিপি/জ্ঞাতার্থে অনুলিপি/দৃষ্টি আকর্ষণ নির্বাচনে ভুল ছিল   !');
+                        }
+
+                    }else{
+
+                       // dd(3);
+
+                        $regDakData = FormNoSevenDak::find($inputAllData['receiverId'][$key]);
+                        $regDakData->original_recipient =$mainPrapok;
+                        $regDakData->copy_of_work =$karjoOnulipi;
+                        $regDakData->informational_purposes =$infoOnulipi;
+                        $regDakData->attraction_attention =$eyeOnulipi;
+                        $regDakData->dak_detail_id = $dakDetailId;
+                        $regDakData->status = 1;
+                        $regDakData->save();
+
+                    }
+
+
+
+                    //dd($main_prapok);
+                }
+
+
+
+
+
+
+            }
+
+
+            ///new code
+
         }elseif($request->mainstatus == 'duplicate'){
 
             ////new code
@@ -2963,6 +3098,72 @@ if($number >0){
 
 }
 
+}elseif($request->mainStatusNew == 'formNoSeven'){
+
+    $deleteData = FormNoSevenDak::where('sender_admin_id',Auth::guard('admin')->user()->id)
+
+         ->where('form_no_seven_status_id',$request->main_id)
+         ->where('status',0)
+         ->delete();
+
+
+         //<--- 13 february code -->
+
+
+$previousReceiver = FormNoSevenDak::where('receiver_admin_id',Auth::guard('admin')->user()->id)
+->where('form_no_seven_status_id',$request->main_id)
+->value('id');
+
+if(empty($previousReceiver)){
+
+
+$sentStatus = 0;
+
+}else{
+$sentStatus = 1;
+
+}
+
+FormNoSevenDak::where('receiver_admin_id',Auth::guard('admin')->user()->id)
+->where('form_no_seven_status_id',$request->main_id)
+->update([
+'sent_status' => 1,
+'check_status'=>1
+]);
+
+
+// new code for red mark start
+if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
+DB::table('form_no_sevens')->where('id',$request->main_id)
+->update([
+'check_status'=>1
+]);
+}
+
+// new code for red mark end
+
+
+//13 february code end
+
+
+if($number >0){
+  for($i=0;$i<$number;$i++){
+
+   $regDakData = new FormNoSevenDak();
+   $regDakData->sender_admin_id =Auth::guard('admin')->user()->id;
+   $regDakData->receiver_admin_id = $request->admin_id[$i];
+   $regDakData->form_no_seven_status_id =$request->main_id;
+   $regDakData->status = 0;
+   $regDakData->nothi_jat_status = 0;
+   $regDakData->amPmValue = $amPmValueFinal;
+   $regDakData->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
+   $regDakData->save();
+
+  }
+
+
+}
+
 }elseif($request->mainStatusNew == 'duplicate'){
 
 
@@ -3221,6 +3422,13 @@ if($mainDataStatus == 'registration'){
     ->where('form_no_five_status_id',$mainIdNewStatus)->get();
 
 
+}elseif($mainDataStatus == 'formNoSeven'){
+
+    $allRegistrationDak = FormNoSevenDak::where('status',0)
+    ->where('sender_admin_id',Auth::guard('admin')->user()->id)
+    ->where('form_no_seven_status_id',$mainIdNewStatus)->get();
+
+
 }elseif($mainDataStatus == 'duplicate'){
 
     $allRegistrationDak = DuplicateCertificateDak::where('status',0)
@@ -3346,6 +3554,13 @@ if($mainDataStatus == 'registration'){
             $allRegistrationDak = FormNoFiveDak::where('status',0)
             ->where('sender_admin_id',Auth::guard('admin')->user()->id)
             ->where('form_no_five_status_id',$id)->get();
+
+
+        }elseif($mainstatus == 'formNoSeven'){
+
+            $allRegistrationDak = FormNoSevenDak::where('status',0)
+            ->where('sender_admin_id',Auth::guard('admin')->user()->id)
+            ->where('form_no_seven_status_id',$id)->get();
 
 
         }elseif($mainstatus == 'duplicate'){
@@ -3621,6 +3836,11 @@ $data = FdFiveDak::count();
             $allRegistrationDak = FormNoFiveDak::where('id',$id)->delete();
 
 $data = FormNoFiveDak::count();
+        }elseif($status == 'formNoSeven'){
+
+            $allRegistrationDak = FormNoSevenDak::where('id',$id)->delete();
+
+$data = FormNoSevenDak::count();
         }elseif($status == 'duplicate'){
 
             $allRegistrationDak = DuplicateCertificateDak::where('id',$id)->delete();
@@ -3712,6 +3932,11 @@ $data = ExecutiveCommitteeDak::count();
         }elseif($status == 'formNoFive'){
 
             $allRegistrationDak = FormNoFiveDak::where('id',$id)->delete();
+
+
+        }elseif($status == 'formNoSeven'){
+
+            $allRegistrationDak = FormNoSevenDak::where('id',$id)->delete();
 
 
         }elseif($status == 'duplicate'){

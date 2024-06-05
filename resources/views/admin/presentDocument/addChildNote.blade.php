@@ -405,6 +405,14 @@
             aria-selected="false"><i
     class="icofont icofont-file-document"></i>বার্ষিক প্রতিবেদন </a></li>
 
+    @elseif($status == 'formNoSeven')
+
+        <li class="nav-item"><a class="nav-link" id="profile-icon-tab_form_eight"
+            data-bs-toggle="tab" href="#profile-icon_form_eight" role="tab"
+            aria-controls="profile-icon"
+            aria-selected="false"><i
+    class="icofont icofont-file-document"></i>প্রকল্পের প্রত্যয়ন পত্র</a></li>
+
                  @endif
 
                                                 <!-- end new code --->
@@ -1275,6 +1283,15 @@ $nothiApproverListOnu = DB::table('nothi_approvers')->where('nothiId',$nothiId)
        aria-labelledby="profile-icon-tab_form_eight">
 
        @include('admin.form_no_five.form_no_five')
+       </div>
+
+       @elseif($status == 'formNoSeven')
+
+
+       <div class="tab-pane fade" id="profile-icon_form_eight" role="tabpanel"
+       aria-labelledby="profile-icon-tab_form_eight">
+
+       @include('admin.form_no_seven.form_no_seven')
        </div>
 
        @endif

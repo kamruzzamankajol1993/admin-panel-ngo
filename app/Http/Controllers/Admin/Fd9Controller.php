@@ -188,6 +188,7 @@ $pdfFilePath =$file_Name_Custome.'.pdf';
      $dataFromNVisaFd9Fd1 = DB::table('fd9_forms')
      ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd9_forms.fd_one_form_id')
      ->select('fd_one_forms.*','fd9_forms.*')
+     ->where('fd9_forms.status','!=','Review')
     ->orderBy('fd9_forms.id','desc')
     ->get();
 

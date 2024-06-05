@@ -19,6 +19,7 @@ use App\Models\NgoRenewDak;
 use App\Models\NgoFdSixDak;
 use App\Models\NgoFdSevenDak;
 use App\Models\NgoRegistrationDak;
+use App\Models\FormNoFiveDak;
 use Carbon\Carbon;
 use Response;
 use App\Models\Fd9ForwardingLetterEdit;
@@ -41,6 +42,7 @@ class FormNoFiveController extends Controller
      $dataFromNoFiveForm = DB::table('form_no_fives')
      ->join('fd_one_forms', 'fd_one_forms.id', '=', 'form_no_fives.fd_one_form_id')
      ->select('fd_one_forms.*','form_no_fives.*','form_no_fives.id as mainId')
+     ->where('form_no_fives.status','!=','Review')
     ->orderBy('form_no_fives.id','desc')
     ->get();
 

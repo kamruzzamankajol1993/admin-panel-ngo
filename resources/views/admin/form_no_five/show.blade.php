@@ -41,7 +41,7 @@
 
 
 
-                            @if($dataFromNoFiveForm->status == 'pending')
+                            @if($dataFromNoFiveForm->status == 'Ongoing')
                             <button onclick="location.href = '{{ route('showDataAll',['status'=>'formNoFive','id'=>$dataFromNoFiveForm->mainId]) }}';" type="button" class="btn btn-primary add-btn">ডাক দেখুন</button>
 
                             @else

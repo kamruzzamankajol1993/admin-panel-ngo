@@ -65,7 +65,7 @@
                             <!-- red background start --->
 
 @if(empty($dataFromNoFiveFormAll->check_status) && ($dataFromNoFiveFormAll->file_last_check_date < date('Y-m-d')))
-<tr style="background-color: red;color:white !important;">
+<tr style="">
 @else
 <tr>
 @endif
@@ -80,7 +80,7 @@
                                 <td><h6> {{ $dataFromNoFiveFormAll->organization_name_ban }} </h6><span>Address: {{ $dataFromNoFiveFormAll->organization_address }}</span></td>
                                 <td>{{ $dataFromNoFiveFormAll->prokolpo_name }}</td>
                                 <td>{{ $dataFromNoFiveFormAll->prokolpo_duration }}</td>
-                                <td>@if($dataFromNoFiveFormAll->status == 'pending')
+                                <td>@if($dataFromNoFiveFormAll->status == 'Ongoing')
                                     <button class="btn btn-secondary btn-xs" type="button">
                                     চলমান
                                     </button>

@@ -255,6 +255,20 @@ $childNoteNewList = DB::table('child_note_for_form_no_fives')
 $officeDetail = DB::table('form_no_five_office_saroks')
 ->where('pnote_form_no_five',$checkParentFirst->id)->get();
 
+}elseif($status == 'formNoSeven'){
+
+$checkParentFirst = DB::table('parent_note_for_form_no_sevens')
+->where('nothi_detail_id',$dakId)
+->where('serial_number',$nothiId)
+->first();
+
+
+$childNoteNewList = DB::table('child_note_for_form_no_sevens')
+                       ->where('pnote_form_no_seven',$checkParentFirst->id)->get();
+
+$officeDetail = DB::table('form_no_seven_office_saroks')
+->where('pnote_form_no_seven',$checkParentFirst->id)->get();
+
 }elseif($status == 'constitution'){
 
 $checkParentFirst = DB::table('parent_note_for_constitutions')->where('nothi_detail_id',$dakId)

@@ -41,6 +41,7 @@ class FD6Controller extends Controller
      $dataFromFd6Form = DB::table('fd6_forms')
      ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd6_forms.fd_one_form_id')
      ->select('fd_one_forms.*','fd6_forms.*','fd6_forms.id as mainId')
+     ->where('fd6_forms.status','!=','Review')
     ->orderBy('fd6_forms.id','desc')
     ->get();
 
