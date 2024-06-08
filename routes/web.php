@@ -52,6 +52,11 @@ use App\Http\Controllers\Admin\LeaveManagementController;
 use App\Http\Controllers\Admin\ProjectSubjectController;
 use App\Http\Controllers\Admin\FormNoFiveController;
 use App\Http\Controllers\Admin\FormNoSevenController;
+use App\Http\Controllers\Admin\NgoProfileController;
+use App\Http\Controllers\Admin\FormNoFourController;
+use App\Http\Controllers\Admin\Fd4OneController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -92,7 +97,25 @@ Route::get('/printPotrangsoPdfForEmail/{status}/{parentId}/{nothiId}/{id}', 'pri
 
 Route::group(['prefix' => 'admin'], function () {
 
+    Route::resource('ngoProfile', NgoProfileController::class);
+
     Route::resource('leaveManagement', LeaveManagementController::class);
+
+
+
+Route::resource('formNoFour', FormNoFourController::class);
+Route::resource('fd4OneForm', Fd4OneController::class);
+
+Route::controller(FormNoFourController::class)->group(function () {
+    Route::post('/statusUpdateForformNoFour', 'statusUpdateForformNoFour')->name('statusUpdateForformNoFour');
+
+});
+
+Route::controller(Fd4OneController::class)->group(function () {
+    Route::post('/statusUpdateForfd4OneForm', 'statusUpdateForfd4OneForm')->name('statusUpdateForfd4OneForm');
+
+});
+
 
     Route::resource('formNoFive', FormNoFiveController::class);
 

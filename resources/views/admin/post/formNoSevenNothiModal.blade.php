@@ -72,7 +72,7 @@
 <?php
 
 
-  $allNoteListNew = DB::table('parent_note_for_form_no_seven_daks')
+  $allNoteListNew = DB::table('parent_note_for_form_no_sevens')
   ->where('serial_number',$nothiLists->id)
   ->where('nothi_detail_id',$allStatusData->id)->get();
 

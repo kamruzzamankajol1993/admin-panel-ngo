@@ -338,8 +338,12 @@ $potrangshoDraft =  DB::table('potrangsho_drafts')
 
 
            @endif
+           @if(empty($aphone))
+
+           @else
 <p>ফোন :{{ $aphone }}</p>
 <p>ইমেইল : {{ $aemail }}</p>
+@endif
 
 
         </td>
@@ -402,56 +406,7 @@ $potrangshoDraft =  DB::table('potrangsho_drafts')
 @if(count($nothiCopyListUpdate) == 0)
 
 @else
-<table class="pdf_table">
-    <tr>
-        <td>
-		<table>
-			<tr>
-				<td  style="width:65px;">
-				<span style="">স্মারক নং: -</span>
-				</td>
-				<td>
-				@if(!$potrangshoDraft)
-				{{ App\Http\Controllers\Admin\CommonController::englishToBangla($nothiNumber) }}
-				@else
-				<div style="display: flex;">
-				@if(($potrangshoDraft->SentStatus == 0)&&($potrangshoDraft->adminId == Auth::guard('admin')->user()->id))
-				{!! $potrangshoDraft->sarok_number !!}
-				@else
 
-                @if(empty($officeDetails->sarok_number))
-
-                {!! $potrangshoDraft->sarok_number !!}
-                @else
-
-				{!! $officeDetails->sarok_number !!}
-
-@endif
-				@endif
-				</div>
-
-				@endif
-				</td>
-			</tr>
-		</table>
-
-		</td>
-        <td style="text-align: right">
-            <table class="pdf_table">
-                <tr>
-                    <td style="width: 58%;">তারিখ:</td>
-                    <td style="text-align: left; padding-left: 10px;">
-                        @if($potroZariListValue == 1)
-                        {{ $dateAppBan }} বঙ্গাব্দ  <br> {{ $dateApp }} খ্রিস্টাব্দ
-                        @else
-
-                        @endif
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
 @endif
 
 @if(count($nothiCopyListUpdate) == 0)
@@ -501,13 +456,12 @@ $potrangshoDraft =  DB::table('potrangsho_drafts')
             @if(!$nothiApproverList)
 
             @else
-            <img src="{{ asset('/') }}{{ $appSignature }}" style="height:30px;"/>
+
             @endif
 
             @else
             @endif
-            <p>{{ $appName }}</p>
-           <p>{{ $desiName }}</p>
+
            @if(!$potrangshoDraft)
 
            @else
@@ -523,14 +477,13 @@ $potrangshoDraft =  DB::table('potrangsho_drafts')
            @if(empty($officeDetails->extra_text ) || $officeDetails->extra_text == '<p>..........</p>')
 
            @else
-           {!! $officeDetails->extra_text !!}
+
            @endif
            @endif
 
 
            @endif
-<p>ফোন :{{ $aphone }}</p>
-<p>ইমেইল : {{ $aemail }}</p>
+
 
         </td>
     </tr>

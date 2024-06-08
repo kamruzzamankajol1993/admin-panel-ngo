@@ -447,44 +447,10 @@ $childNoteNewListValue = DB::table('child_note_for_executive_committees')
 
 
                                                 <div class="row">
-                                                    <div class="col-sm-2 col-xs-12">
-                                                        <div class="nav flex-column nav-pills"
-                                                             id="v-pills-tab" role="tablist"
-                                                             aria-orientation="vertical"><a
-                                                                    class="nav-link active"
-                                                                    id="v-pills-home-tab"
-                                                                    data-bs-toggle="pill"
-                                                                    href="#v-pills-home" role="tab"
-                                                                    aria-controls="v-pills-home"
-                                                                    aria-selected="true">অফিস স্মারক</a>
-                                                                    {{-- <a
-                                                                    class="nav-link"
-                                                                    id="v-pills-profile-tab"
-                                                                    data-bs-toggle="pill"
-                                                                    href="#v-pills-profile" role="tab"
-                                                                    aria-controls="v-pills-profile"
-                                                                    aria-selected="false">সরকারি পত্র</a><a
-                                                                    class="nav-link"
-                                                                    id="v-pills-messages-tab"
-                                                                    data-bs-toggle="pill"
-                                                                    href="#v-pills-messages" role="tab"
-                                                                    aria-controls="v-pills-messages"
-                                                                    aria-selected="false">বেসরকারি
-                                                                পত্র</a><a
-                                                                    class="nav-link"
-                                                                    id="v-pills-settings-tab"
-                                                                    data-bs-toggle="pill"
-                                                                    href="#v-pills-settings" role="tab"
-                                                                    aria-controls="v-pills-settings"
-                                                                    aria-selected="false">বিজ্ঞপ্তি/নোটিশ</a> --}}
-                                                        </div>
-                                                    </div>
+
                                                     <div class="col-sm-10 col-xs-12">
-                                                        <div class="tab-content"
-                                                             id="v-pills-tabContent">
-                                                            <div class="tab-pane fade show active"
-                                                                 id="v-pills-home" role="tabpanel"
-                                                                 aria-labelledby="v-pills-home-tab">
+                                                        <div >
+                                                            <div >
                                                                 <div class="card">
                                                                     <div class="card-body">
 
@@ -672,62 +638,7 @@ $childNoteNewListValue = DB::table('child_note_for_executive_committees')
 
                                                                     <!-- attracttion -->
 
-                                                                    <!-- sarok number --->
 
-                                                                    @if(count($nothiCopyListUpdate) == 0)
-
-                                                                    @else
-
-                                                                    <div class="row" style="margin-top: 20px;">
-                                                                        <div class="col-md-6">
-
-                                                                            @if(!$potrangshoDraft)
-
-
-                                                                            <span > স্মারক নং:</span> {{ App\Http\Controllers\Admin\CommonController::englishToBangla($nothiNumber) }}
-
-                                                                            @else
-
-
-                                                                            <div class="d-flex justify-content-start">
-
-                                                                            @if(($potrangshoDraft->SentStatus == 0)&&($potrangshoDraft->adminId == Auth::guard('admin')->user()->id))
-
-                                                                            <span > স্মারক নং:</span> {!! $potrangshoDraft->sarok_number !!}
-
-                                                                            @else
-                                                                            <span > স্মারক নং:</span> {!! $officeDetails->sarok_number !!}
-                                                                            @endif
-
-                                                                            </div>
-
-                                                                            @endif
-                                                                        </div>
-                                                                        <div class="col-md-6" style="text-align: right;">
-                                                                            <table class="table table-borderless">
-                                                                                <tbody style="border: none !important;">
-                                                                                <tr style="border: none !important;">
-                                                                                    <td style="width: 50%; text-align: right; vertical-align: middle; border: none !important;">
-                                                                                        তারিখ:
-                                                                                    </td>
-                                                                                    <td style="text-align: left; vertical-align: middle; border: none !important;">
-                                                                                        @if($potroZariListValue == 1)
-                                                                                        {{ $dateAppBan }} বঙ্গাব্দ  <br> {{ $dateApp }} খ্রিস্টাব্দ
-                                                                                        @else
-
-                                                                                        @endif
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-@endif
-
-
-
-
-                                                                    <!-- end sarok number -->
 
                                                                     <!--copy-->
 
@@ -775,22 +686,20 @@ $childNoteNewListValue = DB::table('child_note_for_executive_committees')
                                                                                 @if(!$nothiApproverLista)
 
                                                                                 @else
-                                                                                <img src="{{ asset('/') }}{{ $nothiApproverLista->admin_sign }}" style="height:30px;"/><br>
+
                                                                                 @endif
 
                                                                                 @else
                                                                                 @endif
-                                                                                <span>{{ $appName }}</span><br>
-                                                                                <span>{{ $desiName }}</span><br>
+
                                                                                 @if(empty($potrangshoDraft->extra_text))
         <br>
                                                                                 @else
 
-                                                                                <span>{!! $potrangshoDraft->extra_text !!}</span>
+
 
                                                                                 @endif
-                                                                                <span>ফোন :{{ $aphone }}</span><br>
-                                                                                                <span>ইমেইল : {{ $aemail }}</span>
+
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1241,6 +1150,12 @@ $totalOnumodonKari = DB::table('nothi_approvers')
 @section('script')
 
 <script>
+    setTimeout(function(){
+  $('.alert').fadeOut('fast');
+}, 1000);
+</script>
+
+<script>
 
 $("#sompadonButton").click(function(){
 
@@ -1324,8 +1239,13 @@ var snoteId =$('#snoteId').val();
    $("#otherOfficerEmail").val('');
    $("#otherOfficerPhone").val('');
 
-        // $("#sms22").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডেটা সফলভাবে যোগ করা হয়েছে</strong></div>');
+        $("#sms22").html('<div class="alert" style="margin-top:10px;padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডাটা যুক্ত হয়েছে ,বাছাইকৃত অফিসার ট্যাব থেকে ,বাছাই সম্পন্ন করুন </strong></div>');
         // $('#tableListN').html(data);
+
+        setTimeout(function(){
+  $('#sms22').fadeOut('fast');
+}, 1000);
+
         alertify.set('notifier','position','top-center');
 
         console.log(data.error)
@@ -1385,8 +1305,12 @@ $("#otherOfficerBranch2").val('');
 $("#otherOfficerEmail2").val('');
 $("#otherOfficerPhone2").val('');
 
-    //  $("#sms22a").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডেটা সফলভাবে যোগ করা হয়েছে</strong></div>');
+     $("#sms22a").html('<div class="alert" style="margin-top:10px;padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডাটা যুক্ত হয়েছে ,বাছাইকৃত অফিসার ট্যাব থেকে ,বাছাই সম্পন্ন করুন </strong></div>');
     //  $('#tableListN2').html(data);
+
+    setTimeout(function(){
+  $('#sms22a').fadeOut('fast');
+}, 1000);
 
     alertify.set('notifier','position','top-center');
 
@@ -1446,8 +1370,14 @@ $("#otherOfficerBranch3").val('');
 $("#otherOfficerEmail3").val('');
 $("#otherOfficerPhone3").val('');
 
-    //  $("#sms22c").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডেটা সফলভাবে যোগ করা হয়েছে</strong></div>');
+     $("#sms22c").html('<div class="alert" style="margin-top:10px;padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডাটা যুক্ত হয়েছে ,বাছাইকৃত অফিসার ট্যাব থেকে ,বাছাই সম্পন্ন করুন </strong></div>');
     //  $('#tableListN3').html(data);
+
+
+    setTimeout(function(){
+  $('#sms22c').fadeOut('fast');
+}, 1000);
+
     alertify.set('notifier','position','top-center');
 
 console.log(data.error)
@@ -1520,8 +1450,12 @@ $.ajax({
         alertify.success('সফলভাবেই সংরক্ষণ করা হয়েছে');
 
 
-        // $("#sms2a").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডেটা সফলভাবে যোগ করা হয়েছে</strong></div>');
+        $("#sms2a").html('<div class="alert" style="margin-top:10px;padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডাটা যুক্ত হয়েছে ,বাছাইকৃত অফিসার ট্যাব থেকে ,বাছাই সম্পন্ন করুন </strong></div>');
         // $('#tableListN2').html(data);
+
+        setTimeout(function(){
+  $('#sms2a').fadeOut('fast');
+}, 1000);
 
         $("#totalAttract").html('('+data.totalAttract+')');
         $('#tableListN2').html(data.data);
@@ -1551,15 +1485,19 @@ $.ajax({
     success: function(data) {
 
 
-        // $("#sms2c").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডেটা সফলভাবে যোগ করা হয়েছে</strong></div>');
+        $("#sms2c").html('<div class="alert" style="margin-top:10px;padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডাটা যুক্ত হয়েছে ,বাছাইকৃত অফিসার ট্যাব থেকে ,বাছাই সম্পন্ন করুন </strong></div>');
         // $('#tableListN3').html(data);
+
+        setTimeout(function(){
+  $('#sms2c').fadeOut('fast');
+}, 1000);
 
 
         alertify.set('notifier','position','top-center');
         alertify.success('সফলভাবেই সংরক্ষণ করা হয়েছে');
 
 
-        // $("#sms2a").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডেটা সফলভাবে যোগ করা হয়েছে</strong></div>');
+        // $("#sms2a").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডাটা যুক্ত হয়েছে ,বাছাইকৃত অফিসার ট্যাব থেকে ,বাছাই সম্পন্ন করুন </strong></div>');
         // $('#tableListN2').html(data);
 
         $("#totalCopy").html('('+data.totalCopy+')');

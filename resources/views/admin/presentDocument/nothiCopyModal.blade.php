@@ -28,7 +28,7 @@ $nothiCopyList = DB::table('nothi_copies')->where('nothiId',$nothiId)
             <div class="tab-pane fade show active" id="icon-home133" role="tabpanel" aria-labelledby="icon-home-tab">
 
 
-                <div id="sms2c"></div>
+
                     <div class="mb-3 mt-4">
                         <label class="form-label" for="">অফিসার খুজুন</label> <br>
                         <select class="form-control js-example-basic-single" style="width: 100%" name="" id="copyselfOfficerList">
@@ -54,12 +54,14 @@ $nothiCopyList = DB::table('nothi_copies')->where('nothiId',$nothiId)
                         <button class="btn btn-info-gradien"  id="copySelfOfficerAdd">সংরক্ষণ করুন</button>
                     </div>
 
+                    <div id="sms2c"></div>
+
             </div>
             <div class="tab-pane fade" id="profile-icon133" role="tabpanel" aria-labelledby="profile-icon-tab">
                 <div id="sms22c"></div>
                 <form action="" class="mt-4" id="registerSubmit3">
                     <div class="mb-3">
-                        <label class="form-label" for="">অফিসার</label>
+                        <label class="form-label" for="">অফিসার <span class="text-danger">*</span></label>
                          <input type="text" name="otherOfficerName" id="otherOfficerName3" class="form-control"/>
                     </div>
 

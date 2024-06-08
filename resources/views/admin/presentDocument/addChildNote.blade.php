@@ -1039,13 +1039,12 @@ $nothiApproverListOnu = DB::table('nothi_approvers')->where('nothiId',$nothiId)
             @if(!$nothiApproverLista)
 
             @else
-            <img src="{{ asset('/') }}{{ $nothiApproverLista->admin_sign }}" style="height:30px;"/><br>
+
             @endif
 
             @else
             @endif
-            <span>{{ $appName }}</span><br>
-            <span>{{ $desiName }}</span>
+
 
             @if(!$potrangshoDraft)
 
@@ -1054,23 +1053,22 @@ $nothiApproverListOnu = DB::table('nothi_approvers')->where('nothiId',$nothiId)
             @if(($potrangshoDraft->SentStatus == 0)&&($potrangshoDraft->adminId == Auth::guard('admin')->user()->id))
 
             @if(empty($potrangshoDraft->extra_text ) || $potrangshoDraft->extra_text == '<p>..........</p>')
-        <br>
+
             @else
             {!! $potrangshoDraft->extra_text !!}
             @endif
             @else
             @if(empty($officeDetails->extra_text ) || $officeDetails->extra_text == '<p>..........</p>')
-        <br>
+
             @else
-            {!! $officeDetails->extra_text !!}
+
             @endif
+            @endif
+
+
             @endif
 
 
-            @endif
-
-                                                                                    <span>ফোন :{{ $aphone }}</span><br>
-                                                                                    <span>ইমেইল : {{ $aemail }}</span>
             </div>
             @endif
         @endforeach
@@ -1599,7 +1597,7 @@ var snoteId =$('#snoteId').val();
    $("#otherOfficerEmail").val('');
    $("#otherOfficerPhone").val('');
 
-        $("#sms22").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডেটা সফলভাবে যোগ করা হয়েছে</strong></div>');
+        $("#sms22").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডাটা যুক্ত হয়েছে ,বাছাইকৃত অফিসার ট্যাব থেকে ,বাছাই সম্পন্ন করুন </strong></div>');
         $('#tableListN').html(data);
     }
     });
@@ -1642,7 +1640,7 @@ $("#otherOfficerBranch2").val('');
 $("#otherOfficerEmail2").val('');
 $("#otherOfficerPhone2").val('');
 
-     $("#sms22a").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডেটা সফলভাবে যোগ করা হয়েছে</strong></div>');
+     $("#sms22a").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডাটা যুক্ত হয়েছে ,বাছাইকৃত অফিসার ট্যাব থেকে ,বাছাই সম্পন্ন করুন </strong></div>');
      $('#tableListN2').html(data);
  }
  });
@@ -1685,7 +1683,7 @@ $("#otherOfficerBranch3").val('');
 $("#otherOfficerEmail3").val('');
 $("#otherOfficerPhone3").val('');
 
-     $("#sms22c").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডেটা সফলভাবে যোগ করা হয়েছে</strong></div>');
+     $("#sms22c").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডাটা যুক্ত হয়েছে ,বাছাইকৃত অফিসার ট্যাব থেকে ,বাছাই সম্পন্ন করুন</strong></div>');
      $('#tableListN3').html(data);
  }
  });
@@ -1713,7 +1711,7 @@ $.ajax({
     success: function(data) {
 
 
-        $("#sms2").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডেটা সফলভাবে যোগ করা হয়েছে</strong></div>');
+        $("#sms2").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডাটা যুক্ত হয়েছে ,বাছাইকৃত অফিসার ট্যাব থেকে ,বাছাই সম্পন্ন করুন </strong></div>');
         $('#tableListN').html(data);
     }
     });
@@ -1741,7 +1739,7 @@ $.ajax({
     success: function(data) {
 
 
-        $("#sms2a").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডেটা সফলভাবে যোগ করা হয়েছে</strong></div>');
+        $("#sms2a").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডাটা যুক্ত হয়েছে ,বাছাইকৃত অফিসার ট্যাব থেকে ,বাছাই সম্পন্ন করুন </strong></div>');
         $('#tableListN2').html(data);
     }
     });
@@ -1769,7 +1767,7 @@ $.ajax({
     success: function(data) {
 
 
-        $("#sms2c").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডেটা সফলভাবে যোগ করা হয়েছে</strong></div>');
+        $("#sms2c").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডাটা যুক্ত হয়েছে ,বাছাইকৃত অফিসার ট্যাব থেকে ,বাছাই সম্পন্ন করুন </strong></div>');
         $('#tableListN3').html(data);
     }
     });

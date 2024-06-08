@@ -788,9 +788,14 @@ $nothiApproverListOnu = DB::table('nothi_approvers')->where('nothiId',$nothiId)
 
 
         @endif
+                                                                         @if(empty(!$aphone))
 
+                                                                         @else
                                                                                 <span>ফোন :{{ $aphone }}</span><br>
                                                                                 <span>মেইল : {{ $aemail }}</span>
+                                                                        @endif
+
+
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -852,50 +857,7 @@ $nothiApproverListOnu = DB::table('nothi_approvers')->where('nothiId',$nothiId)
 
                                                                     <!-- attracttion -->
 
-                                                                    <!-- sarok number --->
-                                                                    @if(count($nothiCopyListUpdate) == 0)
 
-                                                                    @else
-                                                                    <div class="row" class="mt-4" style="margin-top:20px;">
-                                                                        <div class="col-md-6">
-                                                                            <p >@if(!$potrangshoDraft)
-                                                                                <p ><span > স্মারক নং:</span> {{ App\Http\Controllers\Admin\CommonController::englishToBangla($nothiNumber) }}</p>
-                                                                                @else
-                                                                                <div style="display: flex;">
-                                                                                @if(($potrangshoDraft->SentStatus == 0)&&($potrangshoDraft->adminId == Auth::guard('admin')->user()->id))
-                                                                                <p ><span > স্মারক নং:</span> {!! $potrangshoDraft->sarok_number !!}</p>
-                                                                                @else
-                                                                                <p ><span > স্মারক নং:</span> {!! $officeDetails->sarok_number !!}</p>
-                                                                                @endif
-                                                                                </div>
-
-                                                                                @endif</p>
-                                                                        </div>
-                                                                        <div class="col-md-6" style="text-align: right;">
-                                                                            <table class="table table-borderless">
-                                                                                <tbody style="border: none !important;">
-                                                                                <tr style="border: none !important;">
-                                                                                    <td style="width: 70%; text-align: right; vertical-align: middle; border: none !important;">
-                                                                                        তারিখ:
-                                                                                    </td>
-                                                                                    <td style="text-align: left; vertical-align: middle; border: none !important;">
-                                                                                        @if($potroZariListValue == 1)
-                                                                                        {{ $dateAppBan }} বঙগাব্দ  <br> {{ $dateApp }} খ্রিস্টা্দ
-                                                                                        @else
-
-                                                                                        @endif
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-
-                                                                 @endif
-
-
-
-                                                                    <!-- end sarok number -->
 
                                                                     <!--copy-->
 
@@ -935,54 +897,9 @@ $nothiApproverListOnu = DB::table('nothi_approvers')->where('nothiId',$nothiId)
     </div>
     <div class="col-lg-4">
         <div class="mt-4" style="text-align: center;">
-            @if($potroZariListValue == 1)
-
-            @if(!$nothiApproverList)
-
-                                                                                    @else
-<?php
-
-                                                                                    $nothiApproverLista = DB::table('admins')->where('id',$nothiApproverList->adminId)
-                                                                               ->first();
-
-                                                                                    ?>
-
-            @if(!$nothiApproverLista)
-
-            @else
-            <img src="{{ asset('/') }}{{ $nothiApproverLista->admin_sign }}" style="height:30px;"/><br>
-            @endif
-            @endif
-
-            @else
-            @endif
-            <span>{{ $appName }}</span><br>
-            <span>{{ $desiName }}</span>
-
-            @if(!$potrangshoDraft)
-
-            @else
-
-            @if(($potrangshoDraft->SentStatus == 0)&&($potrangshoDraft->adminId == Auth::guard('admin')->user()->id))
-
-            @if(empty($potrangshoDraft->extra_text ) || $potrangshoDraft->extra_text == '<p>..........</p>')
-        <br>
-            @else
-            {!! $potrangshoDraft->extra_text !!}
-            @endif
-            @else
-            @if(empty($officeDetails->extra_text ) || $officeDetails->extra_text == '<p>..........</p>')
-        <br>
-            @else
-            {!! $officeDetails->extra_text !!}
-            @endif
-            @endif
 
 
-            @endif
 
-                                                                                    <span>ফোন :{{ $aphone }}</span><br>
-                                                                                    <span>ইমেইল : {{ $aemail }}</span>
             </div>
             @endif
         @endforeach
@@ -1491,7 +1408,7 @@ var snoteId =$('#snoteId').val();
    $("#otherOfficerEmail").val('');
    $("#otherOfficerPhone").val('');
 
-        $("#sms22").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডেটা সফলভাবে যোগ করা হয়েছে</strong></div>');
+        $("#sms22").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডাটা যুক্ত হয়েছে ,বাছাইকৃত অফিসার ট্যাব থেকে ,বাছাই সম্পন্ন করুন </strong></div>');
         $('#tableListN').html(data);
     }
     });
@@ -1605,7 +1522,7 @@ $.ajax({
     success: function(data) {
 
 
-        $("#sms2").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডেটা সফলভাবে যোগ করা হয়েছে</strong></div>');
+        $("#sms2").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডাটা যুক্ত হয়েছে ,বাছাইকৃত অফিসার ট্যাব থেকে ,বাছাই সম্পন্ন করুন </strong></div>');
         $('#tableListN').html(data);
     }
     });
@@ -1633,7 +1550,7 @@ $.ajax({
     success: function(data) {
 
 
-        $("#sms2a").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডেটা সফলভাবে যোগ করা হয়েছে</strong></div>');
+        $("#sms2a").html('<div class="alert" style=" padding: 20px;background-color: #1b4c43 !important;color: white;"><strong>ডাটা যুক্ত হয়েছে ,বাছাইকৃত অফিসার ট্যাব থেকে ,বাছাই সম্পন্ন করুন </strong></div>');
         $('#tableListN2').html(data);
     }
     });

@@ -28,7 +28,7 @@ $nothiAttractList = DB::table('nothi_attarcts')->where('nothiId',$nothiId)
             <div class="tab-pane fade show active" id="icon-home12" role="tabpanel" aria-labelledby="icon-home-tab">
 
 
-                <div id="sms2a"></div>
+
                     <div class="mb-3 mt-4">
                         <label class="form-label" for="">অফিসার খুজুন</label> <br>
                         <select class="form-control js-example-basic-single" style="width: 100%" name="" id="attractselfOfficerList">
@@ -54,12 +54,14 @@ $nothiAttractList = DB::table('nothi_attarcts')->where('nothiId',$nothiId)
                         <button class="btn btn-info-gradien"  id="attractSelfOfficerAdd">সংরক্ষণ করুন</button>
                     </div>
 
+                    <div id="sms2a"></div>
+
             </div>
             <div class="tab-pane fade" id="profile-icon12" role="tabpanel" aria-labelledby="profile-icon-tab">
                 <div id="sms22a"></div>
                 <form action="" class="mt-4" id="registerSubmit2" >
                     <div class="mb-3">
-                        <label class="form-label" for="">অফিসার</label>
+                        <label class="form-label" for="">অফিসার <span class="text-danger">*</span></label>
                          <input type="text" name="otherOfficerName" id="otherOfficerName2" class="form-control"/>
                     </div>
 

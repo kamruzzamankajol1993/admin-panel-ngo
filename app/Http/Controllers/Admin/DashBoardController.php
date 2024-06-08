@@ -39,6 +39,9 @@ use App\Models\FdFiveDak;
 use App\Models\NothiList;
 use Mpdf\Mpdf;
 use App\Models\NothiDetail;
+use App\Models\Fd4OneFormDak;
+use App\Models\FormNoFourDak;
+
 class DashBoardController extends Controller
 {
 
@@ -282,13 +285,16 @@ class DashBoardController extends Controller
            $ngoStatusExecutiveCommittee = DB::table('document_for_executive_committee_approvals')->where('status','Ongoing')->latest()->limit(5) ->get();
 
            $ngoStatusFdFive = DB::table('fd_five_forms')->where('status','Ongoing')->latest()->limit(5)->get();
-
+           $ngoStatusFdFourOne = DB::table('fd_four_one_forms')->where('status','Ongoing')->latest()->limit(5)->get();
 
            $ngoStatusFormNoFive = DB::table('form_no_fives')->where('status','Ongoing')->latest()->limit(5)->get();
            $ngoStatusFormNoSeven = DB::table('form_no_sevens')->where('status','Ongoing')->latest()->limit(5)->get();
+           $ngoStatusFormNoFour = DB::table('form_no_fours')->where('status','Ongoing')->latest()->limit(5)->get();
 
 //dd($ngoStatusFdFive);
             return view('admin.dashboard.dashboard',compact(
+                'ngoStatusFdFourOne',
+                'ngoStatusFormNoFour',
                 'senderNothiListformNoSeven',
                 'ngoStatusFormNoSeven',
                 'senderNothiListformNoFive',
@@ -365,6 +371,13 @@ class DashBoardController extends Controller
 
             $ngoStatusFdFive = DB::table('fd_five_daks')->where('status',1)->whereNull('sent_status')->where('receiver_admin_id',Auth::guard('admin')->user()->id)->latest() ->limit(5)->get();
 
+
+            $ngoStatusFdFourOne = Fd4OneFormDak::where('status',1)
+            ->whereNull('sent_status')
+            ->where('receiver_admin_id',Auth::guard('admin')->user()->id)->latest()
+            ->limit(5)->get();
+
+
             $ngoStatusFormNoFive = DB::table('form_no_five_daks')->where('status',1)
             ->whereNull('sent_status')->where('receiver_admin_id',Auth::guard('admin')
             ->user()->id)->latest() ->limit(5)->get();
@@ -375,11 +388,18 @@ class DashBoardController extends Controller
             ->user()->id)->latest() ->limit(5)->get();
 
 
+            $ngoStatusFormNoFour = DB::table('form_no_four_daks')->where('status',1)
+            ->whereNull('sent_status')->where('receiver_admin_id',Auth::guard('admin')
+            ->user()->id)->latest() ->limit(5)->get();
+
+
 
             $all_data_for_new_list = DB::table('ngo_statuses')->whereIn('status',['Ongoing','Old Ngo Renew'])->latest() ->limit(5)->get();
 
 
             return view('admin.dashboard.dashboardOne',compact(
+                'ngoStatusFdFourOne',
+                'ngoStatusFormNoFour',
                 'senderNothiListformNoSeven',
                 'ngoStatusFormNoSeven',
                 'senderNothiListformNoFive',

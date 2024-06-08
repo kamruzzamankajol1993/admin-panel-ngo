@@ -4,8 +4,9 @@ id="myModal22" role="dialog"
 aria-labelledby="myModalLabel22">
 <div class="modal-dialog modal-lg" role="document">
 <div class="modal-content">
-<button id="pp" class="btn btn-outline-danger btn-sm"><i class="fa fa-times" aria-hidden="true"></i></button>
+
 <div class="modal-header">
+    <button id="pp" class="btn btn-outline-danger btn-sm"><i class="fa fa-times" aria-hidden="true"></i></button>
     <h4 class="modal-title" id="myModalLabel2">
         প্রাপক </h4>
 </div>
@@ -30,7 +31,7 @@ aria-labelledby="myModalLabel22">
             <div class="tab-pane fade show active" id="icon-home1" role="tabpanel" aria-labelledby="icon-home-tab">
 
 
-                <div id="sms2"></div>
+                
                     <div class="mb-3 mt-4">
                         <label class="form-label" for="">অফিসার খুজুন</label> <br>
                         <select class="form-control js-example-basic-single" style="width: 100%" name="" id="selfOfficerList">
@@ -56,12 +57,14 @@ aria-labelledby="myModalLabel22">
                         <button class="btn btn-info-gradien"  id="selfOfficerAdd">সংরক্ষণ করুন</button>
                     </div>
 
+                    <div id="sms2"></div>
+
             </div>
             <div class="tab-pane fade" id="profile-icon1" role="tabpanel" aria-labelledby="profile-icon-tab">
                 <div id="sms22"></div>
                 <form action="" class="mt-4" id="registerSubmit">
                     <div class="mb-3">
-                        <label class="form-label" for="">অফিসার</label>
+                        <label class="form-label" for="">অফিসার <span class="text-danger">*</span></label>
                          <input type="text" name="otherOfficerName" id="otherOfficerName" class="form-control"/>
                     </div>
 

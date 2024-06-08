@@ -8,12 +8,14 @@ use App\Models\Admin;
 use DB;
 use Carbon\Carbon;
 use App\Models\SystemInformation;
+use App\Models\Fd4OneFormDak;
 use Hash;
 use Illuminate\Support\Str;
 use Mail;
 use PDF;
 use Response;
 use App\Models\FormNoFiveDak;
+use App\Models\FormNoFourDak;
 use App\Models\FormNoSevenDak;
 use App\Models\Branch;
 use App\Models\FdFiveDak;
@@ -195,6 +197,16 @@ class AppServiceProvider extends ServiceProvider
                     ->orWhereNull('status')
                     ->latest()->count();
 
+
+                    $dataFormNoFour = DB::table('form_no_fours')->where('status','Ongoing')
+                    ->orWhereNull('status')
+                    ->latest()->count();
+
+                    $dataFdFourOne = DB::table('fd_four_one_forms')->where('status','Ongoing')
+                    ->orWhereNull('status')
+                    ->latest()->count();
+
+
                     $dataFormNoSeven = DB::table('form_no_sevens')->where('status','Ongoing')
 
                     ->latest()->count();
@@ -327,12 +339,27 @@ class AppServiceProvider extends ServiceProvider
                     $fdFiveId= $fdFiveMain->implode("id", " ");
                     $fdFiveIdArray= explode(" ", $fdFiveId);
 
+                    $fdFourMain= DB::table('fd_four_one_forms')->where('status','Ongoing')
+                    ->orWhereNull('status')
+                    ->select('id')
+                    ->latest()->get();
+                    $fdFourId= $fdFourMain->implode("id", " ");
+                    $fdFourIdArray= explode(" ", $fdFourId);
+
+
                     $formNoFiveMain= DB::table('form_no_fives')->where('status','Ongoing')
                     ->orWhereNull('status')
                     ->select('id')
                     ->latest()->get();
                     $formNoFiveId= $formNoFiveMain->implode("id", " ");
                     $formNoFiveIdArray= explode(" ", $formNoFiveId);
+
+                    $formNoFourMain= DB::table('form_no_fives')->where('status','Ongoing')
+                    ->orWhereNull('status')
+                    ->select('id')
+                    ->latest()->get();
+                    $formNoFourId= $formNoFourMain->implode("id", " ");
+                    $formNoFourIdArray= explode(" ", $formNoFourId);
 
 
                     $formNoSevenMain= DB::table('form_no_sevens')->where('status','Ongoing')
@@ -456,6 +483,13 @@ class AppServiceProvider extends ServiceProvider
                    ->where('sender_admin_id',Auth::guard('admin')->user()->id)
                    ->groupBy('fd_five_status_id')->count();
 
+                   $ngoStatusFdFour1 = Fd4OneFormDak::where('status',1)
+                   ->whereIn('fd4_one_form_status_id',$fdFourIdArray)
+                   ->where('nothi_jat_status',0)
+                   ->where('nothi_jat_status','!=',1)
+                   ->where('sender_admin_id',Auth::guard('admin')->user()->id)
+                   ->groupBy('fd4_one_form_status_id')->count();
+
 
                    $ngoStatusFormNoFive1 = FormNoFiveDak::where('status',1)
                    ->whereIn('form_no_five_status_id',$formNoFiveIdArray)
@@ -463,6 +497,13 @@ class AppServiceProvider extends ServiceProvider
                    ->where('nothi_jat_status','!=',1)
                    ->where('sender_admin_id',Auth::guard('admin')->user()->id)
                    ->groupBy('form_no_five_status_id')->count();
+
+                   $ngoStatusFormNoFour1 = FormNoFourDak::where('status',1)
+                   ->whereIn('form_no_four_status_id',$formNoFourIdArray)
+                   ->where('nothi_jat_status',0)
+                   ->where('nothi_jat_status','!=',1)
+                   ->where('sender_admin_id',Auth::guard('admin')->user()->id)
+                   ->groupBy('form_no_four_status_id')->count();
 
 
                    $ngoStatusFormNoSeven1 = FormNoSevenDak::where('status',1)
@@ -501,15 +542,15 @@ class AppServiceProvider extends ServiceProvider
 
                    //new code end //
 
-                    $mainCodeCountHeader1 =$ngoStatusFormNoSeven1 + $ngoStatusFormNoFive1 + $ngoStatusFdFive1 + $ngoStatusExecutiveCommittee1+ $ngoStatusConstitution1+$ngoStatusDuplicateCertificate1+$ngoStatusReg1+$ngoStatusFDNineOneDak1+$ngoStatusFdThreeDak1+$ngoStatusFcTwoDak1+$ngoStatusFcOneDak1+$ngoStatusFdSevenDak1+$ngoStatusFdSixDak1+$ngoStatusFDNineDak1+$ngoStatusNameChange1+$ngoStatusRenew1;
+                    $mainCodeCountHeader1 =$ngoStatusFormNoFour1 +$ngoStatusFormNoSeven1 + $ngoStatusFormNoFive1 + $ngoStatusFdFive1 + $ngoStatusFdFour1 +$ngoStatusExecutiveCommittee1+ $ngoStatusConstitution1+$ngoStatusDuplicateCertificate1+$ngoStatusReg1+$ngoStatusFDNineOneDak1+$ngoStatusFdThreeDak1+$ngoStatusFcTwoDak1+$ngoStatusFcOneDak1+$ngoStatusFdSevenDak1+$ngoStatusFdSixDak1+$ngoStatusFDNineDak1+$ngoStatusNameChange1+$ngoStatusRenew1;
 
 
-                   $mainCodeCountHeader2 =
+                   $mainCodeCountHeader2 = $dataFdFourOne+$dataFdFive+
                    $all_data_for_name_changes_list + $all_data_for_renew_list +
                    $all_data_for_new_list+ $dataFdNineOne +
                    $dataFdNine + $dataFromFd6Form +
                     $dataFromFd7Form+$dataFromFc1Form+
-                    $dataFormNoFive+$dataFormNoSeven+
+                    $dataFormNoFive+$dataFormNoSeven+$dataFormNoFour+
                    $dataFromFc2Form+$dataFromFd3Form+$all_data_for_name_changes_list1e+
                    $all_data_for_name_changes_list2e+$all_data_for_name_changes_list3e ;
                 //  dd($mainCodeCountHeader1);

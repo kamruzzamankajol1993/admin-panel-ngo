@@ -86,7 +86,7 @@ class FD6Controller extends Controller
          $get_email_from_user = DB::table('users')->where('id',$dataFromFd6Form->user_id)->value('email');
 
          $fd2FormList = DB::table('fd2_forms')->where('fd_one_form_id',$dataFromFd6Form->fd_one_form_id)
-         ->where('fd_six_form_id',base64_encode($dataFromFd6Form->mainId))->latest()->first();
+         ->where('fd_six_form_id',$dataFromFd6Form->mainId)->latest()->first();
 
          $fd2OtherInfo = DB::table('fd2_form_other_infos')->where('fd2_form_id',$fd2FormList->id)->latest()->get();
 

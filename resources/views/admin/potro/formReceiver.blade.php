@@ -134,9 +134,14 @@
                                                                                   <textarea id="ineditor4" name="extra_text" contenteditable="true">..........</textarea>
                                                                                   @else
                                                                                     <textarea id="ineditor4" name="extra_text" contenteditable="true">{!! $potrangshoDraft->extra_text !!}</textarea>
-                                                                                   @endif --}}
-                              <span>ফোন :{{ $aphone }}</span><br>
+
+                                                                                    @endif --}}
+@if(empty($aphone))
+
+@else
+                                        <span>ফোন :{{ $aphone }}</span><br>
                               <span>ইমেইল : {{ $aemail }}</span>
+                              @endif
                                                                                   </div>
                                                                               </div>
 

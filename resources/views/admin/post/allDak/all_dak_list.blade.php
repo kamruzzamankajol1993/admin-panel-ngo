@@ -3456,7 +3456,7 @@ $branchNames = DB::table('branches')
 
 
                                                                                                   //new code
-$orginalReceverId= DB::table('ngo_form_no_five_daks')
+$orginalReceverId= DB::table('form_no_five_daks')
                 ->where('form_no_five_status_id',$allStatusData->form_no_five_status_id)
                 ->where('original_recipient',1)
                 ->value('receiver_admin_id');
@@ -3706,7 +3706,7 @@ $branchNames = DB::table('branches')
 
 
                                                                                   //new code
-$orginalReceverId= DB::table('ngo_form_no_seven_daks')
+$orginalReceverId= DB::table('form_no_seven_daks')
 ->where('form_no_seven_status_id',$allStatusData->form_no_seven_status_id)
 ->where('original_recipient',1)
 ->value('receiver_admin_id');
@@ -3943,6 +3943,13 @@ $branchNames = DB::table('branches')
 @endforeach
 
     <!-- form no seven end --->
+    <!-- start form no four --->
+
+    <!-- end form no four --->
+
+     <!-- start form fd four one--->
+
+    <!-- end form no fd four one --->
 
                                     </tbody>
                                 </table>

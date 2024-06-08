@@ -11,6 +11,8 @@ use Hash;
 use PDF;
 use File;
 use Mail;
+use App\Models\Fd4OneFormDak;
+use App\Models\FormNoFourDak;
 use App\Models\FormNoSevenDak;
 use App\Models\ParentNoteForFormNoSeven;
 use App\Models\FormNoSevenOfficeSarok;
@@ -836,11 +838,22 @@ class NothiJatController extends Controller
     ->orWhere('sender_admin_id',Auth::guard('admin')->user()->id)
     ->latest()->get()->unique('form_no_seven_status_id');
 
+    $ngoStatusFdFourOne = Fd4OneFormDak::where('nothi_jat_status',1)
+    ->orWhere('receiver_admin_id',Auth::guard('admin')->user()->id)
+    ->orWhere('sender_admin_id',Auth::guard('admin')->user()->id)
+        ->latest()->get()->unique('fd4_one_form_status_id');
+
+
+        $ngoStatusFormNoFour = FormNoFourDak::where('nothi_jat_status',1)
+        ->orWhere('receiver_admin_id',Auth::guard('admin')->user()->id)
+        ->orWhere('sender_admin_id',Auth::guard('admin')->user()->id)
+            ->latest()->get()->unique('form_no_four_status_id');
+
 
 
     $all_data_for_new_list = DB::table('ngo_statuses')->whereIn('status',['Ongoing','Old Ngo Renew'])->latest()->get();
 
-    return view('admin.post.allDak.nothiJatDakList',compact('ngoStatusFormNoSeven','ngoStatusFormNoFive','ngoStatusFdFive','ngoStatusDuplicateCertificate','ngoStatusConstitution','ngoStatusExecutiveCommittee','nothiList','ngoStatusFdThreeDak','ngoStatusFcTwoDak','ngoStatusFcOneDak','ngoStatusFdSevenDak','ngoStatusFdSixDak','ngoStatusFDNineOneDak','ngoStatusFDNineDak','ngoStatusNameChange','ngoStatusRenew','ngoStatusReg'));
+    return view('admin.post.allDak.nothiJatDakList',compact('ngoStatusFdFourOne','ngoStatusFormNoFour','ngoStatusFormNoSeven','ngoStatusFormNoFive','ngoStatusFdFive','ngoStatusDuplicateCertificate','ngoStatusConstitution','ngoStatusExecutiveCommittee','nothiList','ngoStatusFdThreeDak','ngoStatusFcTwoDak','ngoStatusFcOneDak','ngoStatusFdSevenDak','ngoStatusFdSixDak','ngoStatusFDNineOneDak','ngoStatusFDNineDak','ngoStatusNameChange','ngoStatusRenew','ngoStatusReg'));
 
     }
 }

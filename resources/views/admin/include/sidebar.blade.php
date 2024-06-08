@@ -380,6 +380,24 @@
 </li>
 @endif
 
+@if ($usr->can('formNoFourAdd') || $usr->can('formNoFourView') || $usr->can('formNoFourDelete') || $usr->can('formNoFourUpdate'))
+<li class="dropdown">
+    <a class="nav-link menu-title link-nav {{ Route::is('formNoFour.index') || Route::is('formNoFour.show') ? 'active' : '' }}" href="{{ route('formNoFour.index') }}">
+        <i data-feather="airplay"></i>
+        <span>ফরম নং - ৪</span>
+    </a>
+</li>
+@endif
+
+@if ($usr->can('fdFourOneFormAdd') || $usr->can('fdFourOneFormView') || $usr->can('fdFourOneFormDelete') || $usr->can('fdFourOneFormUpdate'))
+<li class="dropdown">
+    <a class="nav-link menu-title link-nav {{ Route::is('fd4OneForm.index') || Route::is('fd4OneForm.show') ? 'active' : '' }}" href="{{ route('fd4OneForm.index') }}">
+        <i data-feather="airplay"></i>
+        <span>এফডি - ৪.১</span>
+    </a>
+</li>
+@endif
+
 @if ($usr->can('formNoFiveAdd') || $usr->can('formNoFiveView') || $usr->can('formNoFiveDelete') || $usr->can('formNoFiveUpdate'))
 <li class="dropdown">
     <a class="nav-link menu-title link-nav {{ Route::is('formNoFive.index') || Route::is('formNoFive.show') ? 'active' : '' }}" href="{{ route('formNoFive.index') }}">
@@ -428,6 +446,22 @@
     </a>
 </li> --}}
 @endif
+
+<li class="sidebar-main-title">
+    <div>
+      <h6>এনজিও প্রোফাইল</h6>
+    </div>
+</li>
+
+@if ($usr->can('ngoProfileAdd') || $usr->can('ngoProfileView') || $usr->can('ngoProfileDelete') || $usr->can('ngoProfileUpdate'))
+<li class="dropdown">
+    <a class="nav-link menu-title link-nav {{ Route::is('ngoProfile.index') || Route::is('ngoProfile.show') ? 'active' : '' }}" href="{{ route('ngoProfile.index') }}">
+        <i data-feather="airplay"></i>
+        <span>এনজিও প্রোফাইলের তালিকা</span>
+    </a>
+</li>
+@endif
+
 @if ($usr->can('complainView') || $usr->can('complainDelete') || $usr->can('complainUpdate'))
 <li class="sidebar-main-title">
     <div>

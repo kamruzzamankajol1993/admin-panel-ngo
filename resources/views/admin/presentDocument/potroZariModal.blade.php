@@ -194,13 +194,13 @@ aria-labelledby="myModalLabel22">
                                                                                 @if($potroZariListValue == 1)
 
                                                                                 @if(!$nothiApproverList)
-                                                                                    
+
                                                                                     @else
-<?php 
-                                                                                    
+<?php
+
                                                                                     $nothiApproverLista = DB::table('admins')->where('id',$nothiApproverList->adminId)
                                                                                ->first();
-                                                                                    
+
                                                                                     ?>
 
                                                                                 @if(!$nothiApproverLista)
@@ -234,8 +234,12 @@ aria-labelledby="myModalLabel22">
                                                                             @endif
 
 
+                                                                            @if(empty($aphone))
+
+                                                                            @else
                                                                             <span>ফোন :{{ $aphone }}</span><br>
                                                                             <span>ইমেইল : {{ $aemail }}</span>
+                                                                            @endif
                                                                             </div>
 
                                                                             <!-- approver end -->
@@ -290,70 +294,7 @@ aria-labelledby="myModalLabel22">
 
                                                                         <!-- attracttion -->
 
-                                                                        <!-- sarok number --->
 
-
-                                                                        @if(count($nothiCopyListUpdate) == 0)
-
-                                                                        <div class="row" class="mt-4" style="margin-top: 30px;">
-                                                                            <div class="col-md-6">
-
-                                                                            </div>
-                                                                          </div>  
-
-                                                                        @else
-
-                                                                        <div class="row" class="mt-4" style="margin-top: 30px;">
-                                                                            <div class="col-md-6">
-
-                                                                                <div class="d-flex justify-content-start">
-                                                                                    <span > স্মারক নং:</span>
-                                                                                    <p >
-                                                                                        @if(empty($officeDetails->sarok_number))
-
-
-                                                                                        {!! $potrangshoDraft->sarok_number !!}
-
-                                                                                        @else
-                                                                                        {!! $officeDetails->sarok_number !!}
-
-                                                                                        @endif
-                                                                                    </p>
-                                                                                </div>
-
-                                                                            </div>
-
-                                                                            @endif
-
-
-                                                                            <?php
-        $potroZariListValue =  DB::table('nothi_details')
-                        ->where('noteId',$id)
-                        ->where('nothId',$nothiId)
-                        ->where('dakId',$parentId)
-                        ->where('dakType',$status)
-                        ->value('permission_status');
-
-
-
-            ?>
-                                                                            <div class="col-md-6" style="text-align: right;">
-                                                                                <div class="d-flex justify-content-end">
-                                                                                    <span >তারিখ:</span>
-                                                                                    <p>	@if($potroZariListValue == 1)
-                                                                                        {{ $dateAppBan }} বঙ্গাব্দ  <br> {{ $dateApp }} খ্রিস্টাব্দ
-                                                                                        @else
-
-                                                                                        @endif</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-
-
-
-
-                                                                        <!-- end sarok number -->
 
                                                                         <!--copy-->
 
@@ -392,38 +333,35 @@ aria-labelledby="myModalLabel22">
         @if($potroZariListValue == 1)
 
         @if(!$nothiApproverList)
-                                                                                    
+
                                                                                     @else
-<?php 
-                                                                                    
+<?php
+
                                                                                     $nothiApproverLista = DB::table('admins')->where('id',$nothiApproverList->adminId)
                                                                                ->first();
-                                                                                    
+
                                                                                     ?>
 
         @if(!$nothiApproverLista)
 
         @else
-        <img src="{{ asset('/') }}{{ $appSignature }}" style="height:30px;"/><br>
+
         @endif
 
         @endif
 
         @else
         @endif
-    <span>{{ $appName }}</span><br>
-    <span>{{ $desiName }}</span>
 
 
     @if(empty($officeDetails->extra_text ) || $officeDetails->extra_text == '<p>..........</p>')
 
     @else
-    {!! $officeDetails->extra_text !!}
+
     @endif
 
 
-    <span>ফোন :{{ $aphone }}</span><br>
-    <span>ইমেইল : {{ $aemail }}</span>
+
     </div>
     @endforeach
 
