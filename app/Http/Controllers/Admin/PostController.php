@@ -2618,7 +2618,8 @@ try{
 
                 DB::table('ngo_statuses')->where('id',$request->main_id)
                          ->update([
-                            'check_status'=>1
+                            'check_status'=>1,
+                            'sent_status'=>1
                          ]);
 
                         }
@@ -2676,7 +2677,8 @@ try{
           if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
           DB::table('ngo_renews')->where('id',$request->main_id)
           ->update([
-             'check_status'=>1
+            'check_status'=>1,
+            'sent_status'=>1
           ]);
         }
 
@@ -2736,7 +2738,8 @@ try{
          if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
             DB::table('ngo_name_changes')->where('id',$request->main_id)
             ->update([
-               'check_status'=>1
+                'check_status'=>1,
+                            'sent_status'=>1
             ]);
           }
 
@@ -2802,7 +2805,8 @@ try{
 if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
     DB::table('fd9_forms')->where('id',$request->main_id)
     ->update([
-       'check_status'=>1
+        'check_status'=>1,
+                            'sent_status'=>1
     ]);
   }
 
@@ -2866,7 +2870,8 @@ if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2)
 if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
     DB::table('fd9_one_forms')->where('id',$request->main_id)
     ->update([
-       'check_status'=>1
+        'check_status'=>1,
+                            'sent_status'=>1
     ]);
   }
 
@@ -2933,7 +2938,8 @@ if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2)
 if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
     DB::table('fd6_forms')->where('id',$request->main_id)
     ->update([
-       'check_status'=>1
+        'check_status'=>1,
+                            'sent_status'=>1
     ]);
   }
 
@@ -2998,7 +3004,8 @@ if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2)
 if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
     DB::table('fd7_forms')->where('id',$request->main_id)
     ->update([
-       'check_status'=>1
+        'check_status'=>1,
+                            'sent_status'=>1
     ]);
   }
 
@@ -3062,7 +3069,8 @@ if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2)
  if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
     DB::table('fc1_forms')->where('id',$request->main_id)
     ->update([
-       'check_status'=>1
+        'check_status'=>1,
+                            'sent_status'=>1
     ]);
   }
 
@@ -3125,7 +3133,8 @@ if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2)
 if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
     DB::table('fc2_forms')->where('id',$request->main_id)
     ->update([
-       'check_status'=>1
+        'check_status'=>1,
+                            'sent_status'=>1
     ]);
   }
 
@@ -3190,7 +3199,8 @@ if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2)
 if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
     DB::table('fd3_forms')->where('id',$request->main_id)
     ->update([
-       'check_status'=>1
+        'check_status'=>1,
+                            'sent_status'=>1
     ]);
   }
 
@@ -3256,7 +3266,8 @@ FdFiveDak::where('receiver_admin_id',Auth::guard('admin')->user()->id)
 if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
     DB::table('fd_five_forms')->where('id',$request->main_id)
     ->update([
-       'check_status'=>1
+        'check_status'=>1,
+        'sent_status'=>1
     ]);
   }
 
@@ -3322,7 +3333,8 @@ FormNoFiveDak::where('receiver_admin_id',Auth::guard('admin')->user()->id)
 if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
 DB::table('form_no_fives')->where('id',$request->main_id)
 ->update([
-'check_status'=>1
+    'check_status'=>1,
+    'sent_status'=>1
 ]);
 }
 
@@ -3388,7 +3400,8 @@ FormNoSevenDak::where('receiver_admin_id',Auth::guard('admin')->user()->id)
 if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
 DB::table('form_no_sevens')->where('id',$request->main_id)
 ->update([
-'check_status'=>1
+    'check_status'=>1,
+    'sent_status'=>1
 ]);
 }
 
@@ -3454,7 +3467,8 @@ FormNoFourDak::where('receiver_admin_id',Auth::guard('admin')->user()->id)
 if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
 DB::table('form_no_fours')->where('id',$request->main_id)
 ->update([
-'check_status'=>1
+    'check_status'=>1,
+    'sent_status'=>1
 ]);
 }
 
@@ -3520,7 +3534,8 @@ Fd4OneFormDak::where('receiver_admin_id',Auth::guard('admin')->user()->id)
 if(Auth::guard('admin')->user()->id ==1 || Auth::guard('admin')->user()->id ==2){
 DB::table('fd_four_one_forms')->where('id',$request->main_id)
 ->update([
-'check_status'=>1
+    'check_status'=>1,
+    'sent_status'=>1
 ]);
 }
 

@@ -17,6 +17,9 @@
                                                         ->value('id');
 
 
+                                                        //dd($checkDataAvailableOrNot);
+
+
                                                                                                 //new code
 $orginalReceverId= DB::table('form_no_seven_daks')
                 ->where('form_no_seven_status_id',$allStatusData->id)
@@ -46,6 +49,7 @@ $orginalReceverId= DB::table('form_no_seven_daks')
                      @include('admin.post.receivedFormNoSevenDak')
 
                                     @else
+
                 <!-- red background start --->
 
 @if(empty($allStatusData->check_status) && ($allStatusData->file_last_check_date < date('Y-m-d')))

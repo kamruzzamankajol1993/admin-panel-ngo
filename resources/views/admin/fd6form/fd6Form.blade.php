@@ -71,6 +71,9 @@
                     <th>বিভাগ</th>
                     <th>জেলা/সিটি কর্পোরেশন</th>
                     <th>উপজেলা/থানা/পৌরসভা/ওয়ার্ড</th>
+                    <th>প্রকল্পের ধরণ</th>
+                    <th>বরাদ্দকৃত বাজেট</th>
+                    <th>মোট উপকারভোগীর সংখ্যা</th>
                 </tr>
                 @foreach($prokolpoAreaList as $prokolpoAreaListAll)
                 <tr>
@@ -85,6 +88,13 @@
                         পৌরসভা: {{ $prokolpoAreaListAll->municipality_name }} <br>
                         ওয়ার্ড: {{ $prokolpoAreaListAll->ward_name }}
                     </td>
+
+                    <td>
+                        {{ DB::table('project_subjects')->where('id',$prokolpoAreaListAll->prokolpo_type)->value('name')}}
+                    </td>
+                    <td>{{ $prokolpoAreaListAll->allocated_budget }}</td>
+                    <td>{{ $prokolpoAreaListAll->number_of_beneficiaries }}</td>
+                    
                 </tr>
                 @endforeach
             </table>

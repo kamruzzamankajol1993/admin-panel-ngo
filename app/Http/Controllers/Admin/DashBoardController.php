@@ -288,7 +288,10 @@ class DashBoardController extends Controller
            $ngoStatusFdFourOne = DB::table('fd_four_one_forms')->where('status','Ongoing')->latest()->limit(5)->get();
 
            $ngoStatusFormNoFive = DB::table('form_no_fives')->where('status','Ongoing')->latest()->limit(5)->get();
-           $ngoStatusFormNoSeven = DB::table('form_no_sevens')->where('status','Ongoing')->latest()->limit(5)->get();
+           $ngoStatusFormNoSeven = DB::table('form_no_sevens')
+           ->where('status','Ongoing')->latest()->limit(5)->get();
+
+           //dd($ngoStatusFormNoSeven);
            $ngoStatusFormNoFour = DB::table('form_no_fours')->where('status','Ongoing')->latest()->limit(5)->get();
 
 //dd($ngoStatusFdFive);

@@ -90,7 +90,48 @@
                         <h5 class="mb-4">কর্ম এলাকা ও বাজেট</h5>
 
 
-                    <table class="table table-bordered">
+                        <?php
+
+                        $prokolpoAreaList = DB::table('prokolpo_areas')
+                        ->where('type','fcTwo')->where('formId',$dataFromFc2Form->id)->get();
+
+                         ?>
+
+ <table class="table table-bordered mb-4">
+     <tr>
+         <th>বিভাগ</th>
+         <th>জেলা/সিটি কর্পোরেশন</th>
+         <th>উপজেলা/থানা/পৌরসভা/ওয়ার্ড</th>
+         <th>প্রকল্পের ধরণ</th>
+         <th>বরাদ্দকৃত বাজেট</th>
+         <th>মোট উপকারভোগীর সংখ্যা</th>
+     </tr>
+     @foreach($prokolpoAreaList as $prokolpoAreaListAll)
+     <tr>
+         <td>বিভাগ: {{ $prokolpoAreaListAll->division_name }}</td>
+         <td>
+             জেলা: {{ $prokolpoAreaListAll->district_name }} <br>
+             সিটি কর্পোরেশন: {{ $prokolpoAreaListAll->city_corparation_name }}
+         </td>
+         <td>
+             উপজেলা: {{ $prokolpoAreaListAll->upozila_name }} <br>
+             থানা: {{ $prokolpoAreaListAll->thana_name }} <br>
+             পৌরসভা: {{ $prokolpoAreaListAll->municipality_name }} <br>
+             ওয়ার্ড: {{ $prokolpoAreaListAll->ward_name }}
+         </td>
+
+         <td>
+             {{ DB::table('project_subjects')->where('id',$prokolpoAreaListAll->prokolpo_type)->value('name')}}
+         </td>
+         <td>{{ $prokolpoAreaListAll->allocated_budget }}</td>
+         <td>{{ $prokolpoAreaListAll->number_of_beneficiaries }}</td>
+
+     </tr>
+     @endforeach
+ </table>
+
+
+                    {{-- <table class="table table-bordered">
                         <tr>
                             <td>কর্ম এলাকা জেলা</td>
                             <td>: {{ App\Http\Controllers\Admin\CommonController::englishToBangla($dataFromFc2Form->ngo_district) }}</td>
@@ -107,7 +148,7 @@
 
 
 
-                    </table>
+                    </table> --}}
 
 
             <h5 class="mb-4">যে বৈদেশিক উৎস থেকে অনুদান গ্রহণ করা হবে তার বিবরণ<br>

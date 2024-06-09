@@ -173,9 +173,18 @@ class AppServiceProvider extends ServiceProvider
 
                     $all_data_for_name_changes_list3e = DB::table('document_for_executive_committee_approvals')->where('status','Ongoing')->latest() ->count();
 
-                    $all_data_for_new_list = DB::table('ngo_statuses')->whereIn('status',['Ongoing','Old Ngo Renew'])->latest() ->count();
-                    $all_data_for_renew_list = DB::table('ngo_renews')->where('status','Ongoing')->latest() ->count();
-                    $all_data_for_name_changes_list = DB::table('ngo_name_changes')->where('status','Ongoing')->latest() ->count();
+                    $all_data_for_new_list = DB::table('ngo_statuses')
+                    ->where('status',['Ongoing','Old Ngo Renew'])
+                    ->whereNull('sent_status')
+                    ->latest() ->count();
+                    $all_data_for_renew_list = DB::table('ngo_renews')
+                    ->where('status','Ongoing')
+                    ->whereNull('sent_status')
+                    ->latest() ->count();
+                    $all_data_for_name_changes_list = DB::table('ngo_name_changes')
+                    ->where('status','Ongoing')
+                    ->whereNull('sent_status')
+                    ->latest() ->count();
 
 //dd($all_data_for_new_list + $all_data_for_renew_list);
                     $dataFdNineOne = DB::table('fd9_one_forms')
@@ -183,42 +192,50 @@ class AppServiceProvider extends ServiceProvider
                     ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd9_one_forms.fd_one_form_id')
                     ->select('fd_one_forms.*','fd9_one_forms.*','n_visas.*','n_visas.id as nVisaId')
                     ->where('fd9_one_forms.status','Ongoing')
+                    ->whereNull('fd9_one_forms.sent_status')
                     ->orderBY('fd9_one_forms.id','desc')
                     ->count();
 
 
                     //dd($dataFdNineOne);
 
-                    $dataFdFive = DB::table('fd_five_forms')->where('status','Ongoing')
+                    $dataFdFive = DB::table('fd_five_forms')
+                    ->whereNull('sent_status')
+                    ->where('status','Ongoing')
                     ->orWhereNull('status')
                     ->latest()->count();
 
                     $dataFormNoFive = DB::table('form_no_fives')->where('status','Ongoing')
+                    ->whereNull('sent_status')
                     ->orWhereNull('status')
                     ->latest()->count();
 
 
                     $dataFormNoFour = DB::table('form_no_fours')->where('status','Ongoing')
+                    ->whereNull('sent_status')
                     ->orWhereNull('status')
                     ->latest()->count();
 
                     $dataFdFourOne = DB::table('fd_four_one_forms')->where('status','Ongoing')
+                    ->whereNull('sent_status')
                     ->orWhereNull('status')
                     ->latest()->count();
 
 
-                    $dataFormNoSeven = DB::table('form_no_sevens')->where('status','Ongoing')
-
+                    $dataFormNoSeven = DB::table('form_no_sevens')
+                    ->where('status','Ongoing')
+                    ->whereNull('sent_status')
                     ->latest()->count();
 
 
 
-                    $dataFdNine = DB::table('fd9_forms')->where('status','Ongoing')->latest()->count();
+                    $dataFdNine = DB::table('fd9_forms')->whereNull('sent_status')->where('status','Ongoing')->latest()->count();
 
                     $dataFromFd6Form = DB::table('fd6_forms')
                     ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd6_forms.fd_one_form_id')
                     ->select('fd_one_forms.*','fd6_forms.*','fd6_forms.id as mainId')
                     ->where('fd6_forms.status','=','Ongoing')
+                    ->whereNull('fd6_forms.sent_status')
                    ->orderBy('fd6_forms.id','desc')
                    ->count();
 
@@ -227,6 +244,7 @@ class AppServiceProvider extends ServiceProvider
                    ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd7_forms.fd_one_form_id')
                    ->select('fd_one_forms.*','fd7_forms.*','fd7_forms.id as mainId')
                    ->where('fd7_forms.status','=','Ongoing')
+                   ->whereNull('fd7_forms.sent_status')
                    ->orderBy('fd7_forms.id','desc')
                    ->count();
 
@@ -235,6 +253,7 @@ class AppServiceProvider extends ServiceProvider
                    ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fc1_forms.fd_one_form_id')
                    ->select('fd_one_forms.*','fc1_forms.*','fc1_forms.id as mainId')
                    ->where('fc1_forms.status','=','Ongoing')
+                   ->whereNull('fc1_forms.sent_status')
                    ->orderBy('fc1_forms.id','desc')
                    ->count();
 
@@ -243,6 +262,7 @@ class AppServiceProvider extends ServiceProvider
                    ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fc2_forms.fd_one_form_id')
                    ->select('fd_one_forms.*','fc2_forms.*','fc2_forms.id as mainId')
                    ->where('fc2_forms.status','=','Ongoing')
+                   ->whereNull('fc2_forms.sent_status')
                    ->orderBy('fc2_forms.id','desc')
                    ->count();
 
@@ -251,11 +271,13 @@ class AppServiceProvider extends ServiceProvider
                    ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd3_forms.fd_one_form_id')
                    ->select('fd_one_forms.*','fd3_forms.*','fd3_forms.id as mainId')
                    ->where('fd3_forms.status','=','Ongoing')
+                   ->whereNull('fd3_forms.sent_status')
                    ->orderBy('fd3_forms.id','desc')
                    ->count();
 
                    //new code start///
-                    $renewMain= DB::table('ngo_renews')->where('status','Ongoing')
+                    $renewMain= DB::table('ngo_renews')
+                    ->where('status','Ongoing')
                     ->select('id') ->get();
                     $renewId= $renewMain->implode("id", " ");
                     $renewIdArray= explode(" ", $renewId);
@@ -554,7 +576,7 @@ class AppServiceProvider extends ServiceProvider
                    $dataFromFc2Form+$dataFromFd3Form+$all_data_for_name_changes_list1e+
                    $all_data_for_name_changes_list2e+$all_data_for_name_changes_list3e ;
                 //  dd($mainCodeCountHeader1);
-                   $mainCodeCountHeader = $mainCodeCountHeader2 - $mainCodeCountHeader1;
+                   $mainCodeCountHeader = $mainCodeCountHeader2;
 
                 }else{
 

@@ -221,7 +221,7 @@ $branchNames = DB::table('branches')
 <div class="card" style="border:2px solid #979797">
     <div class="card-body">
         <div class="tracking_box">
-            <h5>বিষয়ঃ বিদেশ থেকে প্রাপ্ত জিনিসপত্র /দ্রব্যসামগ্র্রীর সংরক্ষণ সংক্রান্ত</h5>
+            <h5>বিষয়ঃ প্রকল্পের প্রত্যয়ন পত্র</h5>
             @if(!$dakDetail->main_file)
 
             @else

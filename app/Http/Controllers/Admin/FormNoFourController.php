@@ -72,4 +72,74 @@ class FormNoFourController extends Controller
         return redirect()->route('error_404')->with('error','some thing went wrong ');
     }
     }
+
+    public function show($id){
+        try{
+        \LogActivity::addToLog('view form no four List Detail');
+
+          $dataFromNoFourForm = DB::table('form_no_fours')
+          ->join('fd_one_forms', 'fd_one_forms.id', '=', 'form_no_fours.fd_one_form_id')
+          ->select('fd_one_forms.*','form_no_fours.*','form_no_fours.id as mainId')
+          ->where('form_no_fours.id',$id)
+         ->orderBy('form_no_fours.id','desc')
+         ->first();
+         $get_email_from_user = DB::table('users')->where('id',$dataFromNoFourForm->user_id)->value('email');
+
+
+
+        $formFourAreaList = DB::table('form_no_four_sector_details')
+        ->where('form_no_four_id',$id)
+                                 ->latest()->get();
+
+        return view('admin.form_no_four.show',compact(
+        'get_email_from_user',
+        'dataFromNoFourForm',
+        'formFourAreaList'
+    ));
+
+            } catch (\Exception $e) {
+                return redirect()->route('error_404')->with('error','some thing went wrong ');
+            }
+    }
+
+
+    public function statusUpdateForformNoFour(Request $request){
+
+
+        try{
+            DB::beginTransaction();
+
+        \LogActivity::addToLog('update form_no_four Status ');
+
+
+        DB::table('form_no_fours')->where('id',$request->id)
+        ->update([
+            'status' => $request->status,
+            'comment' => $request->comment,
+        ]);
+
+
+        $get_user_id = DB::table('form_no_fours')->where('id',$request->id)->value('fd_one_form_id');
+
+
+            Mail::send('emails.monthlyReport', ['comment' => $request->comment,'id' => $request->status,'ngoId'=>$get_user_id], function($message) use($request){
+                $message->to($request->email);
+                $message->subject('Annual Report Service');
+            });
+
+
+
+
+
+            DB::commit();
+        return redirect()->back()->with('success','Updated successfully!');
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return redirect()->route('error_404')->with('error','some thing went wrong ');
+    }
+
+
+
+    }
 }
