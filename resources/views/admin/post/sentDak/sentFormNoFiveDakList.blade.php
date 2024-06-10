@@ -96,7 +96,7 @@ $dakDetail = DB::table('dak_details')
          <?php
 
 $mainDetail = DB::table('form_no_five_daks')
-->where('form_no_five_status_id',$allStatusData->fd_five_status_id)->orderBy('id','asc')->get();
+->where('form_no_five_status_id',$allStatusData->form_no_five_status_id)->orderBy('id','asc')->get();
 
          ?>
 

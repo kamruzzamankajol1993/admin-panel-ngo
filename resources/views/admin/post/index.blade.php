@@ -75,6 +75,10 @@
 
                                       @include('admin.post.formNoFiveDakFirstStep')
 
+                                      @include('admin.post.formNoFourDakFirstStep')
+
+                                      @include('admin.post.fdFourOneFormDakFirstStep')
+
                                       @include('admin.post.duplicateCertificateDakFirstStep')
 
                                       @include('admin.post.contitutionDakFirstStep')

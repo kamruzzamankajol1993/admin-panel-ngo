@@ -203,6 +203,34 @@ class PotroController extends Controller
             $officeDetail = FormNoSevenOfficeSarok::where('pnote_form_no_seven',$id)->get();
             $checkParent = ParentNoteForFormNoSeven::where('nothi_detail_id',$parentId)
                            ->where('serial_number',$nothiId)->get();
+        }elseif($status == 'formNoFour'){
+
+            $getIdSarok = FormNoFourOfficeSarok::where('pnote_form_no_four',$id)
+            ->value('id');
+
+            $potrangshoDraftNew =  DB::table('potrangsho_drafts')
+            ->where('sarokId',$getIdSarok)
+                                   ->where('status',$status)->orderBy('id','desc')
+                                   ->first();
+
+            $officeDetail = FormNoFourOfficeSarok::where('pnote_form_no_four',$id)
+            ->get();
+            $checkParent = ParentNoteForFormNoFour::where('nothi_detail_id',$parentId)
+                           ->where('serial_number',$nothiId)->get();
+        }elseif($status == 'fdFourOneForm'){
+
+            $getIdSarok = FdFourOneFormOfficeSarok::where('pnote_fd_four_one_form',$id)
+            ->value('id');
+
+            $potrangshoDraftNew =  DB::table('potrangsho_drafts')
+            ->where('sarokId',$getIdSarok)
+                                   ->where('status',$status)->orderBy('id','desc')
+                                   ->first();
+
+            $officeDetail = FdFourOneFormOfficeSarok::where('pnote_fd_four_one_form',$id)
+            ->get();
+            $checkParent = ParentNoteForFdFourOneForm::where('nothi_detail_id',$parentId)
+                           ->where('serial_number',$nothiId)->get();
         }
 
         $nothiNumber = NothiList::where('id',$nothiId)->value('main_sarok_number');
@@ -468,6 +496,46 @@ class PotroController extends Controller
 
 
             $checkParent = ParentNoteForFormNoSeven::where('nothi_detail_id',$parentId)
+            ->where('serial_number',$nothiId)
+            ->get();
+
+
+        }elseif($status == 'formNoFour'){
+
+
+            $getIdSarok = FormNoFourOfficeSarok::where('pnote_form_no_four',$id)
+            ->value('id');
+
+            $potrangshoDraftNew =  DB::table('potrangsho_drafts')
+            ->where('sarokId',$getIdSarok)
+            ->where('status',$status)
+            ->orderBy('id','desc')
+            ->first();
+
+            $officeDetail = FormNoFourOfficeSarok::where('pnote_form_no_four',$id)
+            ->get();
+
+            $checkParent = ParentNoteForFormNoFour::where('nothi_detail_id',$parentId)
+            ->where('serial_number',$nothiId)
+            ->get();
+
+
+        }elseif($status == 'fdFourOneForm'){
+
+
+            $getIdSarok = FdFourOneFormOfficeSarok::where('pnote_fd_four_one_form',$id)
+            ->value('id');
+
+            $potrangshoDraftNew =  DB::table('potrangsho_drafts')
+            ->where('sarokId',$getIdSarok)
+            ->where('status',$status)
+            ->orderBy('id','desc')
+            ->first();
+
+            $officeDetail = FdFourOneFormOfficeSarok::where('pnote_fd_four_one_form',$id)
+            ->get();
+
+            $checkParent = ParentNoteForFdFourOneForm::where('nothi_detail_id',$parentId)
             ->where('serial_number',$nothiId)
             ->get();
 

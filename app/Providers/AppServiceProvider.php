@@ -156,12 +156,20 @@ class AppServiceProvider extends ServiceProvider
               ->count('receiver');
 
 
+              $totalReceiveNothiRi12FormFour = NothiDetail::where('receiver',Auth::guard('admin')->user()->id)->whereNull('sent_status')
+             ->whereNull('list_status')
+             ->where('dakType','formNoFour')->distinct()
+              ->count('receiver');
+
+              $totalReceiveNothiRi12FdFourOneForm = NothiDetail::where('receiver',Auth::guard('admin')->user()->id)->whereNull('sent_status')
+             ->whereNull('list_status')
+             ->where('dakType','fdFourOneForm')->distinct()
+              ->count('receiver');
 
 
-        $totalReceiveNothi = $totalReceiveNothiRi12FormSeven+$totalReceiveNothiRi12FormFive + $totalReceiveNothiRe + $totalReceiveNothiRi + $totalReceiveNothiRi1 + $totalReceiveNothiRi2+
+        $totalReceiveNothi =$totalReceiveNothiRi12FdFourOneForm + $totalReceiveNothiRi12FormFour+$totalReceiveNothiRi12FormSeven+$totalReceiveNothiRi12FormFive + $totalReceiveNothiRe + $totalReceiveNothiRi + $totalReceiveNothiRi1 + $totalReceiveNothiRi2+
         $totalReceiveNothiRi3 + $totalReceiveNothiRi4 + $totalReceiveNothiRi5 + $totalReceiveNothiRi6 + $totalReceiveNothiRi7 +
         $totalReceiveNothiRi8 + $totalReceiveNothiRi9 + $totalReceiveNothiRi10 + $totalReceiveNothiRi11 + $totalReceiveNothiRi12;
-
 
 
 

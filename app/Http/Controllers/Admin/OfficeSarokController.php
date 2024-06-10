@@ -24,7 +24,15 @@ use App\Models\FcTwoOfficeSarok;
 use App\Models\FdThreeOfficeSarok;
 use App\Models\FdFiveOfficeSarok;
 use App\Models\PotrangshoDraft;
+use App\Models\FormNoFourDak;
+use App\Models\ParentNoteForFormNoFour;
+use App\Models\FormNoFourOfficeSarok;
+use App\Models\ChildNoteForFormNoFour;
 
+use App\Models\Fd4OneFormDak;
+use App\Models\ParentNoteForFdFourOneForm;
+use App\Models\FdFourOneFormOfficeSarok;
+use App\Models\ChildNoteForFdFourOneForm;
 
 use App\Models\DuplicateCertificateOfficeSarok;
 use App\Models\ExecutiveCommitteeOfficeSarok;
@@ -233,6 +241,32 @@ class OfficeSarokController extends Controller
 
         $saveNewData = new FormNoSevenOfficeSarok();
         $saveNewData->pnote_form_no_seven  = $request->parentIdForPotrangso;
+       //  $saveNewData->office_subject = $request->subject;
+       //  $saveNewData->office_sutro = $request->sutro;
+       //  $saveNewData->description =$request->maindes;
+        $saveNewData->created_at =$created_at;
+        $saveNewData->save();
+
+
+
+
+    }elseif($request->statusForPotrangso == 'formNoFour'){
+
+        $saveNewData = new FormNoFourOfficeSarok();
+        $saveNewData->pnote_form_no_four  = $request->parentIdForPotrangso;
+       //  $saveNewData->office_subject = $request->subject;
+       //  $saveNewData->office_sutro = $request->sutro;
+       //  $saveNewData->description =$request->maindes;
+        $saveNewData->created_at =$created_at;
+        $saveNewData->save();
+
+
+
+
+    }elseif($request->statusForPotrangso == 'fdFourOneForm'){
+
+        $saveNewData = new FdFourOneFormOfficeSarok();
+        $saveNewData->pnote_fd_four_one_form  = $request->parentIdForPotrangso;
        //  $saveNewData->office_subject = $request->subject;
        //  $saveNewData->office_sutro = $request->sutro;
        //  $saveNewData->description =$request->maindes;

@@ -257,6 +257,33 @@ $childNoteNewList = DB::table('child_note_for_form_no_sevens')
 $officeDetail = DB::table('form_no_seven_office_saroks')
 ->where('pnote_form_no_seven',$checkParentFirst->id)->get();
 
+}elseif($status == 'formNoFour'){
+
+$checkParentFirst = DB::table('parent_note_for_form_no_fours')
+->where('nothi_detail_id',$dakId)
+->where('serial_number',$nothiId)
+->first();
+
+
+$childNoteNewList = DB::table('child_note_for_form_no_fours')
+                       ->where('pnote_form_no_four',$checkParentFirst->id)->get();
+
+$officeDetail = DB::table('child_note_for_form_no_fours')
+->where('pnote_form_no_four',$checkParentFirst->id)->get();
+
+}elseif($status == 'fdFourOneForm'){
+
+$checkParentFirst = DB::table('parent_note_for_fd_four_one_forms')
+->where('nothi_detail_id',$dakId)
+->where('serial_number',$nothiId)
+->first();
+
+
+$childNoteNewList = DB::table('child_note_for_fd_four_one_forms')
+                       ->where('pnote_fd_four_one_form',$checkParentFirst->id)->get();
+
+$officeDetail = DB::table('child_note_for_fd_four_one_forms')
+           ->where('pnote_fd_four_one_form',$checkParentFirst->id)->get();
 }elseif($status == 'duplicate'){
 
 $checkParentFirst = DB::table('parent_note_for_duplicate_certificates')->where('nothi_detail_id',$dakId)

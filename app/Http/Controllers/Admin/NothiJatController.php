@@ -11,8 +11,15 @@ use Hash;
 use PDF;
 use File;
 use Mail;
-use App\Models\Fd4OneFormDak;
 use App\Models\FormNoFourDak;
+use App\Models\ParentNoteForFormNoFour;
+use App\Models\FormNoFourOfficeSarok;
+use App\Models\ChildNoteForFormNoFour;
+
+use App\Models\Fd4OneFormDak;
+use App\Models\ParentNoteForFdFourOneForm;
+use App\Models\FdFourOneFormOfficeSarok;
+use App\Models\ChildNoteForFdFourOneForm;
 use App\Models\FormNoSevenDak;
 use App\Models\ParentNoteForFormNoSeven;
 use App\Models\FormNoSevenOfficeSarok;
@@ -203,8 +210,19 @@ class NothiJatController extends Controller
             $updateDataInsert->nothi_jat_status = 0;
             $updateDataInsert->save();
 
+          }elseif($status == 'formNoFour'){
 
+            $updateDataInsert = FormNoFourDak::find($id);
+            $updateDataInsert->nothi_jat_id = 0;
+            $updateDataInsert->nothi_jat_status = 0;
+            $updateDataInsert->save();
 
+          }elseif($status == 'fdFourOneForm'){
+
+            $updateDataInsert = Fd4OneFormDak::find($id);
+            $updateDataInsert->nothi_jat_id = 0;
+            $updateDataInsert->nothi_jat_status = 0;
+            $updateDataInsert->save();
 
           }elseif($status == 'duplicate'){
 
@@ -368,7 +386,21 @@ class NothiJatController extends Controller
                 $updateDataInsert->save();
 
 
-            }elseif($request->status == 'duplicate'){
+            }elseif($status == 'formNoFour'){
+
+                $updateDataInsert = FormNoFourDak::find($request->dakId);
+                $updateDataInsert->nothi_jat_id = $request->nothiId;
+                $updateDataInsert->nothi_jat_status = 1;
+                $updateDataInsert->save();
+
+              }elseif($status == 'fdFourOneForm'){
+
+                $updateDataInsert = Fd4OneFormDak::find($request->dakId);
+                $updateDataInsert->nothi_jat_id = $request->nothiId;
+                $updateDataInsert->nothi_jat_status = 1;
+                $updateDataInsert->save();
+
+              }elseif($request->status == 'duplicate'){
 
                 $updateDataInsert = DuplicateCertificateDak::find($request->dakId);
                 $updateDataInsert->nothi_jat_id = $request->nothiId;

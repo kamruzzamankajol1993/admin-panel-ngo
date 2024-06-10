@@ -1979,6 +1979,8 @@ style="padding:5px; background-color:#879dd9; border-radius: 10px;">নথি �
 
                              @include('admin.sendNothi.formNoFiveNothi')
                              @include('admin.sendNothi.formNoSevenNothi')
+                             @include('admin.sendNothi.formNoFourNothi')
+                             @include('admin.sendNothi.fdFourOneNothi')
 
                         </tbody>
                     </table>

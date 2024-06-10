@@ -1554,7 +1554,8 @@ $allNoteListNew = DB::table('parent_not_for_executive_committees')->where('nothi
 
                     @include('admin.receiveNothi.formNoFiveNothi')
                     @include('admin.receiveNothi.formNoSevenNothi')
-
+                    @include('admin.receiveNothi.formNoFourNothi')
+                    @include('admin.receiveNothi.fdFourOneNothi')
                     </tbody>
                 </table>
 

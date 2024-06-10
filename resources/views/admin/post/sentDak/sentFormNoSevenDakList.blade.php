@@ -51,7 +51,7 @@ $decesionName = DB::table('dak_details')
  <td style="text-align:right;">
 
 
-     <button class="btn btn-primary btn-xs" type="button" data-original-title="btn btn-danger btn-xs" title="" onclick="location.href = '{{ route('formNoFive.show',$allStatusData->form_no_seven_status_id) }}';">দেখুন</button>
+     <button class="btn btn-primary btn-xs" type="button" data-original-title="btn btn-danger btn-xs" title="" onclick="location.href = '{{ route('formNoSeven.show',$allStatusData->form_no_seven_status_id) }}';">দেখুন</button>
 
 
 
@@ -96,7 +96,7 @@ $dakDetail = DB::table('dak_details')
          <?php
 
 $mainDetail = DB::table('form_no_seven_daks')
-->where('form_no_seven_status_id',$allStatusData->fd_seven_status_id)->orderBy('id','asc')->get();
+->where('form_no_seven_status_id',$allStatusData->form_no_seven_status_id)->orderBy('id','asc')->get();
 
          ?>
 

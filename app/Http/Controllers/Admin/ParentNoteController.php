@@ -8,6 +8,15 @@ use Image;
 use Auth;
 use Hash;
 use DB;
+use App\Models\FormNoFourDak;
+use App\Models\ParentNoteForFormNoFour;
+use App\Models\FormNoFourOfficeSarok;
+use App\Models\ChildNoteForFormNoFour;
+
+use App\Models\Fd4OneFormDak;
+use App\Models\ParentNoteForFdFourOneForm;
+use App\Models\FdFourOneFormOfficeSarok;
+use App\Models\ChildNoteForFdFourOneForm;
 use App\Models\ParentNoteForFormNoFiveDak;
 use App\Models\ParentNoteForFormNoSeven;
 use App\Models\ParentNoteForFcOne;
@@ -196,6 +205,20 @@ return 1;
         }elseif($status == 'formNoSeven'){
 
             $checkParent = ParentNoteForFormNoSeven::where('nothi_detail_id',$dakId)
+            ->where('serial_number',$nothiId)
+            ->get();
+
+
+        }elseif($status == 'formNoFour'){
+
+            $checkParent = ParentNoteForFormNoFour::where('nothi_detail_id',$dakId)
+            ->where('serial_number',$nothiId)
+            ->get();
+
+
+        }elseif($status == 'fdFourOneForm'){
+
+            $checkParent = ParentNoteForFdFourOneForm::where('nothi_detail_id',$dakId)
             ->where('serial_number',$nothiId)
             ->get();
 
@@ -392,6 +415,20 @@ return 1;
         }elseif($status == 'formNoSeven'){
 
             $checkParent = ParentNoteForFormNoSevenDak::where('nothi_detail_id',$dakId)
+            ->where('serial_number',$nothiId)
+            ->get();
+
+
+        }elseif($status == 'formNoFour'){
+
+            $checkParent = ParentNoteForFormNoFour::where('nothi_detail_id',$dakId)
+            ->where('serial_number',$nothiId)
+            ->get();
+
+
+        }elseif($status == 'fdFourOneForm'){
+
+            $checkParent = ParentNoteForFdFourOneForm::where('nothi_detail_id',$dakId)
             ->where('serial_number',$nothiId)
             ->get();
 
@@ -645,6 +682,36 @@ return 1;
         $saveNewData->save();
 
         $totalCount = ParentNoteForFormNoSeven::where('nothi_detail_id',$request->dakId)
+        ->where('serial_number',$request->nothiId)->count();
+            $pId = $saveNewData->id;
+
+
+    }elseif($request->status == 'formNoFour'){
+
+        $saveNewData = new ParentNoteForFormNoFour();
+        $saveNewData->nothi_detail_id = $request->dakId;
+        $saveNewData->serial_number = $request->nothiId;
+        $saveNewData->subject = $request->subject;
+        $saveNewData->name ='নোট';
+        $saveNewData->created_at =$created_at;
+        $saveNewData->save();
+
+        $totalCount = ParentNoteForFormNoFour::where('nothi_detail_id',$request->dakId)
+        ->where('serial_number',$request->nothiId)->count();
+            $pId = $saveNewData->id;
+
+
+    }elseif($request->status == 'fdFourOneForm'){
+
+        $saveNewData = new ParentNoteForFdFourOneForm();
+        $saveNewData->nothi_detail_id = $request->dakId;
+        $saveNewData->serial_number = $request->nothiId;
+        $saveNewData->subject = $request->subject;
+        $saveNewData->name ='নোট';
+        $saveNewData->created_at =$created_at;
+        $saveNewData->save();
+
+        $totalCount = ParentNoteForFdFourOneForm::where('nothi_detail_id',$request->dakId)
         ->where('serial_number',$request->nothiId)->count();
             $pId = $saveNewData->id;
 
@@ -919,6 +986,36 @@ return 1;
         $saveNewData->save();
 
         $totalCount = ParentNoteForFormNoSeven::where('nothi_detail_id',$request->dakId)
+        ->where('serial_number',$request->nothiId)->count();
+            $pId = $saveNewData->id;
+
+
+    }elseif($request->status == 'formNoFour'){
+
+        $saveNewData = new ParentNoteForFormNoFour();
+        $saveNewData->nothi_detail_id = $request->dakId;
+        $saveNewData->serial_number = $request->nothiId;
+        $saveNewData->subject = $request->subject;
+        $saveNewData->name ='নোট';
+        $saveNewData->created_at =$created_at;
+        $saveNewData->save();
+
+        $totalCount = ParentNoteForFormNoFour::where('nothi_detail_id',$request->dakId)
+        ->where('serial_number',$request->nothiId)->count();
+            $pId = $saveNewData->id;
+
+
+    }elseif($request->status == 'fdFourOneForm'){
+
+        $saveNewData = new ParentNoteForFdFourOneForm();
+        $saveNewData->nothi_detail_id = $request->dakId;
+        $saveNewData->serial_number = $request->nothiId;
+        $saveNewData->subject = $request->subject;
+        $saveNewData->name ='নোট';
+        $saveNewData->created_at =$created_at;
+        $saveNewData->save();
+
+        $totalCount = ParentNoteForFdFourOneForm::where('nothi_detail_id',$request->dakId)
         ->where('serial_number',$request->nothiId)->count();
             $pId = $saveNewData->id;
 

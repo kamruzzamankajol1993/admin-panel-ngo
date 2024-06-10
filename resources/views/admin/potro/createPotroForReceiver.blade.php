@@ -306,6 +306,37 @@ $childNoteNewList = DB::table('child_note_for_form_no_sevens')
                        $childNoteNewListValue = DB::table('child_note_for_form_no_sevens')
            ->where('pnote_form_no_seven',$id)->orderBy('id','desc')->value('id');
 
+}elseif($status == 'formNoFour'){
+
+$checkParentFirst = DB::table('parent_note_for_form_no_fours')
+->where('nothi_detail_id',$parentId)
+->where('serial_number',$nothiId)
+->where('id',$id)
+->first();
+
+
+$childNoteNewList = DB::table('child_note_for_form_no_fours')
+                       ->where('pnote_form_no_four',$id)->get();
+
+$childNoteNewListValue = DB::table('child_note_for_form_no_fours')
+           ->where('pnote_form_no_four',$id)->orderBy('id','desc')->value('id');
+
+}elseif($status == 'fdFourOneForm'){
+
+$checkParentFirst = DB::table('parent_note_for_fd_four_one_forms')
+->where('nothi_detail_id',$parentId)
+->where('serial_number',$nothiId)
+->where('id',$id)
+->first();
+
+
+$childNoteNewList = DB::table('child_note_for_fd_four_one_forms')
+                       ->where('pnote_fd_four_one_form',$id)->get();
+
+$childNoteNewListValue = DB::table('child_note_for_fd_four_one_forms')
+           ->where('pnote_fd_four_one_form',$id)->orderBy('id','desc')
+           ->value('id');
+
 }elseif($status == 'duplicate'){
 
 

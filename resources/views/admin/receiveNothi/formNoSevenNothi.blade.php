@@ -65,7 +65,7 @@ style="padding:5px; background-color:#879dd9; border-radius: 10px;">নথি �
     @else
 <button type="button" class="btn btn-primary btn-xs"
 data-bs-toggle="modal"
-data-original-title="" data-bs-target="#myModalfdSeven{{ $key+1 }}">
+data-original-title="" data-bs-target="#myModalformNoSeven{{ $key+1 }}">
 নথি গতিবিধি
 </button>
 @endif

@@ -41,6 +41,12 @@ use Mpdf\Mpdf;
 use App\Models\NothiDetail;
 use App\Models\Fd4OneFormDak;
 use App\Models\FormNoFourDak;
+use App\Models\ParentNoteForFormNoFour;
+use App\Models\FormNoFourOfficeSarok;
+use App\Models\ChildNoteForFormNoFour;
+use App\Models\ParentNoteForFdFourOneForm;
+use App\Models\FdFourOneFormOfficeSarok;
+use App\Models\ChildNoteForFdFourOneForm;
 
 class DashBoardController extends Controller
 {
@@ -165,6 +171,22 @@ class DashBoardController extends Controller
         ->whereNull('list_status')
         ->limit(5)
        ->where('dakType','formNoSeven')->latest()->get();
+
+
+       $senderNothiListformNoFour = NothiDetail::where('receiver',Auth::guard('admin')->user()->id)
+        ->whereNull('sent_status')
+        ->whereNull('list_status')
+        ->limit(5)
+       ->where('dakType','formNoFour')
+       ->latest()->get();
+
+
+       $senderNothiListfdFourOne = NothiDetail::where('receiver',Auth::guard('admin')->user()->id)
+        ->whereNull('sent_status')
+        ->whereNull('list_status')
+        ->limit(5)
+       ->where('dakType','fdFourOneForm')
+       ->latest()->get();
 
 
          $senderNothiListduplicate = NothiDetail::where('receiver',Auth::guard('admin')->user()->id)
@@ -296,6 +318,8 @@ class DashBoardController extends Controller
 
 //dd($ngoStatusFdFive);
             return view('admin.dashboard.dashboard',compact(
+                'senderNothiListformNoFour',
+                'senderNothiListfdFourOne',
                 'ngoStatusFdFourOne',
                 'ngoStatusFormNoFour',
                 'senderNothiListformNoSeven',
@@ -401,6 +425,8 @@ class DashBoardController extends Controller
 
 
             return view('admin.dashboard.dashboardOne',compact(
+                'senderNothiListformNoFour',
+                'senderNothiListfdFourOne',
                 'ngoStatusFdFourOne',
                 'ngoStatusFormNoFour',
                 'senderNothiListformNoSeven',

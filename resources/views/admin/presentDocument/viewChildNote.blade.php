@@ -303,6 +303,23 @@
             aria-selected="false"><i
     class="icofont icofont-file-document"></i>প্রকল্পের প্রত্যয়ন পত্র</a></li>
 
+    @elseif($status == 'formNoFour')
+
+    <li class="nav-item"><a class="nav-link" id="profile-icon-tab_form_eight"
+        data-bs-toggle="tab" href="#profile-icon_form_eight" role="tab"
+        aria-controls="profile-icon"
+        aria-selected="false"><i
+class="icofont icofont-file-document"></i>মাসিক অগ্রগতির প্রতিবেদন</a></li>
+
+
+@elseif($status == 'fdFourOneForm')
+
+    <li class="nav-item"><a class="nav-link" id="profile-icon-tab_form_eight"
+        data-bs-toggle="tab" href="#profile-icon_form_eight" role="tab"
+        aria-controls="profile-icon"
+        aria-selected="false"><i
+class="icofont icofont-file-document"></i>সিএ ফার্ম কতৃক প্রদেয় প্রতিবেদন </a></li>
+
                                                 @endif
 
                                                 <!-- end new code --->
@@ -1110,6 +1127,24 @@ $nothiApproverListOnu = DB::table('nothi_approvers')->where('nothiId',$nothiId)
        aria-labelledby="profile-icon-tab_form_eight">
 
        @include('admin.form_no_seven.form_no_seven')
+       </div>
+
+       @elseif($status == 'formNoFour')
+
+
+       <div class="tab-pane fade" id="profile-icon_form_eight" role="tabpanel"
+       aria-labelledby="profile-icon-tab_form_eight">
+
+       @include('admin.form_no_four.form_no_four')
+       </div>
+
+       @elseif($status == 'fdFourOneForm')
+
+
+       <div class="tab-pane fade" id="profile-icon_form_eight" role="tabpanel"
+       aria-labelledby="profile-icon-tab_form_eight">
+
+       @include('admin.fd_four_one_form.fdFourOneForm')
        </div>
        @endif
 

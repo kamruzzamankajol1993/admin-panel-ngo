@@ -6,6 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\NothiDetail;
 use Auth;
+use App\Models\FormNoFourDak;
+use App\Models\ParentNoteForFormNoFour;
+use App\Models\FormNoFourOfficeSarok;
+use App\Models\ChildNoteForFormNoFour;
+
+use App\Models\Fd4OneFormDak;
+use App\Models\ParentNoteForFdFourOneForm;
+use App\Models\FdFourOneFormOfficeSarok;
+use App\Models\ChildNoteForFdFourOneForm;
 class ReceiveNothiController extends Controller
 {
     public function index(){
@@ -85,7 +94,24 @@ class ReceiveNothiController extends Controller
        $senderNothiListformNoSeven = NothiDetail::where('receiver',Auth::guard('admin')->user()->id)
         ->whereNull('sent_status')
         ->whereNull('list_status')
-       ->where('dakType','formNoSeven')->latest()->get();
+       ->where('dakType','formNoSeven')
+       ->latest()->get();
+
+       $senderNothiListformNoFour = NothiDetail::where('receiver',Auth::guard('admin')->user()->id)
+        ->whereNull('sent_status')
+        ->whereNull('list_status')
+       ->where('dakType','formNoFour')
+       ->latest()->get();
+
+
+       $senderNothiListfdFourOne = NothiDetail::where('receiver',Auth::guard('admin')->user()->id)
+        ->whereNull('sent_status')
+        ->whereNull('list_status')
+       ->where('dakType','fdFourOneForm')
+       ->latest()->get();
+
+
+
 
 
          $senderNothiListduplicate = NothiDetail::where('receiver',Auth::guard('admin')->user()->id)
@@ -106,7 +132,10 @@ class ReceiveNothiController extends Controller
         ->where('dakType','committee')->latest()->get();
 
 
-            return view('admin.receiveNothi.index',compact('senderNothiListfdNine',
+            return view('admin.receiveNothi.index',compact(
+            'senderNothiListfdFourOne',
+            'senderNothiListformNoFour',
+            'senderNothiListfdNine',
             'senderNothiListformNoFive',
             'senderNothiListformNoSeven',
             'senderNothiListfdFive',

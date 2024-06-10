@@ -20,6 +20,16 @@ use App\Models\ParentNoteForFormNoSeven;
 use App\Models\FormNoSevenOfficeSarok;
 use App\Models\ChildNoteForFormNoSeven;
 
+use App\Models\FormNoFourDak;
+use App\Models\ParentNoteForFormNoFour;
+use App\Models\FormNoFourOfficeSarok;
+use App\Models\ChildNoteForFormNoFour;
+
+use App\Models\Fd4OneFormDak;
+use App\Models\ParentNoteForFdFourOneForm;
+use App\Models\FdFourOneFormOfficeSarok;
+use App\Models\ChildNoteForFdFourOneForm;
+
 use App\Models\FormNoFiveDak;
 use App\Models\ParentNoteForFormNoFiveDak;
 use App\Models\FormNoFiveOfficeSarok;
@@ -143,6 +153,14 @@ class ChildNoteController extends Controller
 
             $childNoteNewList = DB::table('child_note_for_form_no_sevens')->where('id',$request->getFinalValue)->first();
 
+        }elseif($request->mmStatus == 'formNoFour'){
+
+            $childNoteNewList = DB::table('child_note_for_form_no_fours')->where('id',$request->getFinalValue)->first();
+
+        }elseif($request->mmStatus == 'fdFourOneForm'){
+
+            $childNoteNewList = DB::table('child_note_for_fd_four_one_forms')->where('id',$request->getFinalValue)->first();
+
         }elseif($request->mmStatus == 'duplicate'){
 
             $childNoteNewList = DB::table('child_note_for_duplicate_certificates')->where('id',$request->getFinalValue)->first();
@@ -235,6 +253,14 @@ class ChildNoteController extends Controller
 
             $childNoteNewList = DB::table('child_note_for_form_no_sevens')->where('id',$id)->delete();
 
+        }elseif($status == 'formNoFour'){
+
+            $childNoteNewList = DB::table('child_note_for_form_no_fours')->where('id',$id)->delete();
+
+        }elseif($status == 'fdFourOneForm'){
+
+            $childNoteNewList = DB::table('child_note_for_fd_four_one_forms')->where('id',$id)->delete();
+
         }elseif($status == 'duplicate'){
 
             $childNoteNewList = DB::table('child_note_for_duplicate_certificates')->where('id',$id)->delete();
@@ -324,6 +350,16 @@ class ChildNoteController extends Controller
 
             $officeDetail = FormNoSevenOfficeSarok::where('pnote_form_no_seven',$id)->get();
             $checkParent = ParentNoteForFormNoSeven::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
+
+        }elseif($status == 'formNoFour'){
+
+                $officeDetail = FormNoFourOfficeSarok::where('pnote_form_no_four',$id)->get();
+                $checkParent = ParentNoteForFormNoFour::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
+
+        }elseif($status == 'fdFourOneForm'){
+
+            $officeDetail = FdFourOneFormOfficeSarok::where('pnote_fd_four_one_form',$id)->get();
+            $checkParent = ParentNoteForFdFourOneForm::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
 
         }elseif($status == 'duplicate'){
 
@@ -450,7 +486,17 @@ class ChildNoteController extends Controller
                 $officeDetail = FormNoSevenOfficeSarok::where('pnote_form_no_seven',$id)->get();
                 $checkParent = ParentNoteForFormNoSeven::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
 
-            }elseif($status == 'duplicate'){
+            }elseif($status == 'formNoFour'){
+
+                $officeDetail = FormNoFourOfficeSarok::where('pnote_form_no_four',$id)->get();
+                $checkParent = ParentNoteForFormNoFour::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
+
+        }elseif($status == 'fdFourOneForm'){
+
+            $officeDetail = FdFourOneFormOfficeSarok::where('pnote_fd_four_one_form',$id)->get();
+            $checkParent = ParentNoteForFdFourOneForm::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
+
+        }elseif($status == 'duplicate'){
 
                 $officeDetail = DuplicateCertificateOfficeSarok::where('pnote_dupid',$id)->get();
                 $checkParent = ParentNoteForDuplicateCertificate::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
@@ -574,7 +620,17 @@ class ChildNoteController extends Controller
                 $officeDetail = FormNoSevenOfficeSarok::where('pnote_form_no_seven',$id)->get();
                 $checkParent = ParentNoteForFormNoSeven::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
 
-            }elseif($status == 'duplicate'){
+            }elseif($status == 'formNoFour'){
+
+                $officeDetail = FormNoFourOfficeSarok::where('pnote_form_no_four',$id)->get();
+                $checkParent = ParentNoteForFormNoFour::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
+
+        }elseif($status == 'fdFourOneForm'){
+
+            $officeDetail = FdFourOneFormOfficeSarok::where('pnote_fd_four_one_form',$id)->get();
+            $checkParent = ParentNoteForFdFourOneForm::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
+
+        }elseif($status == 'duplicate'){
 
                 $officeDetail = DuplicateCertificateOfficeSarok::where('pnote_dupid',$id)->get();
                 $checkParent = ParentNoteForDuplicateCertificate::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId) ->get();
@@ -695,14 +751,26 @@ class ChildNoteController extends Controller
         }elseif($status == 'formNoFive'){
 
             $checkParentFirst = DB::table('parent_note_for_form_no_five_daks')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
-            $childNoteNewList = DB::table('child_note_for_form_no_fives')->where('pnote_fd_five',$id)->get();
-            $childNoteNewListValue = DB::table('child_note_for_form_no_fives')->where('pnote_fd_five',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
+            $childNoteNewList = DB::table('child_note_for_form_no_fives')->where('pnote_form_no_five',$id)->get();
+            $childNoteNewListValue = DB::table('child_note_for_form_no_fives')->where('pnote_form_no_five',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
 
     }elseif($status == 'formNoSeven'){
 
         $checkParentFirst = DB::table('parent_note_for_form_no_sevens')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
-        $childNoteNewList = DB::table('child_note_for_form_no_sevens')->where('pnote_fd_seven',$id)->get();
-        $childNoteNewListValue = DB::table('child_note_for_form_no_sevens')->where('pnote_fd_seven',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
+        $childNoteNewList = DB::table('child_note_for_form_no_sevens')->where('pnote_form_no_seven',$id)->get();
+        $childNoteNewListValue = DB::table('child_note_for_form_no_sevens')->where('pnote_form_no_seven',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
+
+}elseif($status == 'formNoFour'){
+
+    $checkParentFirst = DB::table('parent_note_for_form_no_fours')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
+    $childNoteNewList = DB::table('child_note_for_form_no_fours')->where('pnote_form_no_four',$id)->get();
+    $childNoteNewListValue = DB::table('child_note_for_form_no_fours')->where('pnote_form_no_four',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
+
+}elseif($status == 'fdFourOneForm'){
+
+    $checkParentFirst = DB::table('parent_note_for_fd_four_one_forms')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
+    $childNoteNewList = DB::table('child_note_for_fd_four_one_forms')->where('pnote_fd_four_one_form',$id)->get();
+    $childNoteNewListValue = DB::table('child_note_for_fd_four_one_forms')->where('pnote_fd_four_one_form',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
 
 }elseif($status == 'duplicate'){
 
@@ -832,6 +900,18 @@ class ChildNoteController extends Controller
         $checkParentFirst = DB::table('parent_note_for_form_no_sevens')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
         $childNoteNewList = DB::table('child_note_for_form_no_sevens')->where('pnote_form_no_seven',$id)->get();
         $childNoteNewListValue = DB::table('child_note_for_form_no_sevens')->where('pnote_form_no_seven',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
+
+}elseif($status == 'formNoFour'){
+
+    $checkParentFirst = DB::table('parent_note_for_form_no_fours')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
+    $childNoteNewList = DB::table('child_note_for_form_no_fours')->where('pnote_form_no_four',$id)->get();
+    $childNoteNewListValue = DB::table('child_note_for_form_no_fours')->where('pnote_form_no_four',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
+
+}elseif($status == 'fdFourOneForm'){
+
+    $checkParentFirst = DB::table('parent_note_for_fd_four_one_forms')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
+    $childNoteNewList = DB::table('child_note_for_fd_four_one_forms')->where('pnote_fd_four_one_form',$id)->get();
+    $childNoteNewListValue = DB::table('child_note_for_fd_four_one_forms')->where('pnote_fd_four_one_form',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
 
 }elseif($status == 'duplicate'){
 
@@ -980,6 +1060,18 @@ class ChildNoteController extends Controller
             $childNoteNewList = DB::table('child_note_for_form_no_sevens')->where('id',$childIdNew)->where('pnote_form_no_seven',$id)->get();
             $childNoteNewListValue = DB::table('child_note_for_form_no_sevens')->where('pnote_form_no_seven',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
 
+    }elseif($status == 'formNoFour'){
+
+        $checkParentFirst = DB::table('parent_note_for_form_no_fours')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
+        $childNoteNewList = DB::table('child_note_for_form_no_fours')->where('id',$childIdNew)->where('pnote_form_no_four',$id)->get();
+        $childNoteNewListValue = DB::table('child_note_for_form_no_fours')->where('pnote_form_no_four',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
+
+    }elseif($status == 'fdFourOneForm'){
+
+        $checkParentFirst = DB::table('parent_note_for_fd_four_one_forms')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
+        $childNoteNewList = DB::table('child_note_for_fd_four_one_forms')->where('id',$childIdNew)->where('pnote_fd_four_one_form',$id)->get();
+        $childNoteNewListValue = DB::table('child_note_for_fd_four_one_forms')->where('pnote_fd_four_one_form',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
+
     }elseif($status == 'duplicate'){
 
                 $checkParentFirst = DB::table('parent_note_for_duplicate_certificates')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
@@ -1123,6 +1215,18 @@ class ChildNoteController extends Controller
         $childNoteNewList = DB::table('child_note_for_form_no_sevens')->where('id',$childIdNew)->where('pnote_form_no_seven',$id)->get();
         $childNoteNewListValue = DB::table('child_note_for_form_no_sevens')->where('pnote_form_no_seven',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
 
+}elseif($status == 'formNoFour'){
+
+    $checkParentFirst = DB::table('parent_note_for_form_no_fours')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
+    $childNoteNewList = DB::table('child_note_for_form_no_fours')->where('id',$childIdNew)->where('pnote_form_no_four',$id)->get();
+    $childNoteNewListValue = DB::table('child_note_for_form_no_fours')->where('pnote_form_no_four',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
+
+}elseif($status == 'fdFourOneForm'){
+
+    $checkParentFirst = DB::table('parent_note_for_fd_four_one_forms')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
+    $childNoteNewList = DB::table('child_note_for_fd_four_one_forms')->where('id',$childIdNew)->where('pnote_fd_four_one_form',$id)->get();
+    $childNoteNewListValue = DB::table('child_note_for_fd_four_one_forms')->where('pnote_fd_four_one_form',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
+
 }elseif($status == 'duplicate'){
 
             $checkParentFirst = DB::table('parent_note_for_duplicate_certificates')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
@@ -1168,7 +1272,10 @@ class ChildNoteController extends Controller
 
         try{
         if($status == 'registration'){
-
+            $fdFourOneFormStatusId=0;
+            $dataFdFourOneForm=0;
+            $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
             $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -1219,7 +1326,10 @@ class ChildNoteController extends Controller
                              //new code
 
         }elseif($status == 'renew'){
-
+            $fdFourOneFormStatusId=0;
+            $dataFdFourOneForm=0;
+            $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
             $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -1268,7 +1378,10 @@ class ChildNoteController extends Controller
 
 
         }elseif($status == 'nameChange'){
-
+            $fdFourOneFormStatusId=0;
+            $dataFdFourOneForm=0;
+            $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
             $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -1329,7 +1442,10 @@ class ChildNoteController extends Controller
 
 
         }elseif($status == 'fdNine'){
-
+            $fdFourOneFormStatusId=0;
+            $dataFdFourOneForm=0;
+            $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
             $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -1385,7 +1501,10 @@ class ChildNoteController extends Controller
 
         }elseif($status == 'fdNineOne'){
 
-
+            $fdFourOneFormStatusId=0;
+            $dataFdFourOneForm=0;
+            $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
             $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -1454,6 +1573,11 @@ class ChildNoteController extends Controller
 
         }elseif($status == 'fdSix'){
 
+            $fdFourOneFormStatusId=0;
+            $dataFdFourOneForm=0;
+            $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
+
             $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -1497,6 +1621,11 @@ class ChildNoteController extends Controller
 
 
         }elseif($status == 'fdSeven'){
+
+            $fdFourOneFormStatusId=0;
+            $dataFdFourOneForm=0;
+            $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
 
             $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
@@ -1542,6 +1671,11 @@ class ChildNoteController extends Controller
 
         }elseif($status == 'fcOne'){
 
+            $fdFourOneFormStatusId=0;
+            $dataFdFourOneForm=0;
+            $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
+
             $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -1583,6 +1717,11 @@ class ChildNoteController extends Controller
             $checkParent = ParentNoteForFcOne::where('nothi_detail_id',$parentId)->get();
 
         }elseif($status == 'fcTwo'){
+
+            $fdFourOneFormStatusId=0;
+            $dataFdFourOneForm=0;
+            $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
 
             $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
@@ -1639,6 +1778,11 @@ class ChildNoteController extends Controller
 
         }elseif($status == 'fdThree'){
 
+            $fdFourOneFormStatusId=0;
+            $dataFdFourOneForm=0;
+            $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
+
             $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -1680,6 +1824,11 @@ class ChildNoteController extends Controller
 
 
         }elseif($status == 'duplicate'){
+
+            $fdFourOneFormStatusId=0;
+            $dataFdFourOneForm=0;
+            $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
 
             $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
@@ -1724,6 +1873,10 @@ class ChildNoteController extends Controller
             $dataFromNoFiveForm =0;
 
         }elseif($status == 'constitution'){
+            $fdFourOneFormStatusId=0;
+            $dataFdFourOneForm=0;
+            $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
 
             $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
@@ -1767,6 +1920,10 @@ class ChildNoteController extends Controller
             $dataFromNoFiveForm =0;
 
         }elseif($status == 'committee'){
+            $fdFourOneFormStatusId=0;
+            $dataFdFourOneForm=0;
+            $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
 
             $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
@@ -1814,6 +1971,11 @@ class ChildNoteController extends Controller
 
         }elseif($status == 'fdFive'){
 
+            $fdFourOneFormStatusId=0;
+            $dataFdFourOneForm=0;
+            $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
+
             $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -1859,6 +2021,11 @@ class ChildNoteController extends Controller
 
 
         }elseif($status == 'formNoFive'){
+
+            $fdFourOneFormStatusId=0;
+            $dataFdFourOneForm=0;
+            $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
 
             $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
@@ -1908,9 +2075,15 @@ class ChildNoteController extends Controller
 
         }elseif($status == 'formNoSeven'){
 
+            $fdFourOneFormStatusId=0;
+            $dataFdFourOneForm=0;
+            $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
+
             $fdFiveStatusId=0;
                     $dataFromFdFive=0;
-
+                    $formNoFourStatusId=0;
+                    $dataFromNoFourForm==0;
             $fdNineOtherFileList =0;$dataFromFc2Form =0;$dataFromFc1Form =0; $prokolpoAreaList=0;$dataFromFd6Form = 0;
             $dataFromFd7Form = 0;$ngoStatus=0;$ngoTypeData=0;$nVisaDocs=0;
             $dataFromNVisaFd9Fd1=0;$nVisabasicInfo=0;$forwardingLetterOnulipi=0;$editCheck1=0;
@@ -1950,9 +2123,119 @@ class ChildNoteController extends Controller
         $formNoFiveStepFiveArea = 0;
 
 
-           $get_email_from_user = DB::table('users')->where('id',$dataFromNoFiveForm->user_id)->value('email');
+           $get_email_from_user = DB::table('users')->where('id',$dataFromNoSevenForm->user_id)->value('email');
 
            $checkParent = ParentNoteForFormNoSeven::where('nothi_detail_id',$parentId)
+           ->where('serial_number',$nothiId)->get();
+
+
+        }elseif($status == 'formNoFour'){
+            $formNoSevenStatusId=0;
+            $fdFiveStatusId=0;
+            $dataFromFdFive=0;
+            $dataFromNoSevenForm=0;
+
+            $fdNineOtherFileList =0;$dataFromFc2Form =0;$dataFromFc1Form =0; $prokolpoAreaList=0;$dataFromFd6Form = 0;
+            $dataFromFd7Form = 0;$ngoStatus=0;$ngoTypeData=0;$nVisaDocs=0;
+            $dataFromNVisaFd9Fd1=0;$nVisabasicInfo=0;$forwardingLetterOnulipi=0;$editCheck1=0;
+            $editCheck=0;$statusData=0;$nVisaWorkPlace=0;$nVisaSponSor=0;$nVisaForeignerInfo=0;
+            $nVisaManPower=0;$nVisaEmploye=0;$nVisaCompensationAndBenifits=0;$nVisaAuthPerson=0;
+            $mainIdR=0;$renewInfoData=0;$mainIdFdNineOne =0;$form_one_data=0;
+            $all_data_for_new_list_all=0;$form_eight_data=0;$form_member_data=0;$form_member_data_doc=0;
+            $form_ngo_data_doc=0;$users_info=0;$all_source_of_fund=0;$all_partiw=0;
+            $allNameChangeDoc = 0;$getformOneId= 0;$duration_list_all1 =0;$duration_list_all = 0;
+            $renew_status = 0;$name_change_status = 0;$r_status = 0;$form_member_data_doc_renew =0;
+            $get_all_data_adviser=0; $get_all_data_other=0;$get_all_data_adviser_bank=0;
+            $fd_three_status_id =0;$duplicateCertificateStatusId = 0;$constitutionStatusId = 0;
+            $committeeStatusId = 0;$dataFromFd3Form = 0;$dataFromDuplicateCertificate = 0;
+            $dataFromCommittee =0;$dataFromConstitution = 0; $dataFromCommittee =0;
+            $fd2FormList = 0;$fd2OtherInfo = 0;
+
+            $officeDetail = FormNoFourOfficeSarok::where('pnote_form_no_four',$id)->get();
+
+            $formNoFourStatusId = DB::table('form_no_four_daks')
+            ->where('id',$parentId)->value('form_no_four_status_id');
+
+            $dataFromNoFourForm = DB::table('form_no_fours')
+            ->join('fd_one_forms', 'fd_one_forms.id', '=', 'form_no_fours.fd_one_form_id')
+            ->select('fd_one_forms.*','form_no_fours.*','form_no_fours.id as mainId')
+            ->where('form_no_fours.id',$formNoFourStatusId)
+            ->orderBy('form_no_fours.id','desc')
+            ->first();
+
+            $formNoFiveStatusId=0;
+            $dataFromNoFiveForm=0;
+
+        $formNoFiveStepTwoData = 0;
+        $formNoFiveStepThreeData =0;
+        $formNoFiveStepFourData = 0;
+        $formNoFiveStepFiveOther= 0;
+        $formNoFiveStepFiveData = 0;
+        $formNoFiveStepFiveArea = 0;
+
+        $fdFourOneFormStatusId=0;
+        $dataFdFourOneForm=0;
+
+           $get_email_from_user = DB::table('users')
+           ->where('id',$dataFromNoFourForm->user_id)->value('email');
+
+           $checkParent = ParentNoteForFormNoFour::where('nothi_detail_id',$parentId)
+           ->where('serial_number',$nothiId)->get();
+
+
+        }elseif($status == 'fdFourOneForm'){
+            $formNoSevenStatusId=0;
+            $fdFiveStatusId=0;
+            $dataFromFdFive=0;
+            $dataFromNoSevenForm=0;
+
+            $formNoFourStatusId=0;
+            $dataFromNoFourForm=0;
+
+            $fdNineOtherFileList =0;$dataFromFc2Form =0;$dataFromFc1Form =0; $prokolpoAreaList=0;$dataFromFd6Form = 0;
+            $dataFromFd7Form = 0;$ngoStatus=0;$ngoTypeData=0;$nVisaDocs=0;
+            $dataFromNVisaFd9Fd1=0;$nVisabasicInfo=0;$forwardingLetterOnulipi=0;$editCheck1=0;
+            $editCheck=0;$statusData=0;$nVisaWorkPlace=0;$nVisaSponSor=0;$nVisaForeignerInfo=0;
+            $nVisaManPower=0;$nVisaEmploye=0;$nVisaCompensationAndBenifits=0;$nVisaAuthPerson=0;
+            $mainIdR=0;$renewInfoData=0;$mainIdFdNineOne =0;$form_one_data=0;
+            $all_data_for_new_list_all=0;$form_eight_data=0;$form_member_data=0;$form_member_data_doc=0;
+            $form_ngo_data_doc=0;$users_info=0;$all_source_of_fund=0;$all_partiw=0;
+            $allNameChangeDoc = 0;$getformOneId= 0;$duration_list_all1 =0;$duration_list_all = 0;
+            $renew_status = 0;$name_change_status = 0;$r_status = 0;$form_member_data_doc_renew =0;
+            $get_all_data_adviser=0; $get_all_data_other=0;$get_all_data_adviser_bank=0;
+            $fd_three_status_id =0;$duplicateCertificateStatusId = 0;$constitutionStatusId = 0;
+            $committeeStatusId = 0;$dataFromFd3Form = 0;$dataFromDuplicateCertificate = 0;
+            $dataFromCommittee =0;$dataFromConstitution = 0; $dataFromCommittee =0;
+            $fd2FormList = 0;$fd2OtherInfo = 0;
+
+            $officeDetail = FdFourOneFormOfficeSarok::where('pnote_fd_four_one_form',$id)->get();
+
+            $fdFourOneFormStatusId = DB::table('fd4_one_form_daks')
+            ->where('id',$parentId)->value('fd4_one_form_status_id');
+
+            $dataFdFourOneForm = DB::table('fd_four_one_forms')
+            ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd_four_one_forms.fd_one_form_id')
+            ->select('fd_one_forms.*','fd_four_one_forms.*','fd_four_one_forms.id as mainId')
+            ->where('fd_four_one_forms.id',$fdFourOneFormStatusId)
+            ->orderBy('fd_four_one_forms.id','desc')
+            ->first();
+
+            $formNoFiveStatusId=0;
+            $dataFromNoFiveForm=0;
+
+        $formNoFiveStepTwoData = 0;
+        $formNoFiveStepThreeData =0;
+        $formNoFiveStepFourData = 0;
+        $formNoFiveStepFiveOther= 0;
+        $formNoFiveStepFiveData = 0;
+        $formNoFiveStepFiveArea = 0;
+
+
+           $get_email_from_user = DB::table('users')
+           ->where('id',$dataFdFourOneForm->user_id)->value('email');
+
+           $checkParent = ParentNoteForFdFourOneForm::
+           where('nothi_detail_id',$parentId)
            ->where('serial_number',$nothiId)->get();
 
 
@@ -2059,6 +2342,18 @@ class ChildNoteController extends Controller
             $childNoteNewList = DB::table('child_note_for_form_no_sevens')->where('pnote_form_no_seven',$id)->get();
             $childNoteNewListValue = DB::table('child_note_for_form_no_sevens')->where('pnote_form_no_seven',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
 
+        }elseif($status == 'formNoFour'){
+
+            $checkParentFirst = DB::table('parent_note_for_form_no_fours')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
+            $childNoteNewList = DB::table('child_note_for_form_no_fours')->where('pnote_form_no_four',$id)->get();
+            $childNoteNewListValue = DB::table('child_note_for_form_no_fours')->where('pnote_form_no_four',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
+
+        }elseif($status == 'fdFourOneForm'){
+
+            $checkParentFirst = DB::table('parent_note_for_fd_four_one_forms')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
+            $childNoteNewList = DB::table('child_note_for_fd_four_one_forms')->where('pnote_fd_four_one_form',$id)->get();
+            $childNoteNewListValue = DB::table('child_note_for_fd_four_one_forms')->where('pnote_fd_four_one_form',$id)->whereNull('sent_status')->orwhere('sent_status',1)->value('id');
+
         }elseif($status == 'duplicate'){
 
             $checkParentFirst = DB::table('parent_note_for_duplicate_certificates')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
@@ -2080,6 +2375,10 @@ class ChildNoteController extends Controller
         }
 
         return view('admin.presentDocument.addChildNote',compact(
+            'fdFourOneFormStatusId',
+            'dataFdFourOneForm',
+            'formNoFourStatusId',
+            'dataFromNoFourForm',
             'formNoSevenStatusId',
             'dataFromNoSevenForm',
             'formNoFiveStepTwoData',
@@ -2179,6 +2478,11 @@ class ChildNoteController extends Controller
         try{
             if($status == 'registration'){
 
+                $fdFourOneFormStatusId=0;
+                $dataFdFourOneForm=0;
+                $formNoFourStatusId=0;
+                        $dataFromNoFourForm==0;
+
                 $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -2229,6 +2533,11 @@ class ChildNoteController extends Controller
 
 
                 }elseif($status == 'renew'){
+
+                    $fdFourOneFormStatusId=0;
+                    $dataFdFourOneForm=0;
+                    $formNoFourStatusId=0;
+                            $dataFromNoFourForm==0;
 
                     $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
@@ -2281,6 +2590,11 @@ class ChildNoteController extends Controller
                     $get_all_data_adviser = DB::table('fd_one_adviser_lists')->where('fd_one_form_id',$form_one_data->id)->get();
 
                 }elseif($status == 'nameChange'){
+
+                    $fdFourOneFormStatusId=0;
+                    $dataFdFourOneForm=0;
+                    $formNoFourStatusId=0;
+                            $dataFromNoFourForm==0;
 
                     $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
@@ -2347,6 +2661,11 @@ class ChildNoteController extends Controller
 
                 }elseif($status == 'fdNine'){
 
+                    $fdFourOneFormStatusId=0;
+                    $dataFdFourOneForm=0;
+                    $formNoFourStatusId=0;
+                            $dataFromNoFourForm==0;
+
                     $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -2404,6 +2723,11 @@ class ChildNoteController extends Controller
                     $checkParent = ParentNoteForFdNine::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
 
                 }elseif($status == 'fdNineOne'){
+
+                    $fdFourOneFormStatusId=0;
+                    $dataFdFourOneForm=0;
+                    $formNoFourStatusId=0;
+                            $dataFromNoFourForm==0;
 
                     $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
@@ -2474,6 +2798,11 @@ class ChildNoteController extends Controller
 
                 }elseif($status == 'fdSix'){
 
+
+                    $fdFourOneFormStatusId=0;
+                    $dataFdFourOneForm=0;
+                    $formNoFourStatusId=0;
+                            $dataFromNoFourForm==0;
                     $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -2515,6 +2844,11 @@ class ChildNoteController extends Controller
                     $checkParent = ParentNoteForFdsix::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
 
                 }elseif($status == 'fdSeven'){
+
+                    $fdFourOneFormStatusId=0;
+                    $dataFdFourOneForm=0;
+                    $formNoFourStatusId=0;
+                            $dataFromNoFourForm==0;
 
                     $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
@@ -2564,6 +2898,11 @@ class ChildNoteController extends Controller
 
                 }elseif($status == 'fcOne'){
 
+                    $fdFourOneFormStatusId=0;
+                    $dataFdFourOneForm=0;
+                    $formNoFourStatusId=0;
+                            $dataFromNoFourForm==0;
+
                     $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -2609,6 +2948,11 @@ class ChildNoteController extends Controller
                     $checkParent = ParentNoteForFcOne::where('nothi_detail_id',$parentId)->get();
 
                 }elseif($status == 'fcTwo'){
+
+                    $fdFourOneFormStatusId=0;
+                    $dataFdFourOneForm=0;
+                    $formNoFourStatusId=0;
+                            $dataFromNoFourForm==0;
 
                     $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
@@ -2656,6 +3000,11 @@ class ChildNoteController extends Controller
 
                 }elseif($status == 'fdThree'){
 
+                    $fdFourOneFormStatusId=0;
+                    $dataFdFourOneForm=0;
+                    $formNoFourStatusId=0;
+                            $dataFromNoFourForm==0;
+
                     $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -2699,6 +3048,11 @@ class ChildNoteController extends Controller
 
                 }elseif($status == 'duplicate'){
 
+                    $fdFourOneFormStatusId=0;
+                    $dataFdFourOneForm=0;
+                    $formNoFourStatusId=0;
+                            $dataFromNoFourForm==0;
+
                     $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -2739,6 +3093,11 @@ class ChildNoteController extends Controller
                    $checkParent = ParentNoteForDuplicateCertificate::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
 
                 }elseif($status == 'constitution'){
+
+                    $fdFourOneFormStatusId=0;
+                    $dataFdFourOneForm=0;
+                    $formNoFourStatusId=0;
+                            $dataFromNoFourForm==0;
 
                     $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
@@ -2782,6 +3141,11 @@ class ChildNoteController extends Controller
 
                 }elseif($status == 'committee'){
 
+                    $fdFourOneFormStatusId=0;
+                    $dataFdFourOneForm=0;
+                    $formNoFourStatusId=0;
+                            $dataFromNoFourForm==0;
+
                     $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -2823,6 +3187,11 @@ class ChildNoteController extends Controller
                     $checkParent = ParentNotForExecutiveCommittee::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
 
                 }elseif($status == 'fdFive'){
+
+                    $fdFourOneFormStatusId=0;
+                    $dataFdFourOneForm=0;
+                    $formNoFourStatusId=0;
+                            $dataFromNoFourForm==0;
 
                     $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
@@ -2867,7 +3236,10 @@ class ChildNoteController extends Controller
                     $checkParent = ParentNoteForFdFive::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
 
                 }elseif($status == 'formNoFive'){
-
+                    $fdFourOneFormStatusId=0;
+                    $dataFdFourOneForm=0;
+                    $formNoFourStatusId=0;
+                            $dataFromNoFourForm==0;
                     $formNoSevenStatusId=0;
             $dataFromNoSevenForm=0;
 
@@ -2914,7 +3286,10 @@ class ChildNoteController extends Controller
 
 
                 }elseif($status == 'formNoSeven'){
-
+                    $fdFourOneFormStatusId=0;
+                    $dataFdFourOneForm=0;
+                    $formNoFourStatusId=0;
+                            $dataFromNoFourForm==0;
             $fdFiveStatusId=0;
                     $dataFromFdFive=0;
 
@@ -2957,9 +3332,119 @@ class ChildNoteController extends Controller
         $formNoFiveStepFiveArea = 0;
 
 
-           $get_email_from_user = DB::table('users')->where('id',$dataFromNoFiveForm->user_id)->value('email');
+           $get_email_from_user = DB::table('users')->where('id',$dataFromNoSevenForm->user_id)->value('email');
 
            $checkParent = ParentNoteForFormNoSeven::where('nothi_detail_id',$parentId)
+           ->where('serial_number',$nothiId)->get();
+
+
+        }elseif($status == 'formNoFour'){
+            $formNoSevenStatusId=0;
+            $fdFiveStatusId=0;
+            $dataFromFdFive=0;
+            $dataFromNoSevenForm=0;
+
+            $fdNineOtherFileList =0;$dataFromFc2Form =0;$dataFromFc1Form =0; $prokolpoAreaList=0;$dataFromFd6Form = 0;
+            $dataFromFd7Form = 0;$ngoStatus=0;$ngoTypeData=0;$nVisaDocs=0;
+            $dataFromNVisaFd9Fd1=0;$nVisabasicInfo=0;$forwardingLetterOnulipi=0;$editCheck1=0;
+            $editCheck=0;$statusData=0;$nVisaWorkPlace=0;$nVisaSponSor=0;$nVisaForeignerInfo=0;
+            $nVisaManPower=0;$nVisaEmploye=0;$nVisaCompensationAndBenifits=0;$nVisaAuthPerson=0;
+            $mainIdR=0;$renewInfoData=0;$mainIdFdNineOne =0;$form_one_data=0;
+            $all_data_for_new_list_all=0;$form_eight_data=0;$form_member_data=0;$form_member_data_doc=0;
+            $form_ngo_data_doc=0;$users_info=0;$all_source_of_fund=0;$all_partiw=0;
+            $allNameChangeDoc = 0;$getformOneId= 0;$duration_list_all1 =0;$duration_list_all = 0;
+            $renew_status = 0;$name_change_status = 0;$r_status = 0;$form_member_data_doc_renew =0;
+            $get_all_data_adviser=0; $get_all_data_other=0;$get_all_data_adviser_bank=0;
+            $fd_three_status_id =0;$duplicateCertificateStatusId = 0;$constitutionStatusId = 0;
+            $committeeStatusId = 0;$dataFromFd3Form = 0;$dataFromDuplicateCertificate = 0;
+            $dataFromCommittee =0;$dataFromConstitution = 0; $dataFromCommittee =0;
+            $fd2FormList = 0;$fd2OtherInfo = 0;
+
+            $officeDetail = FormNoFourOfficeSarok::where('pnote_form_no_four',$id)->get();
+
+            $formNoFourStatusId = DB::table('form_no_four_daks')
+            ->where('id',$parentId)->value('form_no_four_status_id');
+
+            $dataFromNoFourForm = DB::table('form_no_fours')
+            ->join('fd_one_forms', 'fd_one_forms.id', '=', 'form_no_fours.fd_one_form_id')
+            ->select('fd_one_forms.*','form_no_fours.*','form_no_fours.id as mainId')
+            ->where('form_no_fours.id',$formNoFourStatusId)
+            ->orderBy('form_no_fours.id','desc')
+            ->first();
+
+            $formNoFiveStatusId=0;
+            $dataFromNoFiveForm=0;
+
+        $formNoFiveStepTwoData = 0;
+        $formNoFiveStepThreeData =0;
+        $formNoFiveStepFourData = 0;
+        $formNoFiveStepFiveOther= 0;
+        $formNoFiveStepFiveData = 0;
+        $formNoFiveStepFiveArea = 0;
+
+        $fdFourOneFormStatusId=0;
+        $dataFdFourOneForm=0;
+
+           $get_email_from_user = DB::table('users')
+           ->where('id',$dataFromNoFourForm->user_id)->value('email');
+
+           $checkParent = ParentNoteForFormNoFour::where('nothi_detail_id',$parentId)
+           ->where('serial_number',$nothiId)->get();
+
+
+        }elseif($status == 'fdFourOneForm'){
+            $formNoSevenStatusId=0;
+            $fdFiveStatusId=0;
+            $dataFromFdFive=0;
+            $dataFromNoSevenForm=0;
+
+            $formNoFourStatusId=0;
+            $dataFromNoFourForm=0;
+
+            $fdNineOtherFileList =0;$dataFromFc2Form =0;$dataFromFc1Form =0; $prokolpoAreaList=0;$dataFromFd6Form = 0;
+            $dataFromFd7Form = 0;$ngoStatus=0;$ngoTypeData=0;$nVisaDocs=0;
+            $dataFromNVisaFd9Fd1=0;$nVisabasicInfo=0;$forwardingLetterOnulipi=0;$editCheck1=0;
+            $editCheck=0;$statusData=0;$nVisaWorkPlace=0;$nVisaSponSor=0;$nVisaForeignerInfo=0;
+            $nVisaManPower=0;$nVisaEmploye=0;$nVisaCompensationAndBenifits=0;$nVisaAuthPerson=0;
+            $mainIdR=0;$renewInfoData=0;$mainIdFdNineOne =0;$form_one_data=0;
+            $all_data_for_new_list_all=0;$form_eight_data=0;$form_member_data=0;$form_member_data_doc=0;
+            $form_ngo_data_doc=0;$users_info=0;$all_source_of_fund=0;$all_partiw=0;
+            $allNameChangeDoc = 0;$getformOneId= 0;$duration_list_all1 =0;$duration_list_all = 0;
+            $renew_status = 0;$name_change_status = 0;$r_status = 0;$form_member_data_doc_renew =0;
+            $get_all_data_adviser=0; $get_all_data_other=0;$get_all_data_adviser_bank=0;
+            $fd_three_status_id =0;$duplicateCertificateStatusId = 0;$constitutionStatusId = 0;
+            $committeeStatusId = 0;$dataFromFd3Form = 0;$dataFromDuplicateCertificate = 0;
+            $dataFromCommittee =0;$dataFromConstitution = 0; $dataFromCommittee =0;
+            $fd2FormList = 0;$fd2OtherInfo = 0;
+
+            $officeDetail = FdFourOneFormOfficeSarok::where('pnote_fd_four_one_form',$id)->get();
+
+            $fdFourOneFormStatusId = DB::table('fd4_one_form_daks')
+            ->where('id',$parentId)->value('fd4_one_form_status_id');
+
+            $dataFdFourOneForm = DB::table('fd_four_one_forms')
+            ->join('fd_one_forms', 'fd_one_forms.id', '=', 'fd_four_one_forms.fd_one_form_id')
+            ->select('fd_one_forms.*','fd_four_one_forms.*','fd_four_one_forms.id as mainId')
+            ->where('fd_four_one_forms.id',$fdFourOneFormStatusId)
+            ->orderBy('fd_four_one_forms.id','desc')
+            ->first();
+
+            $formNoFiveStatusId=0;
+            $dataFromNoFiveForm=0;
+
+        $formNoFiveStepTwoData = 0;
+        $formNoFiveStepThreeData =0;
+        $formNoFiveStepFourData = 0;
+        $formNoFiveStepFiveOther= 0;
+        $formNoFiveStepFiveData = 0;
+        $formNoFiveStepFiveArea = 0;
+
+
+           $get_email_from_user = DB::table('users')
+           ->where('id',$dataFdFourOneForm->user_id)->value('email');
+
+           $checkParent = ParentNoteForFdFourOneForm::
+           where('nothi_detail_id',$parentId)
            ->where('serial_number',$nothiId)->get();
 
 
@@ -3131,6 +3616,28 @@ class ChildNoteController extends Controller
                 ->where('receiver_id',Auth::guard('admin')->user()->id)
                 ->update(array('view_status' => 1));
 
+            }elseif($status == 'formNoFour'){
+
+                $checkParentFirst = DB::table('parent_note_for_form_no_fours')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
+                $childNoteNewList = DB::table('child_note_for_form_no_fours')->where('pnote_form_no_four',$id)->get();
+                $childNoteNewListValue = DB::table('child_note_for_form_no_fours')->where('pnote_form_no_four',$id)->orderBy('id','desc')->value('id');
+
+                $childNoteNewListUpdate = DB::table('child_note_for_form_no_fours')
+                ->where('pnote_form_no_four',$id)
+                ->where('receiver_id',Auth::guard('admin')->user()->id)
+                ->update(array('view_status' => 1));
+
+            }elseif($status == 'fdFourOneForm'){
+
+                $checkParentFirst = DB::table('parent_note_for_fd_four_one_forms')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
+                $childNoteNewList = DB::table('child_note_for_fd_four_one_forms')->where('pnote_fd_four_one_form',$id)->get();
+                $childNoteNewListValue = DB::table('child_note_for_fd_four_one_forms')->where('pnote_fd_four_one_form',$id)->orderBy('id','desc')->value('id');
+
+                $childNoteNewListUpdate = DB::table('child_note_for_fd_four_one_forms')
+                ->where('pnote_fd_four_one_form',$id)
+                ->where('receiver_id',Auth::guard('admin')->user()->id)
+                ->update(array('view_status' => 1));
+
             }elseif($status == 'duplicate'){
 
                 $checkParentFirst = DB::table('parent_note_for_duplicate_certificates')->where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->where('id',$id)->first();
@@ -3169,6 +3676,10 @@ class ChildNoteController extends Controller
 
             return view('admin.presentDocument.viewChildNote',
             compact(
+                'fdFourOneFormStatusId',
+            'dataFdFourOneForm',
+            'formNoFourStatusId',
+            'dataFromNoFourForm',
                 'formNoFiveStepTwoData',
                 'formNoFiveStepThreeData',
                 'formNoFiveStepFourData',
@@ -3457,7 +3968,17 @@ class ChildNoteController extends Controller
                 }elseif($status == 'formNoSeven'){
 
                     $officeDetail = FormNoSevenOfficeSarok::where('pnote_form_no_seven',$id)->get();
-                    $checkParent = ParentNoteForFormNoSevenDak::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
+                    $checkParent = ParentNoteForFormNoSeven::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
+
+                }elseif($status == 'formNoFour'){
+
+                    $officeDetail = FormNoFourOfficeSarok::where('pnote_form_no_four',$id)->get();
+                    $checkParent = ParentNoteForFormNoFourDak::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
+
+                }elseif($status == 'fdFourOneForm'){
+
+                    $officeDetail = FdFourOneFormOfficeSarok::where('pnote_fd_four_one_form',$id)->get();
+                    $checkParent = ParentNoteForFdFourOneFormDak::where('nothi_detail_id',$parentId)->where('serial_number',$nothiId)->get();
 
                 }elseif($status == 'duplicate'){
 
@@ -3721,6 +4242,28 @@ class ChildNoteController extends Controller
                     $saveNewData->save();
 
 
+                 }elseif($data['status'] == 'formNoFour'){
+
+                    $saveNewData = FormNoFourOfficeSarok::find($lastSarokValue->sarokId);
+                    $saveNewData->office_subject = $lastSarokValue->office_subject;
+                    $saveNewData->office_sutro = $lastSarokValue->office_sutro;
+                    $saveNewData->description =$lastSarokValue->description;
+                    $saveNewData->sarok_number =$lastSarokValue->sarok_number;
+                    $saveNewData->extra_text =$lastSarokValue->extra_text;
+                    $saveNewData->save();
+
+
+                 }elseif($data['status'] == 'fdFourOneForm'){
+
+                    $saveNewData = FdFourOneFormOfficeSarok::find($lastSarokValue->sarokId);
+                    $saveNewData->office_subject = $lastSarokValue->office_subject;
+                    $saveNewData->office_sutro = $lastSarokValue->office_sutro;
+                    $saveNewData->description =$lastSarokValue->description;
+                    $saveNewData->sarok_number =$lastSarokValue->sarok_number;
+                    $saveNewData->extra_text =$lastSarokValue->extra_text;
+                    $saveNewData->save();
+
+
                  }elseif($data['status'] == 'duplicate'){
 
                     $saveNewData = DuplicateCertificateOfficeSarok::find($lastSarokValue->sarokId);
@@ -3949,6 +4492,28 @@ if($data['button_value'] == 'return'){
                     'back_sign_status' => 1
                  ]);
 
+            }elseif($data['status'] == 'formNoFour'){
+
+                DB::table('child_note_for_form_no_fours')->where('id',$data['child_note_id'])
+                ->update([
+                    'sender_id'=> DB::raw('NULL'),
+                  //  'receiver_id'=> DB::raw('NULL'),
+                    'sent_status'=> DB::raw('NULL'),
+                    'view_status'=> DB::raw('NULL'),
+                    'back_sign_status' => 1
+                 ]);
+
+            }elseif($data['status'] == 'fdFourOneForm'){
+
+                DB::table('child_note_for_fd_four_one_forms')->where('id',$data['child_note_id'])
+                ->update([
+                    'sender_id'=> DB::raw('NULL'),
+                  //  'receiver_id'=> DB::raw('NULL'),
+                    'sent_status'=> DB::raw('NULL'),
+                    'view_status'=> DB::raw('NULL'),
+                    'back_sign_status' => 1
+                 ]);
+
             }elseif($data['status'] == 'duplicate'){
 
                 DB::table('child_note_for_duplicate_certificates')->where('id',$data['child_note_id'])
@@ -4085,6 +4650,16 @@ if($data['button_value'] == 'return'){
             }elseif($data['status'] == 'formNoSeven'){
 
                 $getCreatorValue =  DB::table('child_note_for_form_no_sevens')
+                ->where('id',$data['child_note_id'])->value('admin_id');
+
+            }elseif($data['status'] == 'formNoFour'){
+
+                $getCreatorValue =  DB::table('child_note_for_form_no_fours')
+                ->where('id',$data['child_note_id'])->value('admin_id');
+
+            }elseif($data['status'] == 'fdFourOneForm'){
+
+                $getCreatorValue =  DB::table('child_note_for_fd_four_one_forms')
                 ->where('id',$data['child_note_id'])->value('admin_id');
 
             }elseif($data['status'] == 'duplicate'){
@@ -4245,6 +4820,22 @@ if($data['button_value'] == 'return'){
             }elseif($data['status'] == 'formNoSeven'){
 
                 DB::table('child_note_for_form_no_sevens')->where('id',$data['child_note_id'])
+                ->update([
+                    'sender_id'=> $mainIdSender,
+                    'receiver_id'=>Auth::guard('admin')->user()->id,
+                 ]);
+
+            }elseif($data['status'] == 'formNoFour'){
+
+                DB::table('child_note_for_form_no_fours')->where('id',$data['child_note_id'])
+                ->update([
+                    'sender_id'=> $mainIdSender,
+                    'receiver_id'=>Auth::guard('admin')->user()->id,
+                 ]);
+
+            }elseif($data['status'] == 'fdFourOneForm'){
+
+                DB::table('child_note_for_fd_four_one_forms')->where('id',$data['child_note_id'])
                 ->update([
                     'sender_id'=> $mainIdSender,
                     'receiver_id'=>Auth::guard('admin')->user()->id,
@@ -4557,6 +5148,20 @@ $adminNameSign = DB::table('admins')->where('id',$data['nothiPermissionId'])
                 'back_sign_status' => DB::raw('NULL')
              ]);
 
+        }elseif($data['status'] == 'formNoFour'){
+
+            DB::table('child_note_for_form_no_fours')->where('id',$data['child_note_id'])
+            ->update([
+                'back_sign_status' => DB::raw('NULL')
+             ]);
+
+        }elseif($data['status'] == 'fdFourOneForm'){
+
+            DB::table('child_note_for_fd_four_one_forms')->where('id',$data['child_note_id'])
+            ->update([
+                'back_sign_status' => DB::raw('NULL')
+             ]);
+
         }elseif($data['status'] == 'duplicate'){
 
             DB::table('child_note_for_duplicate_certificates')->where('id',$data['child_note_id'])
@@ -4695,6 +5300,24 @@ $adminNameSign = DB::table('admins')->where('id',$data['nothiPermissionId'])
         }elseif($data['status'] == 'formNoSeven'){
 
             DB::table('form_no_seven_daks')->where('id',$data['dakId'])
+            ->where('receiver_admin_id',Auth::guard('admin')->user()->id)
+            ->update([
+
+                'present_status' => 1
+             ]);
+
+        }elseif($data['status'] == 'formNoFour'){
+
+            DB::table('form_no_four_daks')->where('id',$data['dakId'])
+            ->where('receiver_admin_id',Auth::guard('admin')->user()->id)
+            ->update([
+
+                'present_status' => 1
+             ]);
+
+        }elseif($data['status'] == 'fdFourOneForm'){
+
+            DB::table('fd4_one_form_daks')->where('id',$data['dakId'])
             ->where('receiver_admin_id',Auth::guard('admin')->user()->id)
             ->update([
 
@@ -4854,6 +5477,24 @@ $adminNameSign = DB::table('admins')->where('id',$data['nothiPermissionId'])
 }elseif($data['status'] == 'formNoSeven'){
 
     $saveNewData = ChildNoteForFormNoSeven::find($data['child_note_id']);
+    $saveNewData->sent_status = 1;
+    $saveNewData ->updated_at= $created_at;
+    $saveNewData ->amPmValueUpdate=$amPmValueFinal;
+    $saveNewData->sender_id = Auth::guard('admin')->user()->id;
+    $saveNewData->receiver_id = $data['nothiPermissionId'];
+    $saveNewData->save();
+}elseif($data['status'] == 'formNoFour'){
+
+    $saveNewData = ChildNoteForFormNoFour::find($data['child_note_id']);
+    $saveNewData->sent_status = 1;
+    $saveNewData ->updated_at= $created_at;
+    $saveNewData ->amPmValueUpdate=$amPmValueFinal;
+    $saveNewData->sender_id = Auth::guard('admin')->user()->id;
+    $saveNewData->receiver_id = $data['nothiPermissionId'];
+    $saveNewData->save();
+}elseif($data['status'] == 'fdFourOneForm'){
+
+    $saveNewData = ChildNoteForFdFourOneForm::find($data['child_note_id']);
     $saveNewData->sent_status = 1;
     $saveNewData ->updated_at= $created_at;
     $saveNewData ->amPmValueUpdate=$amPmValueFinal;
@@ -5134,6 +5775,14 @@ $adminNameSign = DB::table('admins')->where('id',$data['nothiPermissionId'])
 
                 DB::table('child_note_for_form_no_sevens')->where('id',$data['child_note_id'])->update(['back_sign_status' => DB::raw('NULL')]);
 
+            }elseif($data['status'] == 'formNoFour'){
+
+                DB::table('child_note_for_form_no_fours')->where('id',$data['child_note_id'])->update(['back_sign_status' => DB::raw('NULL')]);
+
+            }elseif($data['status'] == 'fdFourOneForm'){
+
+                DB::table('child_note_for_fd_four_one_forms')->where('id',$data['child_note_id'])->update(['back_sign_status' => DB::raw('NULL')]);
+
             }elseif($data['status'] == 'duplicate'){
 
                 DB::table('child_note_for_duplicate_certificates')->where('id',$data['child_note_id'])->update(['back_sign_status' => DB::raw('NULL')]);
@@ -5286,6 +5935,22 @@ $adminNameSign = DB::table('admins')->where('id',$data['nothiPermissionId'])
         }elseif($data['status'] == 'formNoSeven'){
 
             $saveNewData = FormNoSevenOfficeSarok::find($lastSarokValue->sarokId);
+            $saveNewData->office_subject = $lastSarokValue->office_subject;
+            $saveNewData->office_sutro = $lastSarokValue->office_sutro;
+            $saveNewData->description =$lastSarokValue->description;
+            $saveNewData->save();
+
+        }elseif($data['status'] == 'formNoFour'){
+
+            $saveNewData = FormNoFourOfficeSarok::find($lastSarokValue->sarokId);
+            $saveNewData->office_subject = $lastSarokValue->office_subject;
+            $saveNewData->office_sutro = $lastSarokValue->office_sutro;
+            $saveNewData->description =$lastSarokValue->description;
+            $saveNewData->save();
+
+        }elseif($data['status'] == 'fdFourOneForm'){
+
+            $saveNewData = FdFourOneFormOfficeSarok::find($lastSarokValue->sarokId);
             $saveNewData->office_subject = $lastSarokValue->office_subject;
             $saveNewData->office_sutro = $lastSarokValue->office_sutro;
             $saveNewData->description =$lastSarokValue->description;
@@ -5444,6 +6109,26 @@ $adminNameSign = DB::table('admins')->where('id',$data['nothiPermissionId'])
            }elseif($data['status'] == 'formNoSeven'){
 
             $saveNewData = ChildNoteForFormNoSeven::find($data['child_note_id']);
+            $saveNewData->sent_status = 1;
+            $saveNewData ->updated_at= $created_at;
+            $saveNewData ->amPmValueUpdate=$amPmValueFinal;
+            $saveNewData->sender_id = Auth::guard('admin')->user()->id;
+            $saveNewData->receiver_id = $data['nothiPermissionId'];
+            $saveNewData->save();
+
+           }elseif($data['status'] == 'formNoFour'){
+
+            $saveNewData = ChildNoteForFormNoFour::find($data['child_note_id']);
+            $saveNewData->sent_status = 1;
+            $saveNewData ->updated_at= $created_at;
+            $saveNewData ->amPmValueUpdate=$amPmValueFinal;
+            $saveNewData->sender_id = Auth::guard('admin')->user()->id;
+            $saveNewData->receiver_id = $data['nothiPermissionId'];
+            $saveNewData->save();
+
+           }elseif($data['status'] == 'fdFourOneForm'){
+
+            $saveNewData = ChildNoteForFdFourOneForm::find($data['child_note_id']);
             $saveNewData->sent_status = 1;
             $saveNewData ->updated_at= $created_at;
             $saveNewData ->amPmValueUpdate=$amPmValueFinal;
@@ -5690,6 +6375,32 @@ $adminNameSign = DB::table('admins')->where('id',$data['nothiPermissionId'])
         $saveNewData->save();
 
 
+    }elseif($request->status == 'formNoFour'){
+
+        $saveNewData = new ChildNoteForFormNoFour();
+        $saveNewData->pnote_form_no_four = $request->parentNoteId;
+        $saveNewData->serial_number = 0;
+        $saveNewData->description = $request->mainPartNote;
+        $saveNewData->created_at =$created_at;
+        $saveNewData->amPmValue = $amPmValueFinal;
+        $saveNewData->admin_id =Auth::guard('admin')->user()->id;
+
+        $saveNewData->save();
+
+
+    }elseif($request->status == 'fdFourOneForm'){
+
+        $saveNewData = new ChildNoteForFdFourOneForm();
+        $saveNewData->pnote_fd_four_one_form = $request->parentNoteId;
+        $saveNewData->serial_number = 0;
+        $saveNewData->description = $request->mainPartNote;
+        $saveNewData->created_at =$created_at;
+        $saveNewData->amPmValue = $amPmValueFinal;
+        $saveNewData->admin_id =Auth::guard('admin')->user()->id;
+
+        $saveNewData->save();
+
+
     }elseif($request->status == 'duplicate'){
 
         $saveNewData = new ChildNoteForDuplicateCertificate();
@@ -5872,6 +6583,22 @@ try{
         $saveNewData->save();
 
 
+    }elseif($request->status == 'formNoFour'){
+
+        $saveNewData = ChildNoteForFormNoFour::find($id);
+
+        $saveNewData->description = $request->mainPartNote;
+        $saveNewData->save();
+
+
+    }elseif($request->status == 'fdFourOneForm'){
+
+        $saveNewData = ChildNoteForFdFourOneForm::find($id);
+
+        $saveNewData->description = $request->mainPartNote;
+        $saveNewData->save();
+
+
     }elseif($request->status == 'duplicate'){
 
         $saveNewData = ChildNoteForDuplicateCertificate::find($id);
@@ -6040,6 +6767,22 @@ try{
     }elseif($request->status == 'formNoSeven'){
 
             $saveNewData = ChildNoteForFormNoSeven::find($id);
+
+            $saveNewData->description = $request->mainPartNote;
+            $saveNewData->save();
+
+
+        }elseif($request->status == 'formNoFour'){
+
+            $saveNewData = ChildNoteForFormNoFour::find($id);
+
+            $saveNewData->description = $request->mainPartNote;
+            $saveNewData->save();
+
+
+        }elseif($request->status == 'fdFourOneForm'){
+
+            $saveNewData = ChildNoteForFdFourOneForm::find($id);
 
             $saveNewData->description = $request->mainPartNote;
             $saveNewData->save();
