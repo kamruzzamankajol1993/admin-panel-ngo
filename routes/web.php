@@ -55,6 +55,7 @@ use App\Http\Controllers\Admin\FormNoSevenController;
 use App\Http\Controllers\Admin\NgoProfileController;
 use App\Http\Controllers\Admin\FormNoFourController;
 use App\Http\Controllers\Admin\Fd4OneController;
+use App\Http\Controllers\Admin\ProkolpoGraphicalReportController;
 
 
 
@@ -97,9 +98,16 @@ Route::get('/printPotrangsoPdfForEmail/{status}/{parentId}/{nothiId}/{id}', 'pri
 
 Route::group(['prefix' => 'admin'], function () {
 
+    Route::resource('prokolpoGraphicalReport', ProkolpoGraphicalReportController::class);
     Route::resource('ngoProfile', NgoProfileController::class);
 
     Route::resource('leaveManagement', LeaveManagementController::class);
+
+
+    Route::controller(ProkolpoGraphicalReportController::class)->group(function () {
+        Route::post('/graphicReportFilter', 'graphicReportFilter')->name('graphicReportFilter');
+
+    });
 
 
 

@@ -763,12 +763,16 @@
                         </div>
                       </li>
 
-                      @if (Route::is('prokolpoBeneficiariesReportSearch') || Route::is('prokolpoBeneficiariesReport') || Route::is('prokolpoReportSearch') || Route::is('prokolpoReport') || Route::is('foreignNgoListReport') || Route::is('localNgoListReport') || Route::is('districtWiseListSearch') || Route::is('districtWiseList') || Route::is('districtWiseListResult')  || Route::is('monthlyReportOfNgo') || Route::is('monthlyReportOfNgoSearch') || Route::is('yearlyReportOfNgo') || Route::is('yearlyReportOfNgoSearch') || Route::is('monthlyReportOfNgoRenew') || Route::is('monthlyReportOfNgoRenewSearch') || Route::is('yearlyReportOfNgoRenew') || Route::is('yearlyReportOfNgoRenewSearch')  )
+                      @if (Route::is('prokolpoGraphicalReport.show') || Route::is('prokolpoGraphicalReport.index') || Route::is('prokolpoBeneficiariesReportSearch') || Route::is('prokolpoBeneficiariesReport') || Route::is('prokolpoReportSearch') || Route::is('prokolpoReport') || Route::is('foreignNgoListReport') || Route::is('localNgoListReport') || Route::is('districtWiseListSearch') || Route::is('districtWiseList') || Route::is('districtWiseListResult')  || Route::is('monthlyReportOfNgo') || Route::is('monthlyReportOfNgoSearch') || Route::is('yearlyReportOfNgo') || Route::is('yearlyReportOfNgoSearch') || Route::is('monthlyReportOfNgoRenew') || Route::is('monthlyReportOfNgoRenewSearch') || Route::is('yearlyReportOfNgoRenew') || Route::is('yearlyReportOfNgoRenewSearch')  )
 
                       <li class="dropdown">
                         <a class="nav-link menu-title active" href="javascript:void(0)"><i data-feather="settings"></i><span>রিপোর্ট </span></a>
                         <ul class="nav-submenu menu-content" style="display: block;">
 
+
+                            <li class="">
+                                <a href="{{ route('prokolpoGraphicalReport.index') }}" class="{{ Route::is('prokolpoGraphicalReport.index') || Route::is('prokolpoGraphicalReport.show')   ? 'active' : '' }}" data-key="t-nft-landing">প্রকল্পের গ্রাফিকাল রিপোর্ট</a>
+                            </li>
 
                             <li class="">
                                 <a href="{{ route('prokolpoReport') }}" class="{{ Route::is('prokolpoReport') || Route::is('prokolpoReportSearch')   ? 'active' : '' }}" data-key="t-nft-landing">সকল প্রকল্পের তালিকা</a>
@@ -819,6 +823,10 @@
 <li class="dropdown">
     <a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="settings"></i><span>রিপোর্ট </span></a>
     <ul class="nav-submenu menu-content">
+
+        <li class="">
+            <a href="{{ route('prokolpoGraphicalReport.index') }}" class="{{ Route::is('prokolpoGraphicalReport.index') || Route::is('prokolpoGraphicalReport.show')   ? 'active' : '' }}" data-key="t-nft-landing">প্রকল্পের গ্রাফিকাল রিপোর্ট</a>
+        </li>
 
         <li class="">
             <a href="{{ route('prokolpoReport') }}" class="{{ Route::is('prokolpoReport')  ? 'active' : '' }}" data-key="t-nft-landing">সকল প্রকল্পের তালিকা</a>
