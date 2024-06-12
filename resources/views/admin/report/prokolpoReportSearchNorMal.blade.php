@@ -291,7 +291,7 @@ $searchDistrictList = DB::table('civilinfos')
                                         @endif
 
                                     </td>
-                                    <td> ( বহুবার্ষিক)</td>
+                                    <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} ( বহুবার্ষিক)</td>
 
                                 </tr>
                                 @endforeach
@@ -332,7 +332,7 @@ $searchDistrictList = DB::table('civilinfos')
                                         @endif
 
                                     </td>
-                                    <td> ( জরুরি ত্রাণ সহায়তা)</td>
+                                    <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} ( জরুরি ত্রাণ সহায়তা)</td>
 
                                 </tr>
                                 @endforeach
@@ -375,7 +375,7 @@ $searchDistrictList = DB::table('civilinfos')
                                         @endif
 
                                     </td>
-                                    <td> (বৈদেশিক অনুদানে গৃহীত)</td>
+                                    <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} (বৈদেশিক অনুদানে গৃহীত)</td>
 
                                 </tr>
                                 @endforeach
@@ -419,8 +419,8 @@ $searchDistrictList = DB::table('civilinfos')
         @endif
 
     </td>
-    <td> (এককালীন অনুদান)</td>
-    
+    <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} (এককালীন অনুদান)</td>
+
 </tr>
 @endforeach
 

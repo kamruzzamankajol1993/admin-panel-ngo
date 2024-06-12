@@ -75,7 +75,7 @@
 
 
 
-                <span>সাল: <b>{{ App\Http\Controllers\Admin\CommonController::englishToBangla(date('Y')) }}</b></span>
+                {{-- <span>সাল: <b>{{ App\Http\Controllers\Admin\CommonController::englishToBangla(date('Y')) }}</b></span> --}}
 
 
 
@@ -106,196 +106,169 @@
         </thead>
         <tbody id="searchTable">
 
-            @if(!in_array('বহুবার্ষিক',$prokolpoType))
+            @foreach($prokolpoReportFd6Main as $key=>$prokolpoReports)
+            <tr>
+                <td>{{ $key+1 }}</td>
+                <td>
+                    {{ DB::table('fd_one_forms')->where('id',$prokolpoReports->fd_one_form_id)->value('organization_name_ban') }}
+                   <p style="font-weight: 900;">প্রকল্পের নাম: {{ DB::table('fd2_forms')->where('fd_six_form_id',$prokolpoReports->formId)->value('ngo_prokolpo_name') }}</p>
+                </td>
+                <td>{{ $prokolpoReports->division_name }}</td>
+                <td>{{ $prokolpoReports->district_name }}</td>
+                <td>
 
+                    @if(empty($prokolpoReports->upozila_name))
 
-                                @else
-
-                                @foreach($prokolpoReportFd6Main as $key=>$prokolpoReports)
-                                <tr>
-                                    <td>{{ $key+1 }}</td>
-                                    <td>
-                                        {{ DB::table('fd_one_forms')->where('id',$prokolpoReports->fd_one_form_id)->value('organization_name_ban') }}
-                                       <p style="font-weight: 900;">প্রকল্পের নাম: {{ DB::table('fd2_forms')->where('fd_six_form_id',$prokolpoReports->formId)->value('ngo_prokolpo_name') }}</p>
-                                    </td>
-                                    <td>{{ $prokolpoReports->division_name }}</td>
-                                    <td>{{ $prokolpoReports->district_name }}</td>
-                                    <td>
-
-                                        @if(empty($prokolpoReports->upozila_name))
-
-                                        @else
+                    @else
 {{ $prokolpoReports->upozila_name }}/
-                                        @endif
+                    @endif
 
-                                        @if(empty($prokolpoReports->city_corparation_name))
+                    @if(empty($prokolpoReports->city_corparation_name))
 
-                                        @else
+                    @else
 {{ $prokolpoReports->city_corparation_name }}/
-                                        @endif
+                    @endif
 
 
-                                        @if(empty($prokolpoReports->thana_name))
+                    @if(empty($prokolpoReports->thana_name))
 
-                                        @else
+                    @else
 {{ $prokolpoReports->thana_name }}
-                                        @endif
+                    @endif
 
-                                    </td>
-                                    <td> ( বহুবার্ষিক)</td>
-                                    <td>{{ $prokolpoReports->number_of_beneficiaries }}</td>
-                                </tr>
-                                @endforeach
+                </td>
+                <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} ( বহুবার্ষিক)</td>
+                <td>{{ $prokolpoReports->number_of_beneficiaries }}</td>
+            </tr>
+            @endforeach
 
-                                @endif
+            <?php
+            $countFd6Data = count($prokolpoReportFd6Main);
+            ?>
 
+            @foreach($prokolpoReportFd7Main as $key=>$prokolpoReports)
+            <tr>
+                <td>{{ $countFd6Data+($key+1) }}</td>
+                <td>
 
-                                @if(!in_array('জরুরি ত্রাণ সহায়তা',$prokolpoType))
+                    {{ DB::table('fd_one_forms')->where('id',$prokolpoReports->fd_one_form_id)->value('organization_name_ban') }}
+                    <p style="font-weight: 900;">প্রকল্পের নাম: {{ DB::table('fd2_form_for_fd7_forms')->where('fd7_form_id',$prokolpoReports->formId)->value('ngo_prokolpo_name') }}</p>
+                </td>
+                <td>{{ $prokolpoReports->division_name }}</td>
+                <td>{{ $prokolpoReports->district_name }}</td>
+                <td>
 
+                    @if(empty($prokolpoReports->upozila_name))
 
-                                @else
-
-                                <?php
-                                $countFd6Data = 0;
-                                ?>
-
-                                @foreach($prokolpoReportFd7Main as $key=>$prokolpoReports)
-                                <tr>
-                                    <td>{{ $countFd6Data+($key+1) }}</td>
-                                    <td>
-
-                                        {{ DB::table('fd_one_forms')->where('id',$prokolpoReports->fd_one_form_id)->value('organization_name_ban') }}
-                                        <p style="font-weight: 900;">প্রকল্পের নাম: {{ DB::table('fd2_form_for_fd7_forms')->where('fd7_form_id',$prokolpoReports->formId)->value('ngo_prokolpo_name') }}</p>
-                                    </td>
-                                    <td>{{ $prokolpoReports->division_name }}</td>
-                                    <td>{{ $prokolpoReports->district_name }}</td>
-                                    <td>
-
-                                        @if(empty($prokolpoReports->upozila_name))
-
-                                        @else
+                    @else
 {{ $prokolpoReports->upozila_name }}/
-                                        @endif
+                    @endif
 
-                                        @if(empty($prokolpoReports->city_corparation_name))
+                    @if(empty($prokolpoReports->city_corparation_name))
 
-                                        @else
+                    @else
 {{ $prokolpoReports->city_corparation_name }}/
-                                        @endif
+                    @endif
 
 
-                                        @if(empty($prokolpoReports->thana_name))
+                    @if(empty($prokolpoReports->thana_name))
 
-                                        @else
+                    @else
 {{ $prokolpoReports->thana_name }}
-                                        @endif
+                    @endif
 
-                                    </td>
-                                    <td> ( জরুরি ত্রাণ সহায়তা)</td>
-                                    <td>{{ $prokolpoReports->number_of_beneficiaries }}</td>
-                                </tr>
-                                @endforeach
+                </td>
+                <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} ( জরুরি ত্রাণ সহায়তা)</td>
+                <td>{{ $prokolpoReports->number_of_beneficiaries }}</td>
+            </tr>
+            @endforeach
 
-                                @endif
+            <?php
+            $countFd7Data = count($prokolpoReportFd7Main);
+            $countFd6Data = count($prokolpoReportFd6Main);
+            $total = $countFd7Data + $countFd6Data;
+            ?>
 
-                                @if(!in_array('বৈদেশিক অনুদানে গৃহীত',$prokolpoType))
+            @foreach($prokolpoReportFc2Main as $key=>$prokolpoReports)
+            <tr>
+                <td>{{ $total+($key+1) }}</td>
+                <td>
 
-                                @else
+                    {{ DB::table('fd_one_forms')->where('id',$prokolpoReports->fd_one_form_id)->value('organization_name_ban') }}
+                    <p style="font-weight: 900;">প্রকল্পের নাম: {{ DB::table('fd2_form_for_fc2_forms')->where('fc2_form_id',$prokolpoReports->formId)->value('ngo_prokolpo_name') }}</p>
+                </td>
+                <td>{{ $prokolpoReports->division_name }}</td>
+                <td>{{ $prokolpoReports->district_name }}</td>
+                <td>
 
-                                <?php
-                                $countFd7Data = 0;
-                                $countFd6Data = 0;
-                                $total = $countFd7Data + $countFd6Data;
-                                ?>
+                    @if(empty($prokolpoReports->upozila_name))
 
-                                @foreach($prokolpoReportFc2Main as $key=>$prokolpoReports)
-                                <tr>
-                                    <td>{{ $total+($key+1) }}</td>
-                                    <td>
+                    @else
+            {{ $prokolpoReports->upozila_name }}/
+                    @endif
 
-                                        {{ DB::table('fd_one_forms')->where('id',$prokolpoReports->fd_one_form_id)->value('organization_name_ban') }}
-                                        <p style="font-weight: 900;">প্রকল্পের নাম: {{ DB::table('fd2_form_for_fc2_forms')->where('fc2_form_id',$prokolpoReports->formId)->value('ngo_prokolpo_name') }}</p>
-                                    </td>
-                                    <td>{{ $prokolpoReports->division_name }}</td>
-                                    <td>{{ $prokolpoReports->district_name }}</td>
-                                    <td>
+                    @if(empty($prokolpoReports->city_corparation_name))
 
-                                        @if(empty($prokolpoReports->upozila_name))
-
-                                        @else
-                                {{ $prokolpoReports->upozila_name }}/
-                                        @endif
-
-                                        @if(empty($prokolpoReports->city_corparation_name))
-
-                                        @else
-                                {{ $prokolpoReports->city_corparation_name }}/
-                                        @endif
+                    @else
+            {{ $prokolpoReports->city_corparation_name }}/
+                    @endif
 
 
-                                        @if(empty($prokolpoReports->thana_name))
+                    @if(empty($prokolpoReports->thana_name))
 
-                                        @else
-                                {{ $prokolpoReports->thana_name }}
-                                        @endif
+                    @else
+            {{ $prokolpoReports->thana_name }}
+                    @endif
 
-                                    </td>
-                                    <td> (বৈদেশিক অনুদানে গৃহীত)</td>
-                                    <td>{{ $prokolpoReports->number_of_beneficiaries }}</td>
-                                </tr>
-                                @endforeach
+                </td>
+                <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} (বৈদেশিক অনুদানে গৃহীত)</td>
+                <td>{{ $prokolpoReports->number_of_beneficiaries }}</td>
+            </tr>
+            @endforeach
 
-                                @endif
-
-
-                                @if(!in_array('এককালীন অনুদান',$prokolpoType))
-
-                                @else
-
-                                <?php
-                                $countFd7Data = 0;
-                                $countFd6Data = 0;
-                                $countFc1Data = 0;
-                                $totalOne = $countFd7Data + $countFd6Data + $countFc1Data;
-                                ?>
+            <?php
+            $countFd7Data = count($prokolpoReportFd7Main);
+            $countFd6Data = count($prokolpoReportFd6Main);
+            $countFc1Data = count($prokolpoReportFc1Main);
+            $totalOne = $countFd7Data + $countFd6Data + $countFc1Data;
+            ?>
 
 @foreach($prokolpoReportFc1Main as $key=>$prokolpoReports)
 <tr>
-    <td>{{ $totalOne+($key+1) }}</td>
-    <td>
+<td>{{ $totalOne+($key+1) }}</td>
+<td>
 
-        {{ DB::table('fd_one_forms')->where('id',$prokolpoReports->fd_one_form_id)->value('organization_name_ban') }}
-        <p style="font-weight: 900;">প্রকল্পের নাম: {{ DB::table('fd2_form_for_fc1_forms')->where('fc1_form_id',$prokolpoReports->formId)->value('ngo_prokolpo_name') }}</p>
-    </td>
-    <td>{{ $prokolpoReports->division_name }}</td>
-    <td>{{ $prokolpoReports->district_name }}</td>
-    <td>
+{{ DB::table('fd_one_forms')->where('id',$prokolpoReports->fd_one_form_id)->value('organization_name_ban') }}
+<p style="font-weight: 900;">প্রকল্পের নাম: {{ DB::table('fd2_form_for_fc1_forms')->where('fc1_form_id',$prokolpoReports->formId)->value('ngo_prokolpo_name') }}</p>
+</td>
+<td>{{ $prokolpoReports->division_name }}</td>
+<td>{{ $prokolpoReports->district_name }}</td>
+<td>
 
-        @if(empty($prokolpoReports->upozila_name))
+@if(empty($prokolpoReports->upozila_name))
 
-        @else
+@else
 {{ $prokolpoReports->upozila_name }}/
-        @endif
+@endif
 
-        @if(empty($prokolpoReports->city_corparation_name))
+@if(empty($prokolpoReports->city_corparation_name))
 
-        @else
+@else
 {{ $prokolpoReports->city_corparation_name }}/
-        @endif
+@endif
 
 
-        @if(empty($prokolpoReports->thana_name))
+@if(empty($prokolpoReports->thana_name))
 
-        @else
+@else
 {{ $prokolpoReports->thana_name }}
-        @endif
+@endif
 
-    </td>
-    <td> (এককালীন অনুদান)</td>
-    <td>{{ $prokolpoReports->number_of_beneficiaries }}</td>
+</td>
+<td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} (এককালীন অনুদান)</td>
+<td>{{ $prokolpoReports->number_of_beneficiaries }}</td>
 </tr>
 @endforeach
-@endif
 
 </table>
 

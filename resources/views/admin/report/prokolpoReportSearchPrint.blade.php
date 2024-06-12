@@ -75,7 +75,7 @@
 
 
 
-                <span>সাল: <b>{{ App\Http\Controllers\Admin\CommonController::englishToBangla(date('Y')) }}</b></span>
+                {{-- <span>সাল: <b>{{ App\Http\Controllers\Admin\CommonController::englishToBangla(date('Y')) }}</b></span> --}}
 
 
 
@@ -106,10 +106,6 @@
         </thead>
         <tbody id="searchTable">
 
-            @if(!in_array('বহুবার্ষিক',$prokolpoType))
-
-
-                                @else
 
                                 @foreach($prokolpoReportFd6Main as $key=>$prokolpoReports)
                                 <tr>
@@ -142,18 +138,12 @@
                                         @endif
 
                                     </td>
-                                    <td> ( বহুবার্ষিক)</td>
+                                    <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} ( বহুবার্ষিক)</td>
 
                                 </tr>
                                 @endforeach
 
-                                @endif
 
-
-                                @if(!in_array('জরুরি ত্রাণ সহায়তা',$prokolpoType))
-
-
-                                @else
 
                                 <?php
                                 $countFd6Data = 0;
@@ -191,16 +181,12 @@
                                         @endif
 
                                     </td>
-                                    <td> ( জরুরি ত্রাণ সহায়তা)</td>
+                                    <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} ( জরুরি ত্রাণ সহায়তা)</td>
 
                                 </tr>
                                 @endforeach
 
-                                @endif
 
-                                @if(!in_array('বৈদেশিক অনুদানে গৃহীত',$prokolpoType))
-
-                                @else
 
                                 <?php
                                 $countFd7Data = 0;
@@ -240,17 +226,12 @@
                                         @endif
 
                                     </td>
-                                    <td> (বৈদেশিক অনুদানে গৃহীত)</td>
+                                    <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} (বৈদেশিক অনুদানে গৃহীত)</td>
 
                                 </tr>
                                 @endforeach
 
-                                @endif
 
-
-                                @if(!in_array('এককালীন অনুদান',$prokolpoType))
-
-                                @else
 
                                 <?php
                                 $countFd7Data = 0;
@@ -291,11 +272,11 @@
         @endif
 
     </td>
-    <td> (এককালীন অনুদান)</td>
-    
+    <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} (এককালীন অনুদান)</td>
+
 </tr>
 @endforeach
-@endif
+
 
 </table>
 

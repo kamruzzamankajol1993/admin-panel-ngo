@@ -40,19 +40,14 @@
                     <div class="card income-card card-primary bg-primary">
                         <div class="card-body text-center">
 
-                            @if(in_array('বহুবার্ষিক',$prokolpoType))
+
 
 
 
                             <h5>{{ App\Http\Controllers\Admin\CommonController::englishToBangla(count($prokolpoReportFd6Main)) }}</h5>
                             <p>মোট বহুবার্ষিক প্রকল্প এলাকা</p>
 
-                            @else
 
-                            <h5>{{ App\Http\Controllers\Admin\CommonController::englishToBangla(0)}}</h5>
-                            <p>মোট বহুবার্ষিক প্রকল্প এলাকা</p>
-
-                            @endif
 
 
                         </div>
@@ -63,19 +58,13 @@
                     <div class="card income-card card-primary bg-primary">
                         <div class="card-body text-center">
 
-                            @if(in_array('জরুরি ত্রাণ সহায়তা',$prokolpoType))
+
 
                             <h5>{{ App\Http\Controllers\Admin\CommonController::englishToBangla(count($prokolpoReportFd7Main)) }}</h5>
                             <p>মোট জরুরি ত্রাণ সহায়তা প্রকল্প এলাকা</p>
 
 
 
-                            @else
-
-                            <h5>{{ App\Http\Controllers\Admin\CommonController::englishToBangla(0) }}</h5>
-                            <p>মোট জরুরি ত্রাণ সহায়তা প্রকল্প এলাকা</p>
-
-                            @endif
 
 
                         </div>
@@ -87,18 +76,12 @@
                 <div class="col-xl-3 col-md-3 col-sm-3 box-col-3 des-xl-25 rate-sec">
                     <div class="card income-card card-primary bg-primary">
                         <div class="card-body text-center">
-                            @if(in_array('বৈদেশিক অনুদানে গৃহীত',$prokolpoType))
+
 
                             <h5>{{ App\Http\Controllers\Admin\CommonController::englishToBangla(count($prokolpoReportFc2Main)) }}</h5>
                             <p>মোট বৈদেশিক অনুদানে গৃহীত প্রকল্প এলাকা</p>
 
-                            @else
 
-
-                            <h5>{{ App\Http\Controllers\Admin\CommonController::englishToBangla(0) }}</h5>
-                            <p>মোট বৈদেশিক অনুদানে গৃহীত প্রকল্প এলাকা</p>
-
-                            @endif
 
 
                         </div>
@@ -110,17 +93,12 @@
                     <div class="card income-card card-primary bg-primary">
                         <div class="card-body text-center">
 
-                            @if(in_array('এককালীন অনুদান',$prokolpoType))
+                           
 
                             <h5>{{ App\Http\Controllers\Admin\CommonController::englishToBangla(count($prokolpoReportFc1Main)) }}</h5>
                             <p>মোট এককালীন অনুদান গ্রহণের  প্রকল্প এলাকা</p>
 
-                            @else
 
-                            <h5>{{ App\Http\Controllers\Admin\CommonController::englishToBangla(0) }}</h5>
-                            <p>মোট এককালীন অনুদান গ্রহণের  প্রকল্প এলাকা</p>
-
-                            @endif
 
 
                         </div>
@@ -143,13 +121,37 @@
                         <form method="get" action="{{ route('prokolpoBeneficiariesReportSearch') }}" id="form">
                             <div class="row">
 
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
+                                    <label>প্রকল্পের বছর</label>
+                                    <select  class="form-control js-example-basic-single" name="prokolpo_year" >
+                                        <option value="">-- নির্বাচন করুন --</option>
+                                        <option value="2020" {{ '2020' == $prokolpoYear ? 'selected':'' }}>২০২০-২০২১</option>
+                                        <option value="2021" {{ '2021' == $prokolpoYear ? 'selected':'' }}>২০২১-২০২২</option>
+                                        <option value="2022" {{ '2022' == $prokolpoYear ? 'selected':'' }}>২০২২-২০২৩</option>
+                                        <option value="2023" {{ '2023' == $prokolpoYear ? 'selected':'' }}>২০২৩-২০২৪</option>
+                                        <option value="2024" {{ '2024' == $prokolpoYear ? 'selected':'' }}>২০২৪-২০২৫</option>
+                                        <option value="2025" {{ '2025' == $prokolpoYear ? 'selected':'' }}>২০২৫-২০২৬</option>
+                                        <option value="2026" {{ '2026' == $prokolpoYear ? 'selected':'' }}>২০২৬-২০২৭</option>
+                                        <option value="2027" {{ '2027' == $prokolpoYear ? 'selected':'' }}>২০২৭-২০২৮</option>
+                                        <option value="2028" {{ '2028' == $prokolpoYear ? 'selected':'' }}>২০২৮-২০২৯</option>
+                                        <option value="2029" {{ '2029' == $prokolpoYear ? 'selected':'' }}>২০২৯-২০৩০</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
                                 <label>বিভাগ</label>
-                                    <select multiple class="form-control js-example-basic-multiple divisionId" name="division_name[]" id="divisionId" required>
+                                    <select multiple class="form-control js-example-basic-multiple divisionId" name="division_name[]" id="divisionId" >
                                         <option value="">-- বিভাগ নির্বাচন করুন --</option>
+                                        @if(empty($divisionName))
+
+                                        @foreach($divisionList as $divisionLists)
+                                        <option value="{{ $divisionLists->division_bn }}">{{ $divisionLists->division_bn }}</option>
+                                        @endforeach
+
+                                        @else
                                         @foreach($divisionList as $divisionLists)
                                         <option value="{{ $divisionLists->division_bn }}" {{ in_array($divisionLists->division_bn,$divisionName) ? 'selected':''}}>{{ $divisionLists->division_bn }}</option>
                                         @endforeach
+                                        @endif
                                     </select>
 
                                 </div>
@@ -158,27 +160,26 @@
 //dd($distrcitName)
 
 $searchDistrictList = DB::table('civilinfos')
-->whereIn('division_bn',$divisionName)
+
 ->groupBy('district_bn')
 ->select('district_bn')
 ->get();
 ?>
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label>জেলা</label>
                                     <select multiple class="form-control js-example-basic-multiple" name="distric_name[]" id="districId">
                                         <option value="">-- জেলা নির্বাচন করুন --</option>
 
                                         @if(empty($distrcitName))
 
-                                        @else
-
-                                        @foreach($searchDistrictList as $distrcitNames)
-
-                                        <option value="{{ $distrcitNames->district_bn }}" {{ in_array($distrcitNames->district_bn,$distrcitName) ? 'selected':''}}>{{ $distrcitNames->district_bn }}</option>
-
+                                        @foreach($searchDistrictList as $divisionLists)
+                                        <option value="{{ $divisionLists->district_bn }}" >{{ $divisionLists->district_bn }}</option>
                                         @endforeach
 
-
+                                        @else
+                                        @foreach($searchDistrictList as $divisionLists)
+                                        <option value="{{ $divisionLists->district_bn }}" {{ in_array($divisionLists->district_bn,$distrcitName) ? 'selected':''}}>{{ $divisionLists->district_bn }}</option>
+                                        @endforeach
                                         @endif
 
                                     </select>
@@ -191,15 +192,21 @@ $searchDistrictList = DB::table('civilinfos')
                                     <input type="text" class="form-control" name="third_name" id="thirdId" >
                                 </div> --}}
 
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label>প্রকল্পের ধরণ</label>
                                     <select multiple class="form-control js-example-basic-multiple" name="prokolpo_type[]" >
                                         <option value="">-- নির্বাচন করুন --</option>
-                                        <option value="সকল" {{ in_array('সকল',$prokolpoType) ? 'selected':''}}>সকল</option>
-                                        <option value="বহুবার্ষিক" {{ in_array('বহুবার্ষিক',$prokolpoType) ? 'selected':''}}>বহুবার্ষিক</option>
-                                        <option value="জরুরি ত্রাণ সহায়তা" {{ in_array('জরুরি ত্রাণ সহায়তা',$prokolpoType) ? 'selected':''}}>জরুরি ত্রাণ সহায়তা</option>
-                                        <option value="বৈদেশিক অনুদানে গৃহীত" {{ in_array('বৈদেশিক অনুদানে গৃহীত"',$prokolpoType) ? 'selected':''}}>বৈদেশিক অনুদানে গৃহীত</option>
-                                        <option value="এককালীন অনুদান" {{ in_array('এককালীন অনুদান',$prokolpoType) ? 'selected':''}}>এককালীন অনুদান</option>
+                                        @if(empty($prokolpoType))
+
+                                        @foreach($projectSubjectList as $projectSubjectLists)
+                                        <option value="{{ $projectSubjectLists->id }}">{{ $projectSubjectLists->name }}</option>
+                                        @endforeach
+
+                                        @else
+                                        @foreach($projectSubjectList as $projectSubjectLists)
+                                        <option value="{{ $projectSubjectLists->id }}" {{ in_array($projectSubjectLists->id,$prokolpoType) ? 'selected':''}} >{{ $projectSubjectLists->name }}</option>
+                                        @endforeach
+                                        @endif
                                     </select>
                                 </div>
 
@@ -262,6 +269,15 @@ $searchDistrictList = DB::table('civilinfos')
     @endforeach
     @endif
 
+    @if(empty($prokolpoYear))
+
+
+    @else
+
+    <input type="hidden" name="prokolpo_year" value="{{ $prokolpoYear }}" />
+
+    @endif
+
     <button class="btn btn-primary waves-effect  btn-sm waves-light" type="submit" >
      <i class="far fa-calendar-plus  mr-2"></i> প্রিন্ট করুন
     </button>
@@ -291,10 +307,7 @@ $searchDistrictList = DB::table('civilinfos')
 
 
 
-                                @if(!in_array('বহুবার্ষিক',$prokolpoType))
 
-
-                                @else
 
                                 @foreach($prokolpoReportFd6Main as $key=>$prokolpoReports)
                                 <tr>
@@ -327,18 +340,12 @@ $searchDistrictList = DB::table('civilinfos')
                                         @endif
 
                                     </td>
-                                    <td> ( বহুবার্ষিক)</td>
+                                    <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} ( বহুবার্ষিক)</td>
                                     <td>{{ $prokolpoReports->number_of_beneficiaries }}</td>
                                 </tr>
                                 @endforeach
 
-                                @endif
 
-
-                                @if(!in_array('জরুরি ত্রাণ সহায়তা',$prokolpoType))
-
-
-                                @else
 
                                 <?php
                                 $countFd6Data = 0;
@@ -376,16 +383,12 @@ $searchDistrictList = DB::table('civilinfos')
                                         @endif
 
                                     </td>
-                                    <td> ( জরুরি ত্রাণ সহায়তা)</td>
+                                    <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} ( জরুরি ত্রাণ সহায়তা)</td>
                                     <td>{{ $prokolpoReports->number_of_beneficiaries }}</td>
                                 </tr>
                                 @endforeach
 
-                                @endif
 
-                                @if(!in_array('বৈদেশিক অনুদানে গৃহীত',$prokolpoType))
-
-                                @else
 
                                 <?php
                                 $countFd7Data = 0;
@@ -425,17 +428,12 @@ $searchDistrictList = DB::table('civilinfos')
                                         @endif
 
                                     </td>
-                                    <td> (বৈদেশিক অনুদানে গৃহীত)</td>
+                                    <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} (বৈদেশিক অনুদানে গৃহীত)</td>
                                     <td>{{ $prokolpoReports->number_of_beneficiaries }}</td>
                                 </tr>
                                 @endforeach
 
-                                @endif
 
-
-                                @if(!in_array('এককালীন অনুদান',$prokolpoType))
-
-                                @else
 
                                 <?php
                                 $countFd7Data = 0;
@@ -476,11 +474,11 @@ $searchDistrictList = DB::table('civilinfos')
         @endif
 
     </td>
-    <td> (এককালীন অনুদান)</td>
+    <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} (এককালীন অনুদান)</td>
     <td>{{ $prokolpoReports->number_of_beneficiaries }}</td>
 </tr>
 @endforeach
-@endif
+
 
                             </tbody>
                         </table>

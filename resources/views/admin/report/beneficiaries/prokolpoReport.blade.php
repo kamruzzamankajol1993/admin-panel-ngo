@@ -103,9 +103,26 @@
                         <form method="get" action="{{ route('prokolpoBeneficiariesReportSearch') }}" id="form">
                             <div class="row">
 
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
+                                    <label>প্রকল্পের বছর</label>
+                                    <select  class="form-control js-example-basic-single" name="prokolpo_year" >
+                                        <option value="">-- নির্বাচন করুন --</option>
+                                        <option value="2020" >২০২০ -২০২১</option>
+                                        <option value="2021" >২০২১-২০২২</option>
+                                        <option value="2022" >২০২২ - ২০২৩</option>
+                                        <option value="2023">২০২৩-২০২৪</option>
+                                        <option value="2024">২০২৪-২০২৫</option>
+                                        <option value="2025">২০২৫ - ২০২৬</option>
+                                        <option value="2026">২০২৬ -২০২৭</option>
+                                        <option value="2027">২০২৭-২০২৮</option>
+                                        <option value="2028">২০২৮ - ২০২৯</option>
+                                        <option value="2029">২০২৯ - ২০৩০</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-3">
                                 <label>বিভাগ</label>
-                                    <select multiple class="form-control js-example-basic-multiple divisionId" name="division_name[]" id="divisionId" required>
+                                    <select multiple class="form-control js-example-basic-multiple divisionId" name="division_name[]" id="divisionId" >
                                         <option value="">-- বিভাগ নির্বাচন করুন --</option>
                                         @foreach($divisionList as $divisionLists)
                                         <option value="{{ $divisionLists->division_bn }}">{{ $divisionLists->division_bn }}</option>
@@ -114,12 +131,23 @@
 
                                 </div>
 
+                                <?php
+                                //dd($distrcitName)
 
-                                <div class="col-sm-4">
+                                $searchDistrictList = DB::table('civilinfos')
+                                ->groupBy('district_bn')
+                                ->select('district_bn')
+                                ->get();
+                                ?>
+                                <div class="col-sm-3">
                                     <label>জেলা</label>
                                     <select multiple class="form-control js-example-basic-multiple" name="distric_name[]" id="districId">
                                         <option value="">-- জেলা নির্বাচন করুন --</option>
+                                        @foreach($searchDistrictList as $distrcitNames)
 
+                                        <option value="{{ $distrcitNames->district_bn }}" >{{ $distrcitNames->district_bn }}</option>
+
+                                        @endforeach
                                     </select>
 
                                 </div>
@@ -130,15 +158,13 @@
                                     <input type="text" class="form-control" name="third_name" id="thirdId" >
                                 </div> --}}
 
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <label>প্রকল্পের ধরণ</label>
                                     <select multiple class="form-control js-example-basic-multiple" name="prokolpo_type[]" >
                                         <option value="">-- নির্বাচন করুন --</option>
-                                        <option value="সকল" >সকল</option>
-                                        <option value="বহুবার্ষিক">বহুবার্ষিক</option>
-                                        <option value="জরুরি ত্রাণ সহায়তা">জরুরি ত্রাণ সহায়তা</option>
-                                        <option value="বৈদেশিক অনুদানে গৃহীত">বৈদেশিক অনুদানে গৃহীত</option>
-                                        <option value="এককালীন অনুদান">এককালীন অনুদান</option>
+                                        @foreach($projectSubjectList as $projectSubjectLists)
+                                        <option value="{{ $projectSubjectLists->id }}" >{{ $projectSubjectLists->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -224,7 +250,7 @@
                                         @endif
 
                                     </td>
-                                    <td> ( বহুবার্ষিক)</td>
+                                    <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} ( বহুবার্ষিক)</td>
                                     <td>{{ $prokolpoReports->number_of_beneficiaries }}</td>
                                 </tr>
                                 @endforeach
@@ -265,7 +291,7 @@
                                         @endif
 
                                     </td>
-                                    <td> ( জরুরি ত্রাণ সহায়তা)</td>
+                                    <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} ( জরুরি ত্রাণ সহায়তা)</td>
                                     <td>{{ $prokolpoReports->number_of_beneficiaries }}</td>
                                 </tr>
                                 @endforeach
@@ -308,7 +334,7 @@
                                         @endif
 
                                     </td>
-                                    <td> (বৈদেশিক অনুদানে গৃহীত)</td>
+                                    <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} (বৈদেশিক অনুদানে গৃহীত)</td>
                                     <td>{{ $prokolpoReports->number_of_beneficiaries }}</td>
                                 </tr>
                                 @endforeach
@@ -352,7 +378,7 @@
         @endif
 
     </td>
-    <td> (এককালীন অনুদান)</td>
+    <td>{{ DB::table('project_subjects')->where('id',$prokolpoReports->prokolpo_type)->value('name') }} (এককালীন অনুদান)</td>
     <td>{{ $prokolpoReports->number_of_beneficiaries }}</td>
 </tr>
 @endforeach
