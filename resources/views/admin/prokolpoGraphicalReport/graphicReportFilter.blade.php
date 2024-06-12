@@ -180,7 +180,7 @@
 
                             <div class="col-sm-4">
                                 <label>প্রকল্পের বছর</label>
-                                <select  class="form-control js-example-basic-single" name="prokolpo_year" >
+                                <select  class="form-control js-example-basic-single" name="prokolpo_year" id="prokolpoYearId">
                                     <option value="">-- নির্বাচন করুন --</option>
 
                                     <option value="2020" {{ '2020' == $prokolpoYear ? 'selected':'' }}>২০২০ -২০২১</option>
@@ -195,6 +195,24 @@
                                     <option value="2029" {{ '2029' == $prokolpoYear ? 'selected':'' }}>২০২৯ - ২০৩০</option>
                                 </select>
                             </div>
+
+
+
+
+                            <div class="col-sm-4" style="display: none;">
+                                <label>জেলা</label>
+                                <select multiple  class="form-control js-example-basic-multiple" name="ajaxDistrictId[]" id="ajaxDistrictId">
+                                    <option value="">-- জেলা নির্বাচন করুন --</option>
+
+
+                                    @foreach($districtList as $divisionLists)
+                                    <option value="{{ $divisionLists->district_bn }}" {{ in_array($divisionLists->district_bn,$mainDistrictArray) ? 'selected':''}}>{{ $divisionLists->district_bn }}</option>
+                                    @endforeach
+
+                                </select>
+
+                            </div>
+
 
 
                             <div class="col-sm-4">
@@ -225,7 +243,7 @@
 
                             <div class="col-sm-4">
                                 <label>প্রকল্পের ধরণ</label>
-                                <select multiple class="form-control js-example-basic-multiple" name="prokolpo_type[]" >
+                                <select multiple class="form-control js-example-basic-multiple" name="prokolpo_type[]" id="prokolpoTypeId">
                                     <option value="">-- নির্বাচন করুন --</option>
 
                                     @if(empty($prokolpoType))
@@ -4140,7 +4158,9 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center" id="myLargeModalLabel"></h5>
+                <h5 class="modal-title text-center" id="myLargeModalLabel"></h5><br>
+
+
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
@@ -4163,11 +4183,25 @@ $("[id^=distrcitList]").click(function(){
     var districtName = $(this).data("name");
 
 
+    var prokolpoYear = $('#prokolpoYearId').val();
+
+    var prokolpoTypeId = $('#prokolpoTypeId').map(function (idx, ele) {
+   return $(ele).val();
+}).get();
+
+
+var ajaxDistrictId = $('#ajaxDistrictId').map(function (idx, ele) {
+   return $(ele).val();
+}).get();
+
+
+
+
 
     $.ajax({
-    url: "{{ route('prokolpoGraphicalReport.create') }}",
+    url: "{{ route('graphicReportFilterDistrict') }}",
     method: 'GET',
-    data: {districtName:districtName},
+    data: {ajaxDistrictId:ajaxDistrictId,districtName:districtName,prokolpoYear:prokolpoYear,prokolpoTypeId:prokolpoTypeId},
     success: function(data) {
 
     $('#myLargeModalLabel').html(districtName+' '+'জেলার প্রকল্পের রিপোর্ট ');

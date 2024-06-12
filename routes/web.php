@@ -105,6 +105,8 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     Route::controller(ProkolpoGraphicalReportController::class)->group(function () {
+
+        Route::get('/graphicReportFilterDistrict', 'graphicReportFilterDistrict')->name('graphicReportFilterDistrict');
         Route::get('/graphicReportFilter', 'graphicReportFilter')->name('graphicReportFilter');
 
     });

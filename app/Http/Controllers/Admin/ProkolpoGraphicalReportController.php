@@ -22,6 +22,165 @@ class ProkolpoGraphicalReportController extends Controller
     }
 
 
+    public function graphicReportFilterDistrict(Request $request){
+
+        $districtName = $request->districtName;
+        $prokolpoYear = $request->prokolpoYear;
+        $prokolpoTypeId = $request->prokolpoTypeId;
+
+        if(empty($prokolpoYear)){
+
+            $prokolpoAreaListFd6 = DB::table('fd6_form_prokolpo_areas')
+            ->join('fd6_forms', 'fd6_forms.id', '=', 'fd6_form_prokolpo_areas.fd6_form_id')
+           ->select('fd6_form_prokolpo_areas.*','fd6_forms.*','fd6_forms.id as mainId')
+            ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
+
+            ->where('fd6_form_prokolpo_areas.district_name',$districtName)
+            ->orderBy('fd6_forms.id','desc')
+
+            ->get();
+
+            $prokolpoAreaListFd7 = DB::table('fd7_form_prokolpo_areas')
+            ->join('fd7_forms', 'fd7_forms.id', '=', 'fd7_form_prokolpo_areas.fd7_form_id')
+            ->select('fd7_form_prokolpo_areas.*','fd7_forms.*','fd7_forms.id as mainId')
+            ->where('fd7_form_prokolpo_areas.district_name',$districtName)
+
+            ->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$request->prokolpoTypeId)
+            ->orderBy('fd7_forms.id','desc')
+            ->get();
+
+
+            $prokolpoAreaListFc1 = DB::table('prokolpo_areas')->where('type','fcOne')
+            ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.*','fc1_forms.*','fc1_forms.id as mainId')
+
+            ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpoTypeId)
+            ->where('prokolpo_areas.district_name',$districtName)
+            ->orderBy('fc1_forms.id','desc')
+            ->get();
+
+
+            $prokolpoAreaListFc2 = DB::table('prokolpo_areas')->where('type','fcTwo')
+            ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.*','fc2_forms.*','fc2_forms.id as mainId')
+            ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+
+            ->where('prokolpo_areas.district_name',$districtName)
+            ->orderBy('fc2_forms.id','desc')
+            ->get();
+
+        }elseif($prokolpoTypeId == []){
+
+            $formYear = $request->prokolpoYear;
+            $toYear =$request->prokolpoYear+1;
+
+            $formDate = $formYear.'-07-01';
+            $toDate = $toYear.'-06-30';
+
+            $prokolpoAreaListFd6 = DB::table('fd6_form_prokolpo_areas')
+            ->join('fd6_forms', 'fd6_forms.id', '=', 'fd6_form_prokolpo_areas.fd6_form_id')
+           ->select('fd6_form_prokolpo_areas.*','fd6_forms.*','fd6_forms.id as mainId')
+            ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
+            ->where('fd6_form_prokolpo_areas.district_name',$districtName)
+
+            ->orderBy('fd6_forms.id','desc')
+
+            ->get();
+
+            $prokolpoAreaListFd7 = DB::table('fd7_form_prokolpo_areas')
+            ->join('fd7_forms', 'fd7_forms.id', '=', 'fd7_form_prokolpo_areas.fd7_form_id')
+            ->select('fd7_form_prokolpo_areas.*','fd7_forms.*','fd7_forms.id as mainId')
+            ->where('fd7_form_prokolpo_areas.district_name',$districtName)
+            ->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
+
+            ->orderBy('fd7_forms.id','desc')
+            ->get();
+
+
+            $prokolpoAreaListFc1 = DB::table('prokolpo_areas')->where('type','fcOne')
+            ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.*','fc1_forms.*','fc1_forms.id as mainId')
+            ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+
+            ->where('prokolpo_areas.district_name',$districtName)
+            ->orderBy('fc1_forms.id','desc')
+            ->get();
+
+
+            $prokolpoAreaListFc2 = DB::table('prokolpo_areas')->where('type','fcTwo')
+            ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+            ->select('prokolpo_areas.*','fc2_forms.*','fc2_forms.id as mainId')
+            ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+
+            ->where('prokolpo_areas.district_name',$districtName)
+            ->orderBy('fc2_forms.id','desc')
+            ->get();
+
+        }else{
+
+            $formYear = $request->prokolpoYear;
+            $toYear =$request->prokolpoYear+1;
+
+            $formDate = $formYear.'-07-01';
+            $toDate = $toYear.'-06-30';
+
+            $prokolpoAreaListFd6 = DB::table('fd6_form_prokolpo_areas')
+         ->join('fd6_forms', 'fd6_forms.id', '=', 'fd6_form_prokolpo_areas.fd6_form_id')
+        ->select('fd6_form_prokolpo_areas.*','fd6_forms.*','fd6_forms.id as mainId')
+         ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
+         ->whereIn('fd6_form_prokolpo_areas.prokolpo_type',$request->prokolpoTypeId)
+         ->where('fd6_form_prokolpo_areas.district_name',$districtName)
+         ->orderBy('fd6_forms.id','desc')
+
+         ->get();
+
+         $prokolpoAreaListFd7 = DB::table('fd7_form_prokolpo_areas')
+         ->join('fd7_forms', 'fd7_forms.id', '=', 'fd7_form_prokolpo_areas.fd7_form_id')
+         ->select('fd7_form_prokolpo_areas.*','fd7_forms.*','fd7_forms.id as mainId')
+         ->where('fd7_form_prokolpo_areas.district_name',$districtName)
+         ->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
+         ->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$request->prokolpoTypeId)
+         ->orderBy('fd7_forms.id','desc')
+         ->get();
+
+
+         $prokolpoAreaListFc1 = DB::table('prokolpo_areas')->where('type','fcOne')
+         ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+         ->select('prokolpo_areas.*','fc1_forms.*','fc1_forms.id as mainId')
+         ->whereBetween('fc1_form_prokolpo_areas.created_at', [$formDate, $toDate])
+         ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpoTypeId)
+         ->where('prokolpo_areas.district_name',$districtName)
+         ->orderBy('fc1_forms.id','desc')
+         ->get();
+
+
+         $prokolpoAreaListFc2 = DB::table('prokolpo_areas')->where('type','fcTwo')
+         ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+         ->select('prokolpo_areas.*','fc2_forms.*','fc2_forms.id as mainId')
+         ->whereBetween('fc2_form_prokolpo_areas.created_at', [$formDate, $toDate])
+         ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpoTypeId)
+         ->where('prokolpo_areas.district_name',$districtName)
+         ->orderBy('fc2_forms.id','desc')
+         ->get();
+
+        }
+
+       
+
+        return $data= view('admin.prokolpoGraphicalReport.graphicReportFilterDistrict',compact(
+            'districtName',
+            'prokolpoYear',
+            'prokolpoTypeId',
+            'prokolpoAreaListFd6',
+            'prokolpoAreaListFd7',
+            'prokolpoAreaListFc1',
+            'prokolpoAreaListFc2',
+        ));
+
+
+    }
+
+
     public function create(Request $request){
 
         $districtName = $request->districtName;
