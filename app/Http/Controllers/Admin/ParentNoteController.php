@@ -43,6 +43,26 @@ class ParentNoteController extends Controller
     public function addParentAttachment(Request $request){
 
 
+        //dd($request->all());
+
+
+        $insertData = new NoteAttachment();
+        $insertData->noteId = $request->snoteId;
+        $insertData->status = $request->sstatus;
+        $insertData->nothiId = $request->snothiId;
+        $insertData->title = $request->name;
+        $insertData->link = $request->value;
+        $insertData->child_id = $request->lastChild;
+        $insertData->admin_id =Auth::guard('admin')->user()->id;
+        $insertData->save();
+
+        return 1;
+            }
+
+
+    public function addParentAttachmentNew(Request $request){
+
+
 //dd($request->all());
 
 
@@ -51,12 +71,18 @@ $insertData->noteId = $request->snoteId;
 $insertData->status = $request->sstatus;
 $insertData->nothiId = $request->snothiId;
 $insertData->title = $request->name;
-$insertData->link = $request->value;
+//$insertData->link = $request->value;
+if ($request->hasfile('file')) {
+    $filePath ="attFile";
+    $file = $request->file('file');
+    $insertData->link =  CommonController::pdfUpload($request,$file,$filePath);
+
+}
 $insertData->child_id = $request->lastChild;
 $insertData->admin_id =Auth::guard('admin')->user()->id;
 $insertData->save();
 
-return 1;
+return redirect()->back();
     }
 
 

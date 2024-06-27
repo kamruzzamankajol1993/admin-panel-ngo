@@ -290,7 +290,10 @@ $unsentAtt = DB::table('note_attachments')
 ?>
 
 
+<!--new add att code -->
+<a  href="#"  data-cmid="{{ $childNoteNewLists->id }}" id="attModal1">4সংযুক্তি যুক্ত করুন <i class="fa fa-plus"></i></a>
 
+<!-- end new add att code -->
  <p class="mt-4">সংযুক্তি({{ count($unsentAtt) }})</p>
  <ul>
     @foreach($unsentAtt as $unsentAtts )

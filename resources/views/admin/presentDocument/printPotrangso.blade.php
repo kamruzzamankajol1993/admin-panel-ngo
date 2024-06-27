@@ -167,11 +167,11 @@ $potrangshoDraft =  DB::table('potrangsho_drafts')
 				@else
 				<div style="display: flex;">
 				@if(($potrangshoDraft->SentStatus == 0)&&($potrangshoDraft->adminId == Auth::guard('admin')->user()->id))
-				{!! $potrangshoDraft->sarok_number !!}
+				{{ App\Http\Controllers\Admin\CommonController::englishToBangla($nothiNumber) }}
 				@else
 
 				@if(empty($officeDetails->sarok_number))
-                {!! $potrangshoDraft->sarok_number !!}
+                {{ App\Http\Controllers\Admin\CommonController::englishToBangla($nothiNumber) }}
                 @else
 				{!! $officeDetails->sarok_number !!}
                 @endif
@@ -374,9 +374,13 @@ $potrangshoDraft =  DB::table('potrangsho_drafts')
     @endforeach
 </table>
 <table class="pdf_table">
+    @if(count($nothiAttractListUpdate) == 0)
+
+@else
     <tr>
         <td style="font-weight:bold;">দৃষ্টি আকর্ষণ:</td>
     </tr>
+    @endif
     @foreach($nothiAttractListUpdate as $key=>$nothiPropokLists)
     <tr>
 

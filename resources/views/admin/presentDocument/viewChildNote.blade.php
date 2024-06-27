@@ -348,7 +348,7 @@ class="icofont icofont-file-document"></i>সিএ ফার্ম কতৃক
 
                                      @if(count($officeDetail) == 0 )
 
-                                     <h5 style="color:red;"><span><i class="fa fa-exclamation-triangle"></i></span>কনো পত্র পাওা যায়নি </h5>
+                                     <h5 style="color:red;"><span><i class="fa fa-exclamation-triangle"></i></span>কোন পত্র পাওয়া যায়নি</h5>
 
                                      @else
 
@@ -541,7 +541,7 @@ $nothiApproverListOnu = DB::table('nothi_approvers')->where('nothiId',$nothiId)
             <h3 class="popover-header">পত্র অনুমোদন </h3>
             <div class="popover-body">আপনি কি পত্র অনুমোদন করতে চান</div>
             <div class="d-flex justify-content-center p-2">
-                <button  onclick="location.href = '{{ route('givePermissionToNote', ['status' => $status,'parentId'=>$parentId,'nothiId'=>$nothiId,'id' =>$id,'childnote'=>$childNoteNewListValue]) }}';" class="btn btn-primary me-2">হযাঁ</button>
+                <button  onclick="location.href = '{{ route('givePermissionToNote', ['status' => $status,'parentId'=>$parentId,'nothiId'=>$nothiId,'id' =>$id,'childnote'=>$childNoteNewListValue]) }}';" class="btn btn-primary me-2">হ্যাঁ</button>
                 <button class="btn btn-danger">না</button>
             </div>
         </div>
@@ -642,9 +642,9 @@ $nothiApproverListOnu = DB::table('nothi_approvers')->where('nothiId',$nothiId)
                                                                                     @else
                                                                                     <div style="display: flex;">
                                                                                     @if(($potrangshoDraft->SentStatus == 0)&&($potrangshoDraft->adminId == Auth::guard('admin')->user()->id))
-                                                                                    <p ><span > স্মারক নং:</span> {!! $potrangshoDraft->sarok_number !!}</p>
+                                                                                    <p ><span > স্মারক নং:</span> {{ App\Http\Controllers\Admin\CommonController::englishToBangla($nothiNumber) }}</p>
                                                                                     @else
-                                                                                    <p ><span > স্মারক নং:</span> {!! $officeDetails->sarok_number !!}</p>
+                                                                                    <p ><span > স্মারক নং:</span> {{ App\Http\Controllers\Admin\CommonController::englishToBangla($nothiNumber) }}</p>
                                                                                     @endif
                                                                                     </div>
 
@@ -887,7 +887,7 @@ $nothiApproverListOnu = DB::table('nothi_approvers')->where('nothiId',$nothiId)
                                                                     @if(count($nothiCopyListUpdate) == ($key+1))
                                                                     <span>{{ App\Http\Controllers\Admin\CommonController::englishToBangla($key+1) }} | {{ $nothiPropokLists->otherOfficerDesignation }}, এনজিও বিষয় ব্যুরো</span>।
                                                                     @else
-                                                                    <span>{{ App\Http\Controllers\Admin\CommonController::englishToBangla($key+1) }} | {{ $nothiPropokLists->otherOfficerDesignation }}, এনজও বিষয়ক ব্ুরো</span>;<br>
+                                                                    <span>{{ App\Http\Controllers\Admin\CommonController::englishToBangla($key+1) }} | {{ $nothiPropokLists->otherOfficerDesignation }}, এনজিও বিষয়ক ব্যুরো</span>;<br>
 
                                                                     @endif
                                                                     @else
@@ -1198,7 +1198,7 @@ $nothiApproverListOnu = DB::table('nothi_approvers')->where('nothiId',$nothiId)
 
 
 <!-- end note add modal start -->
-
+@include('admin.presentDocument.attModal')
 <!-- nothi approval modal -->
 @include('admin.presentDocument.nothiApproverModal')
 <!-- end nothi approval modal -->
@@ -1247,6 +1247,7 @@ $nothiApproverListOnu = DB::table('nothi_approvers')->where('nothiId',$nothiId)
 
 
 @section('script')
+@include('admin.presentDocument.attscript')
 <script>
     $(document).ready(function(){
   $("[id^=dataMain]").click(function(){
@@ -1340,7 +1341,7 @@ var snoteId =$('#snoteId').val();
 
         location.reload(true);
         alertify.set('notifier','position','top-center');
-          alertify.success('সফলভাব কপি হয়েছে');
+          alertify.success('সফলভাবে সংযুক্তিতে সংযুক্ত করা হয়েছে');
 
     }
     });

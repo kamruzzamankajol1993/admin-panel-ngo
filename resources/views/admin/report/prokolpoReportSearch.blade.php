@@ -121,8 +121,20 @@
 
                         <form method="get" action="{{ route('prokolpoReportSearch') }}" id="form">
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <label>প্রকল্পের বছর</label>
+
+                                <div class="col-sm-2">
+                                    <label>ফিল্টার এর ধরণ</label>
+                                    <select  class="form-control js-example-basic-single" id="filter_type" name="filter_type" >
+                                        <option value="">-- নির্বাচন করুন --</option>
+                                        <option value="yearly" {{ 'yearly' == $filterType ? 'selected':'' }}>বছর অনুযায়ী</option>
+                                        <option value="monthly" {{ 'monthly' == $filterType ? 'selected':'' }}>মাস অনুযায়ী</option>
+                                    </select>
+                                </div>
+
+                                @if($filterType == 'yearly')
+
+                                <div class="col-sm-4" id="prokolpo_year">
+                                    <label>প্রকল্পের বছর</label><br>
                                     <select  class="form-control js-example-basic-single" name="prokolpo_year" >
                                         <option value="">-- নির্বাচন করুন --</option>
                                         <option value="2020" {{ '2020' == $prokolpoYear ? 'selected':'' }}>২০২০-২০২১</option>
@@ -137,7 +149,48 @@
                                         <option value="2029" {{ '2029' == $prokolpoYear ? 'selected':'' }}>২০২৯-২০৩০</option>
                                     </select>
                                 </div>
-                                <div class="col-sm-3">
+
+                                <div class="col-sm-2" id="from" style="display:none;">
+                                    <label>হইতে</label>
+                                    <input type="text" value="{{ $from }}"  class="form-control datepicker233" name="from"/>
+                                </div>
+                                <div class="col-sm-2" id="to" style="display:none;">
+                                    <label>পর্যন্ত</label>
+                                    <input type="text" value="{{ $to }}"  class="form-control datepicker233" name="to"/>
+                                </div>
+
+                                @else
+
+                                <div class="col-sm-4" id="prokolpo_year" style="display:none;">
+                                    <label>প্রকল্পের বছর</label><br>
+                                    <select  class="form-control js-example-basic-single" name="prokolpo_year" >
+                                        <option value="">-- নির্বাচন করুন --</option>
+                                        <option value="2020" {{ '2020' == $prokolpoYear ? 'selected':'' }}>২০২০-২০২১</option>
+                                        <option value="2021" {{ '2021' == $prokolpoYear ? 'selected':'' }}>২০২১-২০২২</option>
+                                        <option value="2022" {{ '2022' == $prokolpoYear ? 'selected':'' }}>২০২২-২০২৩</option>
+                                        <option value="2023" {{ '2023' == $prokolpoYear ? 'selected':'' }}>২০২৩-২০২৪</option>
+                                        <option value="2024" {{ '2024' == $prokolpoYear ? 'selected':'' }}>২০২৪-২০২৫</option>
+                                        <option value="2025" {{ '2025' == $prokolpoYear ? 'selected':'' }}>২০২৫-২০২৬</option>
+                                        <option value="2026" {{ '2026' == $prokolpoYear ? 'selected':'' }}>২০২৬-২০২৭</option>
+                                        <option value="2027" {{ '2027' == $prokolpoYear ? 'selected':'' }}>২০২৭-২০২৮</option>
+                                        <option value="2028" {{ '2028' == $prokolpoYear ? 'selected':'' }}>২০২৮-২০২৯</option>
+                                        <option value="2029" {{ '2029' == $prokolpoYear ? 'selected':'' }}>২০২৯-২০৩০</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-2" id="from" >
+                                    <label>হইতে</label>
+                                    <input type="text" value="{{ $from }}"  class="form-control datepicker233" name="from"/>
+                                </div>
+                                <div class="col-sm-2" id="to" >
+                                    <label>পর্যন্ত</label>
+                                    <input type="text" value="{{ $to }}"  class="form-control datepicker233" name="to"/>
+                                </div>
+
+
+                                @endif
+
+                                <div class="col-sm-2">
                                 <label>বিভাগ</label>
                                     <select multiple class="form-control js-example-basic-multiple divisionId" name="division_name[]" id="divisionId" >
                                         <option value="">-- বিভাগ নির্বাচন করুন --</option>
@@ -165,7 +218,7 @@ $searchDistrictList = DB::table('civilinfos')
 ->select('district_bn')
 ->get();
 ?>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label>জেলা</label>
                                     <select multiple class="form-control js-example-basic-multiple" name="distric_name[]" id="districId">
                                         <option value="">-- জেলা নির্বাচন করুন --</option>
@@ -192,7 +245,7 @@ $searchDistrictList = DB::table('civilinfos')
                                     <input type="text" class="form-control" name="third_name" id="thirdId" >
                                 </div> --}}
 
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label>প্রকল্পের ধরণ</label>
                                     <select multiple class="form-control js-example-basic-multiple" name="prokolpo_type[]" >
                                         <option value="">-- নির্বাচন করুন --</option>
@@ -277,6 +330,14 @@ $searchDistrictList = DB::table('civilinfos')
 
     <input type="hidden" name="prokolpo_year" value="{{ $prokolpoYear }}" />
 
+    @endif
+
+    @if($filterType == 'yearly')
+    <input type="hidden" name="filter_type" value="{{ $filterType }}" />
+    @else
+    <input type="hidden" name="filter_type" value="{{ $filterType }}" />
+    <input type="hidden" name="from" value="{{ $from }}" />
+    <input type="hidden" name="to" value="{{ $to }}" />
     @endif
 
     <button class="btn btn-primary waves-effect  btn-sm waves-light" type="submit" >
@@ -517,6 +578,31 @@ $searchDistrictList = DB::table('civilinfos')
             buttons: ['copy', 'csv', 'excel', 'print']
         }
     }
+});
+</script>
+<script>
+    $("#filter_type").change(function(){
+
+        var ftype =$(this).val();
+
+        if(ftype == 'yearly'){
+
+            $('#prokolpo_year').show();
+            $('#to').hide();
+            $('#from').hide();
+
+        }else{
+
+            $('#prokolpo_year').hide();
+            $('#to').show();
+            $('#from').show();
+
+        }
+
+
+
+
+
 });
 </script>
 <script>

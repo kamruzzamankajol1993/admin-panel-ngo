@@ -10,7 +10,7 @@
 
 
             <textarea id="ineditor3" name="sarok_number" contenteditable="true">
-                {!! $potrangshoDraft->sarok_number !!}
+                {{ App\Http\Controllers\Admin\CommonController::englishToBangla($nothiNumber) }}
                 </textarea>
             </div>
 

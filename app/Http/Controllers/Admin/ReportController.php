@@ -820,6 +820,8 @@ class ReportController extends Controller
             //abort(403, 'Sorry !! You are Unauthorized to view !');
             return redirect()->route('error_404');
         }
+
+       // dd($request->all());
         $prokolpoYear = $request->prokolpo_year;
         $prokolpoType = $request->prokolpo_type;
         $distrcitName = $request->distric_name;
@@ -847,8 +849,19 @@ class ReportController extends Controller
             $formYear = $request->prokolpo_year;
             $toYear =$request->prokolpo_year+1;
 
+            if($request->filter_type == 'yearly'){
+
+
             $formDate = $formYear.'-07-01';
             $toDate = $toYear.'-06-30';
+        }else{
+
+
+            $formDate = date('Y-m-d', strtotime($request->from));
+            $toDate = date('Y-m-d', strtotime($request->to));
+
+
+        }
 
             $prokolpoReportFd6Main = DB::table('prokolpo_details')
             ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
@@ -1154,8 +1167,18 @@ class ReportController extends Controller
             $formYear = $request->prokolpo_year;
             $toYear =$request->prokolpo_year+1;
 
-            $formDate = $formYear.'-07-01';
-            $toDate = $toYear.'-06-30';
+            if($request->filter_type == 'yearly'){
+
+
+                $formDate = $formYear.'-07-01';
+                $toDate = $toYear.'-06-30';
+            }else{
+
+
+                $formDate = date('Y-m-d', strtotime($request->from));
+                $toDate = date('Y-m-d', strtotime($request->to));
+
+            }
 
             $prokolpoReportFd6Main = DB::table('prokolpo_details')
             ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
@@ -1206,8 +1229,18 @@ class ReportController extends Controller
             $formYear = $request->prokolpo_year;
             $toYear =$request->prokolpo_year+1;
 
-            $formDate = $formYear.'-07-01';
-            $toDate = $toYear.'-06-30';
+            if($request->filter_type == 'yearly'){
+
+
+                $formDate = $formYear.'-07-01';
+                $toDate = $toYear.'-06-30';
+            }else{
+
+
+                $formDate = date('Y-m-d', strtotime($request->from));
+                $toDate = date('Y-m-d', strtotime($request->to));
+
+            }
 
             $prokolpoReportFd6Main = DB::table('prokolpo_details')
             ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
@@ -1259,8 +1292,18 @@ class ReportController extends Controller
             $formYear = $request->prokolpo_year;
             $toYear =$request->prokolpo_year+1;
 
-            $formDate = $formYear.'-07-01';
-            $toDate = $toYear.'-06-30';
+            if($request->filter_type == 'yearly'){
+
+
+                $formDate = $formYear.'-07-01';
+                $toDate = $toYear.'-06-30';
+            }else{
+
+
+                $formDate = date('Y-m-d', strtotime($request->from));
+                $toDate = date('Y-m-d', strtotime($request->to));
+
+            }
 
             $prokolpoReportFd6Main = DB::table('prokolpo_details')
             ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
@@ -1361,8 +1404,18 @@ class ReportController extends Controller
             $formYear = $request->prokolpo_year;
             $toYear =$request->prokolpo_year+1;
 
-            $formDate = $formYear.'-07-01';
-            $toDate = $toYear.'-06-30';
+            if($request->filter_type == 'yearly'){
+
+
+                $formDate = $formYear.'-07-01';
+                $toDate = $toYear.'-06-30';
+            }else{
+
+
+                $formDate = date('Y-m-d', strtotime($request->from));
+                $toDate = date('Y-m-d', strtotime($request->to));
+
+            }
 
             $prokolpoReportFd6Main = DB::table('prokolpo_details')
             ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
@@ -1416,8 +1469,18 @@ class ReportController extends Controller
             $formYear = $request->prokolpo_year;
             $toYear =$request->prokolpo_year+1;
 
-            $formDate = $formYear.'-07-01';
-            $toDate = $toYear.'-06-30';
+            if($request->filter_type == 'yearly'){
+
+
+                $formDate = $formYear.'-07-01';
+                $toDate = $toYear.'-06-30';
+            }else{
+
+
+                $formDate = date('Y-m-d', strtotime($request->from));
+                $toDate = date('Y-m-d', strtotime($request->to));
+
+            }
 
 
             $prokolpoReportFd6Main = DB::table('prokolpo_details')
@@ -1472,8 +1535,18 @@ class ReportController extends Controller
             $formYear = $request->prokolpo_year;
             $toYear =$request->prokolpo_year+1;
 
-            $formDate = $formYear.'-07-01';
-            $toDate = $toYear.'-06-30';
+            if($request->filter_type == 'yearly'){
+
+
+                $formDate = $formYear.'-07-01';
+                $toDate = $toYear.'-06-30';
+            }else{
+
+
+                $formDate = date('Y-m-d', strtotime($request->from));
+                $toDate = date('Y-m-d', strtotime($request->to));
+
+            }
 
 
             $prokolpoReportFd6Main = DB::table('prokolpo_details')
@@ -1532,8 +1605,18 @@ class ReportController extends Controller
             $formYear = $request->prokolpo_year;
             $toYear =$request->prokolpo_year+1;
 
-            $formDate = $formYear.'-07-01';
-            $toDate = $toYear.'-06-30';
+            if($request->filter_type == 'yearly'){
+
+
+                $formDate = $formYear.'-07-01';
+                $toDate = $toYear.'-06-30';
+            }else{
+
+
+                $formDate = date('Y-m-d', strtotime($request->from));
+                $toDate = date('Y-m-d', strtotime($request->to));
+
+            }
 
 
             $prokolpoReportFd6Main = DB::table('prokolpo_details')
@@ -1594,7 +1677,13 @@ class ReportController extends Controller
 
 
 
-     return view('admin.report.prokolpoReportSearch',compact('divisionName','distrcitName','prokolpoType','prokolpoYear','cityCorporationList','districtList','divisionList','projectSubjectList','prokolpoReportFc2Main','prokolpoReportFc1Main','prokolpoReportFd7Main','prokolpoReportFd6Main','prokolpoReportFc2','prokolpoReportFc1','prokolpoReportFd7','prokolpoReport','prokolpoReportFd6'));
+            $from = $request->from;
+            $to = $request->to;
+            $filterType = $request->filter_type;
+
+
+
+     return view('admin.report.prokolpoReportSearch',compact('to','filterType','from','divisionName','distrcitName','prokolpoType','prokolpoYear','cityCorporationList','districtList','divisionList','projectSubjectList','prokolpoReportFc2Main','prokolpoReportFc1Main','prokolpoReportFd7Main','prokolpoReportFd6Main','prokolpoReportFc2','prokolpoReportFc1','prokolpoReportFd7','prokolpoReport','prokolpoReportFd6'));
 
 
 
@@ -2400,6 +2489,7 @@ class ReportController extends Controller
 
 
 
+        $filterType = $request->filter_type;
         $prokolpoType = $request->prokolpo_type;
         $distrcitName = $request->distric_name;
         $divisionName = $request->division_name;
@@ -2420,756 +2510,837 @@ class ReportController extends Controller
         ->groupBy('city_orporation')->select('city_orporation')->get();
 
 
-        // new code start
+       // new code start
 
-        if(empty($prokolpoType) && empty($divisionName) && empty($distrcitName)){
+       if(empty($prokolpoType) && empty($divisionName) && empty($distrcitName)){
 
-            $formYear = $request->prokolpo_year;
-            $toYear =$request->prokolpo_year+1;
+        $formYear = $request->prokolpo_year;
+        $toYear =$request->prokolpo_year+1;
+
+        if($request->filter_type == 'yearly'){
+
+
+        $formDate = $formYear.'-07-01';
+        $toDate = $toYear.'-06-30';
+    }else{
+
+
+        $formDate = date('Y-m-d', strtotime($request->from));
+        $toDate = date('Y-m-d', strtotime($request->to));
+
+
+    }
+
+        $prokolpoReportFd6Main = DB::table('prokolpo_details')
+        ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+        ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+        ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+        ->where('prokolpo_details.type','fd6')
+        ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
+        ->orderBy('prokolpo_details.id','desc')
+        ->get();
+
+        $prokolpoReportFd7Main = DB::table('prokolpo_details')
+->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+->where('prokolpo_details.type','fd7')
+->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
+->orderBy('prokolpo_details.id','desc')
+->get();
+
+
+        $prokolpoReportFc1Main = DB::table('prokolpo_details')
+->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+->where('prokolpo_details.type','fc1')
+->where('prokolpo_areas.type','fcOne')
+->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+->orderBy('prokolpo_details.id','desc')
+->get();
+
+
+        $prokolpoReportFc2Main = DB::table('prokolpo_details')
+->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+->where('prokolpo_details.type','fc2')
+->where('prokolpo_areas.type','fcTwo')
+->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+->orderBy('prokolpo_details.id','desc')
+->get();
+
+    }elseif(empty($prokolpoYear) && empty($divisionName) && empty($distrcitName)){
+
+        $prokolpoReportFd6Main = DB::table('prokolpo_details')
+        ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+        ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+        ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+        ->where('prokolpo_details.type','fd6')
+        ->whereBetween('fd6_form_prokolpo_areas.prokolpo_type',$prokolpoType)
+        ->orderBy('prokolpo_details.id','desc')
+        ->get();
+
+        $prokolpoReportFd7Main = DB::table('prokolpo_details')
+->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+->where('prokolpo_details.type','fd7')
+->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$prokolpoType)
+->orderBy('prokolpo_details.id','desc')
+->get();
+
+
+        $prokolpoReportFc1Main = DB::table('prokolpo_details')
+->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+->where('prokolpo_details.type','fc1')
+->where('prokolpo_areas.type','fcOne')
+->whereIn('prokolpo_areas.prokolpo_type',$prokolpoType)
+->orderBy('prokolpo_details.id','desc')
+->get();
+
+
+        $prokolpoReportFc2Main = DB::table('prokolpo_details')
+->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+->where('prokolpo_details.type','fc2')
+->where('prokolpo_areas.type','fcTwo')
+->whereIn('prokolpo_areas.prokolpo_type',$prokolpoType)
+->orderBy('prokolpo_details.id','desc')
+->get();
+
+    }elseif(empty($prokolpoYear) && empty($divisionName) && empty($prokolpoType)){
+
+        $prokolpoReportFd6Main = DB::table('prokolpo_details')
+        ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+        ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+        ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+        ->where('prokolpo_details.type','fd6')
+        ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
+        ->orderBy('prokolpo_details.id','desc')
+        ->get();
+
+
+        $prokolpoReportFd7Main = DB::table('prokolpo_details')
+     ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+     ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+     ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+     ->where('prokolpo_details.type','fd7')
+     ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc1Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc1')
+     ->where('prokolpo_areas.type','fcOne')
+     ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc2Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc2')
+     ->where('prokolpo_areas.type','fcTwo')
+     ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+    }elseif(empty($prokolpoYear) && empty($distrcitName) && empty($prokolpoType)){
+
+        $prokolpoReportFd6Main = DB::table('prokolpo_details')
+        ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+        ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+        ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+        ->where('prokolpo_details.type','fd6')
+        ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+        ->orderBy('prokolpo_details.id','desc')
+        ->get();
+
+
+        $prokolpoReportFd7Main = DB::table('prokolpo_details')
+     ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+     ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+     ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+     ->where('prokolpo_details.type','fd7')
+     ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc1Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc1')
+     ->where('prokolpo_areas.type','fcOne')
+     ->whereIn('prokolpo_areas.division_name',$request->division_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc2Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc2')
+     ->where('prokolpo_areas.type','fcTwo')
+     ->whereIn('prokolpo_areas.division_name',$request->division_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+    }elseif(empty($prokolpoYear) && empty($divisionName)){
+
+        $prokolpoReportFd6Main = DB::table('prokolpo_details')
+        ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+        ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+        ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+        ->where('prokolpo_details.type','fd6')
+        ->whereIn('fd6_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+        ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
+        ->orderBy('prokolpo_details.id','desc')
+        ->get();
+
+
+        $prokolpoReportFd7Main = DB::table('prokolpo_details')
+     ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+     ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+     ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+     ->where('prokolpo_details.type','fd7')
+     ->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc1Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc1')
+     ->where('prokolpo_areas.type','fcOne')
+     ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc2Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc2')
+     ->where('prokolpo_areas.type','fcTwo')
+     ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+    }elseif(empty($prokolpoYear) && empty($distrcitName)){
+
+        $prokolpoReportFd6Main = DB::table('prokolpo_details')
+        ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+        ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+        ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+        ->where('prokolpo_details.type','fd6')
+        ->whereIn('fd6_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+        ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+        ->orderBy('prokolpo_details.id','desc')
+        ->get();
+
+
+        $prokolpoReportFd7Main = DB::table('prokolpo_details')
+     ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+     ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+     ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+     ->where('prokolpo_details.type','fd7')
+     ->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc1Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc1')
+     ->where('prokolpo_areas.type','fcOne')
+     ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('prokolpo_areas.division_name',$request->division_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc2Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc2')
+     ->where('prokolpo_areas.type','fcTwo')
+     ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('prokolpo_areas.division_name',$request->division_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+    }elseif(empty($prokolpoYear) && empty($prokolpoType)){
+
+        $prokolpoReportFd6Main = DB::table('prokolpo_details')
+        ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+        ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+        ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+        ->where('prokolpo_details.type','fd6')
+        ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+        ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
+        ->orderBy('prokolpo_details.id','desc')
+        ->get();
+
+
+        $prokolpoReportFd7Main = DB::table('prokolpo_details')
+     ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+     ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+     ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+     ->where('prokolpo_details.type','fd7')
+     ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+     ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc1Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc1')
+     ->where('prokolpo_areas.type','fcOne')
+     ->whereIn('prokolpo_areas.division_name',$request->division_name)
+     ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc2Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc2')
+     ->where('prokolpo_areas.type','fcTwo')
+     ->whereIn('prokolpo_areas.division_name',$request->division_name)
+     ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+    }elseif(empty($divisionName) && empty($distrcitName)){
+
+        $formYear = $request->prokolpo_year;
+        $toYear =$request->prokolpo_year+1;
+
+        if($request->filter_type == 'yearly'){
+
 
             $formDate = $formYear.'-07-01';
             $toDate = $toYear.'-06-30';
-
-            $prokolpoReportFd6Main = DB::table('prokolpo_details')
-            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
-            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
-            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
-            ->where('prokolpo_details.type','fd6')
-            ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
-            ->orderBy('prokolpo_details.id','desc')
-            ->get();
-
-            $prokolpoReportFd7Main = DB::table('prokolpo_details')
-    ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
-    ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
-    ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
-    ->where('prokolpo_details.type','fd7')
-    ->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
-    ->orderBy('prokolpo_details.id','desc')
-    ->get();
-
-
-            $prokolpoReportFc1Main = DB::table('prokolpo_details')
-    ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-    ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
-    ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
-    ->where('prokolpo_details.type','fc1')
-    ->where('prokolpo_areas.type','fcOne')
-    ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
-    ->orderBy('prokolpo_details.id','desc')
-    ->get();
-
-
-            $prokolpoReportFc2Main = DB::table('prokolpo_details')
-    ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-    ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
-    ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
-    ->where('prokolpo_details.type','fc2')
-    ->where('prokolpo_areas.type','fcTwo')
-    ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
-    ->orderBy('prokolpo_details.id','desc')
-    ->get();
-
-        }elseif(empty($prokolpoYear) && empty($divisionName) && empty($distrcitName)){
-
-            $prokolpoReportFd6Main = DB::table('prokolpo_details')
-            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
-            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
-            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
-            ->where('prokolpo_details.type','fd6')
-            ->whereBetween('fd6_form_prokolpo_areas.prokolpo_type',$prokolpoType)
-            ->orderBy('prokolpo_details.id','desc')
-            ->get();
-
-            $prokolpoReportFd7Main = DB::table('prokolpo_details')
-    ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
-    ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
-    ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
-    ->where('prokolpo_details.type','fd7')
-    ->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$prokolpoType)
-    ->orderBy('prokolpo_details.id','desc')
-    ->get();
-
-
-            $prokolpoReportFc1Main = DB::table('prokolpo_details')
-    ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-    ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
-    ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
-    ->where('prokolpo_details.type','fc1')
-    ->where('prokolpo_areas.type','fcOne')
-    ->whereIn('prokolpo_areas.prokolpo_type',$prokolpoType)
-    ->orderBy('prokolpo_details.id','desc')
-    ->get();
-
-
-            $prokolpoReportFc2Main = DB::table('prokolpo_details')
-    ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-    ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
-    ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
-    ->where('prokolpo_details.type','fc2')
-    ->where('prokolpo_areas.type','fcTwo')
-    ->whereIn('prokolpo_areas.prokolpo_type',$prokolpoType)
-    ->orderBy('prokolpo_details.id','desc')
-    ->get();
-
-        }elseif(empty($prokolpoYear) && empty($divisionName) && empty($prokolpoType)){
-
-            $prokolpoReportFd6Main = DB::table('prokolpo_details')
-            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
-            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
-            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
-            ->where('prokolpo_details.type','fd6')
-            ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
-            ->orderBy('prokolpo_details.id','desc')
-            ->get();
-
-
-            $prokolpoReportFd7Main = DB::table('prokolpo_details')
-         ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
-         ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
-         ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
-         ->where('prokolpo_details.type','fd7')
-         ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc1Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc1')
-         ->where('prokolpo_areas.type','fcOne')
-         ->whereIn('prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc2Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc2')
-         ->where('prokolpo_areas.type','fcTwo')
-         ->whereIn('prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-        }elseif(empty($prokolpoYear) && empty($distrcitName) && empty($prokolpoType)){
-
-            $prokolpoReportFd6Main = DB::table('prokolpo_details')
-            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
-            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
-            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
-            ->where('prokolpo_details.type','fd6')
-            ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
-            ->orderBy('prokolpo_details.id','desc')
-            ->get();
-
-
-            $prokolpoReportFd7Main = DB::table('prokolpo_details')
-         ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
-         ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
-         ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
-         ->where('prokolpo_details.type','fd7')
-         ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc1Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc1')
-         ->where('prokolpo_areas.type','fcOne')
-         ->whereIn('prokolpo_areas.division_name',$request->division_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc2Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc2')
-         ->where('prokolpo_areas.type','fcTwo')
-         ->whereIn('prokolpo_areas.division_name',$request->division_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-        }elseif(empty($prokolpoYear) && empty($divisionName)){
-
-            $prokolpoReportFd6Main = DB::table('prokolpo_details')
-            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
-            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
-            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
-            ->where('prokolpo_details.type','fd6')
-            ->whereIn('fd6_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-            ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
-            ->orderBy('prokolpo_details.id','desc')
-            ->get();
-
-
-            $prokolpoReportFd7Main = DB::table('prokolpo_details')
-         ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
-         ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
-         ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
-         ->where('prokolpo_details.type','fd7')
-         ->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc1Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc1')
-         ->where('prokolpo_areas.type','fcOne')
-         ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc2Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc2')
-         ->where('prokolpo_areas.type','fcTwo')
-         ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-        }elseif(empty($prokolpoYear) && empty($distrcitName)){
-
-            $prokolpoReportFd6Main = DB::table('prokolpo_details')
-            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
-            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
-            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
-            ->where('prokolpo_details.type','fd6')
-            ->whereIn('fd6_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-            ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
-            ->orderBy('prokolpo_details.id','desc')
-            ->get();
-
-
-            $prokolpoReportFd7Main = DB::table('prokolpo_details')
-         ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
-         ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
-         ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
-         ->where('prokolpo_details.type','fd7')
-         ->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc1Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc1')
-         ->where('prokolpo_areas.type','fcOne')
-         ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('prokolpo_areas.division_name',$request->division_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc2Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc2')
-         ->where('prokolpo_areas.type','fcTwo')
-         ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('prokolpo_areas.division_name',$request->division_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-        }elseif(empty($prokolpoYear) && empty($prokolpoType)){
-
-            $prokolpoReportFd6Main = DB::table('prokolpo_details')
-            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
-            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
-            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
-            ->where('prokolpo_details.type','fd6')
-            ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
-            ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
-            ->orderBy('prokolpo_details.id','desc')
-            ->get();
-
-
-            $prokolpoReportFd7Main = DB::table('prokolpo_details')
-         ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
-         ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
-         ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
-         ->where('prokolpo_details.type','fd7')
-         ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
-         ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc1Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc1')
-         ->where('prokolpo_areas.type','fcOne')
-         ->whereIn('prokolpo_areas.division_name',$request->division_name)
-         ->whereIn('prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc2Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc2')
-         ->where('prokolpo_areas.type','fcTwo')
-         ->whereIn('prokolpo_areas.division_name',$request->division_name)
-         ->whereIn('prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-        }elseif(empty($divisionName) && empty($distrcitName)){
-
-            $formYear = $request->prokolpo_year;
-            $toYear =$request->prokolpo_year+1;
-
-            $formDate = $formYear.'-07-01';
-            $toDate = $toYear.'-06-30';
-
-            $prokolpoReportFd6Main = DB::table('prokolpo_details')
-            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
-            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
-            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
-            ->where('prokolpo_details.type','fd6')
-            ->whereIn('fd6_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-            ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
-            ->orderBy('prokolpo_details.id','desc')
-            ->get();
-
-            $prokolpoReportFd7Main = DB::table('prokolpo_details')
-    ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
-    ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
-    ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
-    ->where('prokolpo_details.type','fd7')
-    ->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-    ->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
-    ->orderBy('prokolpo_details.id','desc')
-    ->get();
-
-
-            $prokolpoReportFc1Main = DB::table('prokolpo_details')
-    ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-    ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
-    ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
-    ->where('prokolpo_details.type','fc1')
-    ->where('prokolpo_areas.type','fcOne')
-    ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-    ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
-    ->orderBy('prokolpo_details.id','desc')
-    ->get();
-
-
-            $prokolpoReportFc2Main = DB::table('prokolpo_details')
-    ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-    ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
-    ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
-    ->where('prokolpo_details.type','fc2')
-    ->where('prokolpo_areas.type','fcTwo')
-    ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-    ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
-    ->orderBy('prokolpo_details.id','desc')
-    ->get();
-
-        }elseif(empty($divisionName) && empty($prokolpoType)){
-
-            $formYear = $request->prokolpo_year;
-            $toYear =$request->prokolpo_year+1;
-
-            $formDate = $formYear.'-07-01';
-            $toDate = $toYear.'-06-30';
-
-            $prokolpoReportFd6Main = DB::table('prokolpo_details')
-            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
-            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
-            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
-            ->where('prokolpo_details.type','fd6')
-            ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
-            ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
-            ->orderBy('prokolpo_details.id','desc')
-            ->get();
-
-            $prokolpoReportFd7Main = DB::table('prokolpo_details')
-    ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
-    ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
-    ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
-    ->where('prokolpo_details.type','fd7')
-    ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
-    ->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
-    ->orderBy('prokolpo_details.id','desc')
-    ->get();
-
-
-            $prokolpoReportFc1Main = DB::table('prokolpo_details')
-    ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-    ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
-    ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
-    ->where('prokolpo_details.type','fc1')
-    ->where('prokolpo_areas.type','fcOne')
-    ->whereIn('prokolpo_areas.district_name',$request->distric_name)
-    ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
-    ->orderBy('prokolpo_details.id','desc')
-    ->get();
-
-
-            $prokolpoReportFc2Main = DB::table('prokolpo_details')
-    ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-    ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
-    ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
-    ->where('prokolpo_details.type','fc2')
-    ->where('prokolpo_areas.type','fcTwo')
-    ->whereIn('prokolpo_areas.district_name',$request->distric_name)
-    ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
-    ->orderBy('prokolpo_details.id','desc')
-    ->get();
-
-        }elseif(empty($distrcitName) && empty($prokolpoType)){
-
-
-            $formYear = $request->prokolpo_year;
-            $toYear =$request->prokolpo_year+1;
-
-            $formDate = $formYear.'-07-01';
-            $toDate = $toYear.'-06-30';
-
-            $prokolpoReportFd6Main = DB::table('prokolpo_details')
-            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
-            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
-            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
-            ->where('prokolpo_details.type','fd6')
-            ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
-            ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
-            ->orderBy('prokolpo_details.id','desc')
-            ->get();
-
-            $prokolpoReportFd7Main = DB::table('prokolpo_details')
-    ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
-    ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
-    ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
-    ->where('prokolpo_details.type','fd7')
-    ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
-    ->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
-    ->orderBy('prokolpo_details.id','desc')
-    ->get();
-
-
-            $prokolpoReportFc1Main = DB::table('prokolpo_details')
-    ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-    ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
-    ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
-    ->where('prokolpo_details.type','fc1')
-    ->where('prokolpo_areas.type','fcOne')
-    ->whereIn('prokolpo_areas.division_name',$request->division_name)
-    ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
-    ->orderBy('prokolpo_details.id','desc')
-    ->get();
-
-
-            $prokolpoReportFc2Main = DB::table('prokolpo_details')
-    ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-    ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
-    ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
-    ->where('prokolpo_details.type','fc2')
-    ->where('prokolpo_areas.type','fcTwo')
-    ->whereIn('prokolpo_areas.division_name',$request->division_name)
-    ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
-    ->orderBy('prokolpo_details.id','desc')
-    ->get();
-
-        }elseif(empty($prokolpoYear)){
-
-
-            $prokolpoReportFd6Main = DB::table('prokolpo_details')
-            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
-            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
-            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
-            ->where('prokolpo_details.type','fd6')
-            ->whereIn('fd6_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-            ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
-            ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
-            ->orderBy('prokolpo_details.id','desc')
-            ->get();
-
-
-            $prokolpoReportFd7Main = DB::table('prokolpo_details')
-         ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
-         ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
-         ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
-         ->where('prokolpo_details.type','fd7')
-         ->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
-         ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc1Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc1')
-         ->where('prokolpo_areas.type','fcOne')
-         ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('prokolpo_areas.division_name',$request->division_name)
-         ->whereIn('prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc2Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc2')
-         ->where('prokolpo_areas.type','fcTwo')
-         ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('prokolpo_areas.division_name',$request->division_name)
-         ->whereIn('prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-        }elseif(empty($divisionName)){
-
-            $formYear = $request->prokolpo_year;
-            $toYear =$request->prokolpo_year+1;
-
-            $formDate = $formYear.'-07-01';
-            $toDate = $toYear.'-06-30';
-
-            $prokolpoReportFd6Main = DB::table('prokolpo_details')
-            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
-            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
-            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
-            ->where('prokolpo_details.type','fd6')
-            ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
-            ->whereIn('fd6_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-            ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
-            ->orderBy('prokolpo_details.id','desc')
-            ->get();
-
-
-            $prokolpoReportFd7Main = DB::table('prokolpo_details')
-         ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
-         ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
-         ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
-         ->where('prokolpo_details.type','fd7')
-         ->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
-         ->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc1Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc1')
-         ->where('prokolpo_areas.type','fcOne')
-         ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
-         ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc2Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc2')
-         ->where('prokolpo_areas.type','fcTwo')
-         ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
-         ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-        }elseif(empty($distrcitName)){
-
-            $formYear = $request->prokolpo_year;
-            $toYear =$request->prokolpo_year+1;
-
-            $formDate = $formYear.'-07-01';
-            $toDate = $toYear.'-06-30';
-
-
-            $prokolpoReportFd6Main = DB::table('prokolpo_details')
-            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
-            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
-            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
-            ->where('prokolpo_details.type','fd6')
-            ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
-            ->whereIn('fd6_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-            ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
-            ->orderBy('prokolpo_details.id','desc')
-            ->get();
-
-
-            $prokolpoReportFd7Main = DB::table('prokolpo_details')
-         ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
-         ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
-         ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
-         ->where('prokolpo_details.type','fd7')
-         ->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
-         ->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc1Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc1')
-         ->where('prokolpo_areas.type','fcOne')
-         ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
-         ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('prokolpo_areas.division_name',$request->division_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc2Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc2')
-         ->where('prokolpo_areas.type','fcTwo')
-         ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
-         ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('prokolpo_areas.division_name',$request->division_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-        }elseif(empty($prokolpoType)){
-
-            $formYear = $request->prokolpo_year;
-            $toYear =$request->prokolpo_year+1;
-
-            $formDate = $formYear.'-07-01';
-            $toDate = $toYear.'-06-30';
-
-
-            $prokolpoReportFd6Main = DB::table('prokolpo_details')
-            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
-            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
-            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
-            ->where('prokolpo_details.type','fd6')
-            ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
-
-            ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
-            ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
-            ->orderBy('prokolpo_details.id','desc')
-            ->get();
-
-
-            $prokolpoReportFd7Main = DB::table('prokolpo_details')
-         ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
-         ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
-         ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
-         ->where('prokolpo_details.type','fd7')
-         ->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
-
-         ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
-         ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc1Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc1')
-         ->where('prokolpo_areas.type','fcOne')
-         ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
-
-         ->whereIn('prokolpo_areas.division_name',$request->division_name)
-         ->whereIn('prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc2Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc2')
-         ->where('prokolpo_areas.type','fcTwo')
-         ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
-
-         ->whereIn('prokolpo_areas.division_name',$request->division_name)
-         ->whereIn('prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
         }else{
 
-            $formYear = $request->prokolpo_year;
-            $toYear =$request->prokolpo_year+1;
+
+            $formDate = date('Y-m-d', strtotime($request->from));
+            $toDate = date('Y-m-d', strtotime($request->to));
+
+        }
+
+        $prokolpoReportFd6Main = DB::table('prokolpo_details')
+        ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+        ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+        ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+        ->where('prokolpo_details.type','fd6')
+        ->whereIn('fd6_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+        ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
+        ->orderBy('prokolpo_details.id','desc')
+        ->get();
+
+        $prokolpoReportFd7Main = DB::table('prokolpo_details')
+->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+->where('prokolpo_details.type','fd7')
+->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
+->orderBy('prokolpo_details.id','desc')
+->get();
+
+
+        $prokolpoReportFc1Main = DB::table('prokolpo_details')
+->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+->where('prokolpo_details.type','fc1')
+->where('prokolpo_areas.type','fcOne')
+->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+->orderBy('prokolpo_details.id','desc')
+->get();
+
+
+        $prokolpoReportFc2Main = DB::table('prokolpo_details')
+->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+->where('prokolpo_details.type','fc2')
+->where('prokolpo_areas.type','fcTwo')
+->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+->orderBy('prokolpo_details.id','desc')
+->get();
+
+    }elseif(empty($divisionName) && empty($prokolpoType)){
+
+        $formYear = $request->prokolpo_year;
+        $toYear =$request->prokolpo_year+1;
+
+        if($request->filter_type == 'yearly'){
+
 
             $formDate = $formYear.'-07-01';
             $toDate = $toYear.'-06-30';
+        }else{
 
 
-            $prokolpoReportFd6Main = DB::table('prokolpo_details')
-            ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
-            ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
-            ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
-            ->where('prokolpo_details.type','fd6')
-            ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
-            ->whereIn('fd6_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-            ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
-            ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
-            ->orderBy('prokolpo_details.id','desc')
-            ->get();
-
-
-            $prokolpoReportFd7Main = DB::table('prokolpo_details')
-         ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
-         ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
-         ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
-         ->where('prokolpo_details.type','fd7')
-         ->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
-         ->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
-         ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc1Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc1')
-         ->where('prokolpo_areas.type','fcOne')
-         ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
-         ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('prokolpo_areas.division_name',$request->division_name)
-         ->whereIn('prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
-            $prokolpoReportFc2Main = DB::table('prokolpo_details')
-         ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
-         ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
-         ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
-         ->where('prokolpo_details.type','fc2')
-         ->where('prokolpo_areas.type','fcTwo')
-         ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
-         ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
-         ->whereIn('prokolpo_areas.division_name',$request->division_name)
-         ->whereIn('prokolpo_areas.district_name',$request->distric_name)
-         ->orderBy('prokolpo_details.id','desc')
-         ->get();
-
+            $formDate = date('Y-m-d', strtotime($request->from));
+            $toDate = date('Y-m-d', strtotime($request->to));
 
         }
-        //end new code start
+
+        $prokolpoReportFd6Main = DB::table('prokolpo_details')
+        ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+        ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+        ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+        ->where('prokolpo_details.type','fd6')
+        ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
+        ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
+        ->orderBy('prokolpo_details.id','desc')
+        ->get();
+
+        $prokolpoReportFd7Main = DB::table('prokolpo_details')
+->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+->where('prokolpo_details.type','fd7')
+->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
+->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
+->orderBy('prokolpo_details.id','desc')
+->get();
+
+
+        $prokolpoReportFc1Main = DB::table('prokolpo_details')
+->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+->where('prokolpo_details.type','fc1')
+->where('prokolpo_areas.type','fcOne')
+->whereIn('prokolpo_areas.district_name',$request->distric_name)
+->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+->orderBy('prokolpo_details.id','desc')
+->get();
+
+
+        $prokolpoReportFc2Main = DB::table('prokolpo_details')
+->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+->where('prokolpo_details.type','fc2')
+->where('prokolpo_areas.type','fcTwo')
+->whereIn('prokolpo_areas.district_name',$request->distric_name)
+->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+->orderBy('prokolpo_details.id','desc')
+->get();
+
+    }elseif(empty($distrcitName) && empty($prokolpoType)){
+
+
+        $formYear = $request->prokolpo_year;
+        $toYear =$request->prokolpo_year+1;
+
+        if($request->filter_type == 'yearly'){
+
+
+            $formDate = $formYear.'-07-01';
+            $toDate = $toYear.'-06-30';
+        }else{
+
+
+            $formDate = date('Y-m-d', strtotime($request->from));
+            $toDate = date('Y-m-d', strtotime($request->to));
+
+        }
+
+        $prokolpoReportFd6Main = DB::table('prokolpo_details')
+        ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+        ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+        ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+        ->where('prokolpo_details.type','fd6')
+        ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+        ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
+        ->orderBy('prokolpo_details.id','desc')
+        ->get();
+
+        $prokolpoReportFd7Main = DB::table('prokolpo_details')
+->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+->where('prokolpo_details.type','fd7')
+->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
+->orderBy('prokolpo_details.id','desc')
+->get();
+
+
+        $prokolpoReportFc1Main = DB::table('prokolpo_details')
+->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+->where('prokolpo_details.type','fc1')
+->where('prokolpo_areas.type','fcOne')
+->whereIn('prokolpo_areas.division_name',$request->division_name)
+->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+->orderBy('prokolpo_details.id','desc')
+->get();
+
+
+        $prokolpoReportFc2Main = DB::table('prokolpo_details')
+->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+->where('prokolpo_details.type','fc2')
+->where('prokolpo_areas.type','fcTwo')
+->whereIn('prokolpo_areas.division_name',$request->division_name)
+->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+->orderBy('prokolpo_details.id','desc')
+->get();
+
+    }elseif(empty($prokolpoYear)){
+
+
+        $prokolpoReportFd6Main = DB::table('prokolpo_details')
+        ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+        ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+        ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+        ->where('prokolpo_details.type','fd6')
+        ->whereIn('fd6_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+        ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+        ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
+        ->orderBy('prokolpo_details.id','desc')
+        ->get();
+
+
+        $prokolpoReportFd7Main = DB::table('prokolpo_details')
+     ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+     ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+     ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+     ->where('prokolpo_details.type','fd7')
+     ->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+     ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc1Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc1')
+     ->where('prokolpo_areas.type','fcOne')
+     ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('prokolpo_areas.division_name',$request->division_name)
+     ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc2Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc2')
+     ->where('prokolpo_areas.type','fcTwo')
+     ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('prokolpo_areas.division_name',$request->division_name)
+     ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+    }elseif(empty($divisionName)){
+
+        $formYear = $request->prokolpo_year;
+        $toYear =$request->prokolpo_year+1;
+
+        if($request->filter_type == 'yearly'){
+
+
+            $formDate = $formYear.'-07-01';
+            $toDate = $toYear.'-06-30';
+        }else{
+
+
+            $formDate = date('Y-m-d', strtotime($request->from));
+            $toDate = date('Y-m-d', strtotime($request->to));
+
+        }
+
+        $prokolpoReportFd6Main = DB::table('prokolpo_details')
+        ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+        ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+        ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+        ->where('prokolpo_details.type','fd6')
+        ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
+        ->whereIn('fd6_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+        ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
+        ->orderBy('prokolpo_details.id','desc')
+        ->get();
+
+
+        $prokolpoReportFd7Main = DB::table('prokolpo_details')
+     ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+     ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+     ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+     ->where('prokolpo_details.type','fd7')
+     ->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
+     ->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc1Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc1')
+     ->where('prokolpo_areas.type','fcOne')
+     ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+     ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc2Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc2')
+     ->where('prokolpo_areas.type','fcTwo')
+     ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+     ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+    }elseif(empty($distrcitName)){
+
+        $formYear = $request->prokolpo_year;
+        $toYear =$request->prokolpo_year+1;
+
+        if($request->filter_type == 'yearly'){
+
+
+            $formDate = $formYear.'-07-01';
+            $toDate = $toYear.'-06-30';
+        }else{
+
+
+            $formDate = date('Y-m-d', strtotime($request->from));
+            $toDate = date('Y-m-d', strtotime($request->to));
+
+        }
+
+
+        $prokolpoReportFd6Main = DB::table('prokolpo_details')
+        ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+        ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+        ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+        ->where('prokolpo_details.type','fd6')
+        ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
+        ->whereIn('fd6_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+        ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+        ->orderBy('prokolpo_details.id','desc')
+        ->get();
+
+
+        $prokolpoReportFd7Main = DB::table('prokolpo_details')
+     ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+     ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+     ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+     ->where('prokolpo_details.type','fd7')
+     ->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
+     ->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc1Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc1')
+     ->where('prokolpo_areas.type','fcOne')
+     ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+     ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('prokolpo_areas.division_name',$request->division_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc2Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc2')
+     ->where('prokolpo_areas.type','fcTwo')
+     ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+     ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('prokolpo_areas.division_name',$request->division_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+    }elseif(empty($prokolpoType)){
+
+        $formYear = $request->prokolpo_year;
+        $toYear =$request->prokolpo_year+1;
+
+        if($request->filter_type == 'yearly'){
+
+
+            $formDate = $formYear.'-07-01';
+            $toDate = $toYear.'-06-30';
+        }else{
+
+
+            $formDate = date('Y-m-d', strtotime($request->from));
+            $toDate = date('Y-m-d', strtotime($request->to));
+
+        }
+
+
+        $prokolpoReportFd6Main = DB::table('prokolpo_details')
+        ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+        ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+        ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+        ->where('prokolpo_details.type','fd6')
+        ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
+
+        ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+        ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
+        ->orderBy('prokolpo_details.id','desc')
+        ->get();
+
+
+        $prokolpoReportFd7Main = DB::table('prokolpo_details')
+     ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+     ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+     ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+     ->where('prokolpo_details.type','fd7')
+     ->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
+
+     ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+     ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc1Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc1')
+     ->where('prokolpo_areas.type','fcOne')
+     ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+
+     ->whereIn('prokolpo_areas.division_name',$request->division_name)
+     ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc2Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc2')
+     ->where('prokolpo_areas.type','fcTwo')
+     ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+
+     ->whereIn('prokolpo_areas.division_name',$request->division_name)
+     ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+    }else{
+
+        $formYear = $request->prokolpo_year;
+        $toYear =$request->prokolpo_year+1;
+
+        if($request->filter_type == 'yearly'){
+
+
+            $formDate = $formYear.'-07-01';
+            $toDate = $toYear.'-06-30';
+        }else{
+
+
+            $formDate = date('Y-m-d', strtotime($request->from));
+            $toDate = date('Y-m-d', strtotime($request->to));
+
+        }
+
+
+        $prokolpoReportFd6Main = DB::table('prokolpo_details')
+        ->join('fd6_form_prokolpo_areas', 'fd6_form_prokolpo_areas.fd6_form_id', '=', 'prokolpo_details.formId')
+        ->join('fd6_forms', 'fd6_forms.id', '=', 'prokolpo_details.formId')
+        ->select('prokolpo_details.*','fd6_forms.*','fd6_forms.id as mainId','fd6_form_prokolpo_areas.*')
+        ->where('prokolpo_details.type','fd6')
+        ->whereBetween('fd6_form_prokolpo_areas.created_at', [$formDate, $toDate])
+        ->whereIn('fd6_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+        ->whereIn('fd6_form_prokolpo_areas.division_name',$request->division_name)
+        ->whereIn('fd6_form_prokolpo_areas.district_name',$request->distric_name)
+        ->orderBy('prokolpo_details.id','desc')
+        ->get();
+
+
+        $prokolpoReportFd7Main = DB::table('prokolpo_details')
+     ->join('fd7_form_prokolpo_areas', 'fd7_form_prokolpo_areas.fd7_form_id', '=', 'prokolpo_details.formId')
+     ->join('fd7_forms', 'fd7_forms.id', '=', 'prokolpo_details.formId')
+     ->select('prokolpo_details.*','fd7_forms.*','fd7_forms.id as mainId','fd7_form_prokolpo_areas.*')
+     ->where('prokolpo_details.type','fd7')
+     ->whereBetween('fd7_form_prokolpo_areas.created_at', [$formDate, $toDate])
+     ->whereIn('fd7_form_prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('fd7_form_prokolpo_areas.division_name',$request->division_name)
+     ->whereIn('fd7_form_prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc1Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc1_forms', 'fc1_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc1_forms.*','fc1_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc1')
+     ->where('prokolpo_areas.type','fcOne')
+     ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+     ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('prokolpo_areas.division_name',$request->division_name)
+     ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+        $prokolpoReportFc2Main = DB::table('prokolpo_details')
+     ->join('prokolpo_areas', 'prokolpo_areas.formId', '=', 'prokolpo_details.formId')
+     ->join('fc2_forms', 'fc2_forms.id', '=', 'prokolpo_areas.formId')
+     ->select('prokolpo_areas.formId as mainAreaId','prokolpo_details.*','fc2_forms.*','fc2_forms.id as mainId','prokolpo_areas.*')
+     ->where('prokolpo_details.type','fc2')
+     ->where('prokolpo_areas.type','fcTwo')
+     ->whereBetween('prokolpo_areas.created_at', [$formDate, $toDate])
+     ->whereIn('prokolpo_areas.prokolpo_type',$request->prokolpo_type)
+     ->whereIn('prokolpo_areas.division_name',$request->division_name)
+     ->whereIn('prokolpo_areas.district_name',$request->distric_name)
+     ->orderBy('prokolpo_details.id','desc')
+     ->get();
+
+
+    }
+    //end new code start
 
 
 

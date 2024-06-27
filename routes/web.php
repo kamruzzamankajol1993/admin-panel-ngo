@@ -339,6 +339,7 @@ Route::controller(Fd4OneController::class)->group(function () {
 
     Route::controller(ParentNoteController::class)->group(function () {
 
+Route::post('/addParentAttachmentNew', 'addParentAttachmentNew')->name('addParentAttachmentNew');
         Route::get('/addParentAttachment', 'addParentAttachment')->name('addParentAttachment');
         Route::post('/storeDataFromSenderView', 'storeDataFromSenderView')->name('storeDataFromSenderView');
         Route::get('/addParentNote/{status}/{dakId}/{nothiId}', 'addParentNote')->name('addParentNote');

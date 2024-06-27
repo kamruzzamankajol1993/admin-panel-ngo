@@ -100,12 +100,23 @@
 
                     <div class="card-body">
 
-                        <form method="get" action="{{ route('prokolpoReportSearch') }}" id="form">
-                            <div class="row">
 
-                                <div class="col-sm-3">
+
+                        <form method="get" action="{{ route('prokolpoReportSearch') }}" id="form" >
+                            <div class="row ">
+                                <div class="col-sm-2">
+                                    <label>ফিল্টার এর ধরণ</label>
+                                    <select  class="form-control js-example-basic-single" id="filter_type" name="filter_type" >
+                                        <option value="">-- নির্বাচন করুন --</option>
+                                        <option value="yearly" selected>বছর অনুযায়ী</option>
+                                        <option value="monthly" >মাস অনুযায়ী</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="col-sm-4" id="prokolpo_year">
                                     <label>প্রকল্পের বছর</label>
-                                    <select  class="form-control js-example-basic-single" name="prokolpo_year" >
+                                    <select  class="form-control js-example-basic-single"  name="prokolpo_year" >
                                         <option value="">-- নির্বাচন করুন --</option>
                                         <option value="2020" >২০২০ -২০২১</option>
                                         <option value="2021" >২০২১-২০২২</option>
@@ -120,7 +131,17 @@
                                     </select>
                                 </div>
 
-                                <div class="col-sm-3">
+                                <div class="col-sm-2" id="from" style="display:none;">
+                                    <label>হইতে</label>
+                                    <input type="text"  class="form-control datepicker233" name="from"/>
+                                </div>
+                                <div class="col-sm-2" id="to" style="display:none;">
+                                    <label>পর্যন্ত</label>
+                                    <input type="text"  class="form-control datepicker233" name="to"/>
+                                </div>
+
+
+                                <div class="col-sm-2">
                                 <label>বিভাগ</label>
                                     <select multiple class="form-control js-example-basic-multiple divisionId" name="division_name[]" id="divisionId" >
                                         <option value="">-- বিভাগ নির্বাচন করুন --</option>
@@ -139,7 +160,7 @@
                                 ->select('district_bn')
                                 ->get();
                                 ?>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label>জেলা</label>
                                     <select multiple class="form-control js-example-basic-multiple" name="distric_name[]" id="districId">
                                         <option value="">-- জেলা নির্বাচন করুন --</option>
@@ -158,7 +179,7 @@
                                     <input type="text" class="form-control" name="third_name" id="thirdId" >
                                 </div> --}}
 
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label>প্রকল্পের ধরণ</label>
                                     <select multiple class="form-control js-example-basic-multiple" name="prokolpo_type[]" >
                                         <option value="">-- নির্বাচন করুন --</option>
@@ -178,6 +199,8 @@
 
                             </div>
             </form>
+
+
 
                     </div>
 
@@ -419,6 +442,31 @@
 });
 </script>
 
+<script>
+    $("#filter_type").change(function(){
+
+        var ftype =$(this).val();
+
+        if(ftype == 'yearly'){
+
+            $('#prokolpo_year').show();
+            $('#to').hide();
+            $('#from').hide();
+
+        }else{
+
+            $('#prokolpo_year').hide();
+            $('#to').show();
+            $('#from').show();
+
+        }
+
+
+
+
+
+});
+</script>
 
 <script>
     $("#divisionId").change(function(){

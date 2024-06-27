@@ -81,8 +81,12 @@
         <form class="custom-validation" action="{{ route('childNote.update',$childNoteNewLists->id) }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
             @csrf
             @method('PUT')
+            <textarea class="" style="display: none;" name="mainPartNote" >
 
+                {!! $childNoteNewLists->description !!}
+            </textarea>
             <input type="hidden" value="{{ $status }}" name="status"/>
+            <input type="hidden" value="receiverForm" name="receiverForm"/>
 
             <input type="hidden" value="{{ $id }}" name="noteId"/>
             <input type="hidden" value="{{ $activeCode }}" name="activeCode"/>
@@ -306,7 +310,10 @@ $unsentAtt = DB::table('note_attachments')
 ?>
 
 
+<!--new add att code -->
+<a  href="#" data-cmid="{{ $childNoteNewLists->id }}" id="attModal1">সংযুক্তি যুক্ত করুন <i class="fa fa-plus"></i></a>
 
+<!-- end new add att code -->
  <p class="mt-4">সংযুক্তি({{ count($unsentAtt) }})</p>
  <ul>
     @foreach($unsentAtt as $unsentAtts )
@@ -348,7 +355,7 @@ $potrangshoDraft =  DB::table('potrangsho_drafts')
  @else
  <div style="display: flex;" class="mCss">
  @if(($potrangshoDraft->SentStatus == 0)&&($potrangshoDraft->adminId == Auth::guard('admin')->user()->id))
- <p style="color: #BC1133 !important;"><span >অফিস স্মারক নম্বর:</span> {!! $potrangshoDraft->sarok_number !!}, <span style="color: #BC1133 !important;">প্রেরণের তারিখ: {{ App\Http\Controllers\Admin\CommonController::englishToBangla(date('d/m/y', strtotime($childNoteNewLists->updated_at)))}}</span></p>
+ <p style="color: #BC1133 !important;"><span >অফিস স্মারক নম্বর:</span> {{ App\Http\Controllers\Admin\CommonController::englishToBangla($nothiNumber) }}, <span style="color: #BC1133 !important;">প্রেরণের তারিখ: {{ App\Http\Controllers\Admin\CommonController::englishToBangla(date('d/m/y', strtotime($childNoteNewLists->updated_at)))}}</span></p>
  @else
  <p style="color: #BC1133 !important;">অফিস স্মারক নম্বর:{!! $officeDetails->sarok_number !!}, <span style="color: #BC1133 !important;">প্রেরণের তারিখ: {{ App\Http\Controllers\Admin\CommonController::englishToBangla(date('d/m/y', strtotime($childNoteNewLists->updated_at)))}}</span></p>
  @endif
@@ -424,7 +431,7 @@ $checkPreviousCodeDupdateBlade = DB::table('seal_statuses')->where('noteId',$id)
 
 <!-- code for delete status-->
 @if($checkPreviousCodeDupdateBlade == 1)
-2
+
 @else
 <button data-bs-toggle="modal"
         data-original-title="" data-bs-target="#myModal22stumm{{ $childNoteNewLists->id }}" class="btn btn-danger ms-3" type="button">
@@ -490,7 +497,7 @@ $checkPreviousCodeDupdateBlade = DB::table('seal_statuses')->where('noteId',$id)
 <!-- code for delete status-->
 
 @if($checkPreviousCodeDupdateBlade == 1)
-3
+
 @else
 <button data-bs-toggle="modal"
 data-original-title="" data-bs-target="#myModal22stumm{{ $childNoteNewLists->id }}" class="btn btn-danger ms-3" type="button">
@@ -544,6 +551,19 @@ $paraSentStatusOne = DB::table('nothi_details')
     </button>
 
 @endif
+
+@endif
+@if($childNoteNewLists->back_sign_status == 1)
+
+@else
+
+
+        <button class="btn-sm btn btn-secondary" value="সংশোধন ও খসড়া" name="final_button" type="submit"
+
+        aria-expanded="false">
+       খসড়া
+</button>
+
 
 @endif
 <a href="javascript:void(0)" id="newPara" class=" btn-sm btn btn-primary">নতুন অনুচ্ছেদ</a>

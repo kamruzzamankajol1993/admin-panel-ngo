@@ -6640,14 +6640,10 @@ try{
 
      if($request->final_button == 'সংশোধন ও খসড়া'){
 
-        if($request->receiverForm == 'receiverForm'){
-            return redirect('admin/createPotroForReceiver/'.$request->status.'/'.$request->dakId.'/'.$request->nothiId.'/'.$request->noteId.'/'.$request->activeCode)->with('success','ফলভাবে সংশোধ করা হয়েছে');
-        }else{
-
         return redirect('admin/createPotro/'.$request->status.'/'.$request->dakId.'/'.$request->nothiId.'/'.$request->noteId.'/'.$request->activeCode)->with('success','ফলভাবে সংশোধ করা হয়েছে');
-}
+
      }else{
-        return redirect()->back()->with('success','সফলভাবে সংশোধন করা হয়েছ');
+        return redirect()->back()->with('success','সফলভাবে সংশধন করা হয়েছ');
      }
 
 
@@ -6833,13 +6829,8 @@ try{
 
      if($request->final_button == 'সংশোধন ও খসড়া'){
 
-        if($request->receiverForm == 'receiverForm'){
-
-            return redirect('admin/createPotroForReceiver/'.$request->status.'/'.$request->dakId.'/'.$request->nothiId.'/'.$request->noteId.'/'.$request->activeCode)->with('success','সফলভাে সংশোধন কর হয়েছে');
-        }else{
-
         return redirect('admin/createPotro/'.$request->status.'/'.$request->dakId.'/'.$request->nothiId.'/'.$request->noteId.'/'.$request->activeCode)->with('success','সফলভাে সংশোধন কর হয়েছে');
-        }
+
      }else{
         return redirect()->back()->with('success','সফলাবে সংশোন কা হয়েছে');
      }

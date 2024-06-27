@@ -454,8 +454,8 @@ $branchName = DB::table('branches')
         @if(!$potrangshoDraftNew)
         {{ App\Http\Controllers\Admin\CommonController::englishToBangla($nothiNumber) }};
         @else
-
-        {!! $potrangshoDraftNew->sarok_number !!};
+        {{ App\Http\Controllers\Admin\CommonController::englishToBangla($nothiNumber) }};
+        {{-- {!! $potrangshoDraftNew->sarok_number !!}; --}}
 
         @endif
 
@@ -775,7 +775,7 @@ $branchName = DB::table('branches')
         ?>
     <div class="row" class="mt-4">
         <div class="col-md-6">
-            <span >স্মারক নং: </span> {{ App\Http\Controllers\Admin\CommonController::englishToBangla($nothiNumber) }}
+            <span >1স্মারক নং: </span> {{ App\Http\Controllers\Admin\CommonController::englishToBangla($nothiNumber) }}
         </div>
         <div class="col-md-6" style="text-align: right;">
             <table class="table table-borderless">
@@ -807,7 +807,7 @@ $branchName = DB::table('branches')
                                         <input type="hidden" value="{{ $id }}" name="parentNoteId"/>
                                         <input type="hidden" value="{{ $status }}" name="status"/>
 
-        <div class="d-flex justify-content-end mt-3">
+        <div class="d-flex  mt-3">
             <p style="font-weight:bold;">বিষয় :</p>
             <p>
             <textarea id="ineditor1" name="subject" contenteditable="true">
@@ -818,7 +818,7 @@ $branchName = DB::table('branches')
             <input type="hidden" name="statusForPotrangso" id="statusForPotrangso" value="{{ $status }}"/>
             </p>
         </div>
-        <div class="d-flex justify-content-end">
+        <div class="d-flex ">
             <p style="font-weight:bold;">সুত্রঃ </p>
             <p>
                  <textarea id="ineditor2" name="sutro" contenteditable="true">

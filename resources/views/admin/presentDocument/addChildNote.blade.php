@@ -1381,7 +1381,7 @@ $nothiApproverListOnu = DB::table('nothi_approvers')->where('nothiId',$nothiId)
 </div>
 
 
-
+@include('admin.presentDocument.attModal')
 
 <!-- end note add modal start -->
 
@@ -1433,6 +1433,7 @@ $nothiApproverListOnu = DB::table('nothi_approvers')->where('nothiId',$nothiId)
 
 
 @section('script')
+@include('admin.presentDocument.attscript')
 <script>
     $(document).ready(function(){
   $("[id^=dataMain]").click(function(){
@@ -1542,7 +1543,7 @@ var snoteId =$('#snoteId').val();
 
         location.reload(true);
         alertify.set('notifier','position','top-center');
-        alertify.success('সফলভাবে কপি হয়েছে');
+        alertify.success('সফলভাবে সংযুক্তিতে সংযুক্ত করা হয়েছে');
 
     }
     });
